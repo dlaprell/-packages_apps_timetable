@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:id="@+id/time"
+        android:gravity="center_vertical"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+        android:textColor="#80000000"/>
+
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="@string/free"
+        android:id="@+id/mark_as_freetime" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/options_container"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:layout_gravity="fill_horizontal"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+            android:textColor="#80000000"
+            android:text="@string/subject" />
+
+        <eu.laprell.timetable.widgets.RippleFrameLayout2
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/subject_container">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_label_grey600_48dp"
+                android:padding="8dp"
+                android:scaleType="fitCenter" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:id="@+id/subject"
+                android:layout_marginLeft="48dp"
+                android:layout_marginStart="48dp"
+                android:gravity="center_vertical"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+                android:hint="@string/select_subject"
+                android:textStyle="bold"
+                android:textColor="#000" />
+
+        </eu.laprell.timetable.widgets.RippleFrameLayout2>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="fill_horizontal"
+            android:gravity="center_vertical"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+            android:textColor="#80000000"
+            android:text="@string/color" />
+
+        <eu.laprell.timetable.widgets.RippleFrameLayout2
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/color_container">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_format_paint_grey600_48dp"
+                android:padding="8dp"
+                android:scaleType="fitCenter" />
+
+            <View
+                android:id="@+id/color"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="@string/select_color"
+                android:layout_marginStart="48dp"
+                android:layout_marginLeft="48dp" />
+
+        </eu.laprell.timetable.widgets.RippleFrameLayout2>
+
+    </LinearLayout>
+
+</LinearLayout>

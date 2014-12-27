@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="array_subjects" translatable="false">
+        <item>@string/s_german</item>
+        <item>@string/s_english</item>
+        <item>@string/s_biology</item>
+        <item>@string/s_physics</item>
+        <item>@string/s_computer_science</item>
+        <item>@string/s_sport</item>
+        <item>@string/s_chemistry</item>
+        <item>@string/s_music</item>
+        <item>@string/s_choir</item>
+        <item>@string/s_history</item>
+        <item>@string/s_pedagogy</item>
+        <item>@string/s_geography</item>
+        <item>@string/s_religion</item>
+        <item>@string/s_philosophy</item>
+        <item>@string/s_politics</item>
+        <item>@string/s_social_sciences</item>
+        <item>@string/s_art</item>
+        <item>@string/s_latin</item>
+        <item>@string/s_french</item>
+        <item>@string/s_mathematics</item>
+        <item>@string/s_project_art</item>
+        <item>@string/s_project_mathematics</item>
+        <item>@string/s_project_english</item>
+        <item>@string/s_project_social_sciences</item>
+    </string-array>
+
+    <string-array name="array_subjects_images" translatable="false">
+        <item>@drawable/book_grey</item>
+        <item>@drawable/writing_grey</item>
+        <item>@drawable/biology_grey</item>
+        <item>@drawable/optics_grey</item>
+        <item>@drawable/info_grey</item>
+        <item>@drawable/running_grey</item>
+        <item>@drawable/chemistry_grey</item>
+        <item>@drawable/music_grey</item>
+        <item>@drawable/chor_grey</item>
+        <item>@drawable/history_grey</item>
+        <item>@drawable/family_grey</item>
+        <item>@drawable/map_compass_grey</item>
+        <item>@drawable/cross_grey</item>
+        <item>@drawable/thinking_grey</item>
+        <item>@drawable/politics_grey</item>
+        <item>@drawable/city_grey</item>
+        <item>@drawable/art_grey</item>
+        <item>@drawable/latin_grey</item>
+        <item>@drawable/paris_grey</item>
+        <item>@drawable/math_grey</item>
+        <item>@drawable/art_grey</item>
+        <item>@drawable/math_grey</item>
+        <item>@drawable/writing_grey</item>
+        <item>@drawable/city_grey</item>
+    </string-array>
+
+    <string-array name="array_subjects_images_all" translatable="false">
+        <item>@drawable/book_grey</item>
+        <item>@drawable/writing_grey</item>
+        <item>@drawable/biology_grey</item>
+        <item>@drawable/optics_grey</item>
+        <item>@drawable/info_grey</item>
+        <item>@drawable/running_grey</item>
+        <item>@drawable/chemistry_grey</item>
+        <item>@drawable/music_grey</item>
+        <item>@drawable/chor_grey</item>
+        <item>@drawable/history_grey</item>
+        <item>@drawable/family_grey</item>
+        <item>@drawable/map_compass_grey</item>
+        <item>@drawable/cross_grey</item>
+        <item>@drawable/thinking_grey</item>
+        <item>@drawable/politics_grey</item>
+        <item>@drawable/city_grey</item>
+        <item>@drawable/latin_grey</item>
+        <item>@drawable/paris_grey</item>
+        <item>@drawable/art_grey</item>
+        <item>@drawable/math_grey</item>
+        <item>@drawable/bundestag_grey</item>
+        <item>@drawable/capitol_grey</item>
+        <item>@drawable/choice_grey</item>
+        <item>@drawable/colloseum_grey</item>
+        <item>@drawable/dance_grey</item>
+        <item>@drawable/elephant_grey</item>
+        <item>@drawable/geese_grey</item>
+        <item>@drawable/justice_grey</item>
+        <item>@drawable/microscope_grey</item>
+        <item>@drawable/paintings_grey</item>
+        <item>@drawable/palma_grey</item>
+        <item>@drawable/plasma_grey</item>
+        <item>@drawable/plasma_lamp_grey</item>
+        <item>@drawable/stage_grey</item>
+        <item>@drawable/thinker_grey</item>
+        <item>@drawable/weights_grey</item>
+    </string-array>
+
+    <string-array name="array_days" translatable="false">
+        <item>@string/day_monday</item>
+        <item>@string/day_tuesday</item>
+        <item>@string/day_wednesday</item>
+        <item>@string/day_thursday</item>
+        <item>@string/day_friday</item>
+        <item>@string/day_saturday</item>
+        <item>@string/day_sunday</item>
+    </string-array>
+
+    <integer-array name="array_colors" translatable="false">
+        <item>@color/material_red</item>
+        <item>@color/material_pink</item>
+        <item>@color/material_purple</item>
+        <item>@color/material_deep_purple</item>
+        <item>@color/material_indigo</item>
+        <item>@color/material_blue</item>
+        <item>@color/material_cyan</item>
+        <item>@color/material_teal</item>
+        <item>@color/material_green</item>
+        <item>@color/material_light_green</item>
+        <item>@color/material_yellow</item>
+        <item>@color/material_orange</item>
+        <item>@color/material_deep_orange</item>
+        <item>@color/material_brown</item>
+        <item>@color/material_blue_grey</item>
+    </integer-array>
+
+    <string-array name="addon_array_kgh_teachers" translatable="false">
+        <item>Frau Adams</item>
+        <item>Frau Backhaus</item>
+        <item>Frau Boymans</item>
+        <item>Herr Bork</item>
+        <item>Frau Braß</item>
+        <item>Frau Brüggemann</item>
+        <item>Herr Bartels</item>
+        <item>Frau Bies</item>
+        <item>Frau Call</item>
+        <item>Frau Conen</item>
+        <item>Frau Cockx</item>
+        <item>Frau Dahlmanns</item>
+        <item>Frau Depke</item>
+        <item>Frau Diehl</item>
+        <item>Herr Dahlmanns</item>
+        <item>Herr Dohmen</item>
+        <item>Frau Dohmen</item>
+        <item>Herr M.von den Driesch</item>
+        <item>Herr F.von den Driesch</item>
+        <item>Herr Draudt</item>
+        <item>Herr Dumke</item>
+        <item>Frau Frenken-Ollertz</item>
+        <item>Frau Greve</item>
+        <item>Herr Göricke</item>
+        <item>Herr Hastenrath</item>
+        <item>Herr Heimanns</item>
+        <item>Frau Henkes</item>
+        <item>Herr Hoffmann D.</item>
+        <item>Herr Hils</item>
+        <item>Frau Hillebrand</item>
+        <item>Frau Hallmann-Müller</item>
+        <item>Herr Hoffmann P.</item>
+        <item>Herr Houben</item>
+        <item>Frau Heppener</item>
+        <item>Frau Hasse</item>
+        <item>Herr Jansen</item>
+        <item>Herr Jumpertz</item>
+        <item>Herr Dr. Kasulke</item>
+        <item>Herr Kludt</item>
+        <item>Frau Kaufmann</item>
+        <item>Herr Kleinlosen</item>
+        <item>Frau Körlings</item>
+        <item>Herr Koch</item>
+        <item>Herr Kofferschläger</item>
+        <item>Frau Krägler</item>
+        <item>Herr Krings</item>
+        <item>Frau Krewald</item>
+        <item>Herr Laumen</item>
+        <item>Frau Laumen</item>
+        <item>Frau Lay</item>
+        <item>Herr Leinders</item>
+        <item>Frau Lennertz</item>
+        <item>Frau Lengersdorf-Roeben</item>
+        <item>Herr Lengert</item>
+        <item>Frau Maaßen</item>
+        <item>Frau Mair</item>
+        <item>Herr Matzerath</item>
+        <item>Frau Maybaum</item>
+        <item>Herr Dr. Mechlinsky</item>
+        <item>Frau Merkle</item>
+        <item>Herr Dr. Metz</item>
+        <item>Herr Nijs</item>
+        <item>Frau Nelissen</item>
+        <item>Frau Ofers</item>
+        <item>Frau Pakusa</item>
+        <item>Frau Peter</item>
+        <item>Herr Dr. Prinzen</item>
+        <item>Frau Poot</item>
+        <item>Herr Dr. Reckendorf</item>
+        <item>Frau Roeb</item>
+        <item>Herr Schröder</item>
+        <item>Herr Schaaf</item>
+        <item>Frau Schael</item>
+        <item>Herr Schindler</item>
+        <item>Frau Schröder</item>
+        <item>Frau Sega</item>
+        <item>Frau Sontag</item>
+        <item>Frau Schulte-Sperlich</item>
+        <item>Frau Schauerte</item>
+        <item>Frau Struve</item>
+        <item>Frau Schwinden</item>
+        <item>Herr Thevis</item>
+        <item>Frau Thilo</item>
+        <item>Frau Thies</item>
+        <item>Herr Ullm</item>
+        <item>Frau Wagemann</item>
+        <item>Herr Walther</item>
+        <item>Frau Wolff</item>
+        <item>Frau Weiß</item>
+    </string-array>
+
+    <string-array name="array_minutes_before" translatable="false">
+        <item>@string/min_5</item>
+        <item>@string/min_10</item>
+        <item>@string/min_15</item>
+        <item>@string/min_30</item>
+        <item>@string/min_45</item>
+    </string-array>
+
+    <integer-array name="array_minutes_before_values" translatable="false">
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>30</item>
+        <item>45</item>
+    </integer-array>
+</resources>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:id="@+id/lesson_select"
+        android:foreground="@drawable/base_ripple">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:id="@+id/image"
+            tools:src="@drawable/math_grey" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Mathematik"
+            android:layout_marginLeft="@dimen/keyline_left_space"
+            android:layout_marginStart="@dimen/keyline_left_space"
+            android:id="@+id/text"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display3" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="160dp"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/keyline_left_space"
+        android:paddingRight="@dimen/keyline_left_space">
+
+        <include layout="@layout/list_item_space" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:gravity="center_vertical"
+            android:text="Titel"
+            android:textSize="14sp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="32dp"
+            android:inputType="text"
+            android:singleLine="true"
+            android:id="@+id/edit_title" />
+
+        <include layout="@layout/list_item_space" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:gravity="center_vertical"
+            android:text="Beschreibung"
+            android:textSize="14sp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="72dp"
+            android:inputType="text"
+            android:maxLines="7"
+            android:id="@+id/edit_description" />
+
+    </LinearLayout>
+
+</FrameLayout>

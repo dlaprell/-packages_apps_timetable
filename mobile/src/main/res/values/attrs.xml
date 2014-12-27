@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LessonCardView">
+        <attr name="lessonNrColor" format="color" />
+        <attr name="lessonInfoColor" format="color" />
+        <attr name="lessonTitleColor" format="color" />
+    </declare-styleable>
+
+</resources>

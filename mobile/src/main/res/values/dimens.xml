@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="drawer_width">320dp</dimen> <!-- 320dp - 56dp -->
+    <dimen name="drawer_item_height">48dp</dimen>
+    <dimen name="drawer_item_space_height">8dp</dimen>
+    <dimen name="keyline_left_space">16dp</dimen>
+    <dimen name="keyline_sec_left_space">72dp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="fab_normal_dimen">62dp</dimen>
+    <dimen name="fab_mini_dimen">46dp</dimen>
+
+    <integer name="day_overview_columns">1</integer>
+
+    <dimen name="task_list_width">240dp</dimen>
+
+</resources>

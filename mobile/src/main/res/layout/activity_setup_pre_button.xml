@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<eu.laprell.timetable.widgets.RippleTouchImageView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="72dp"
+    android:layout_height="72dp"
+    android:id="@+id/pre"
+    android:layout_gravity="left|start|bottom"
+    android:src="@drawable/ic_arrow_back_white_48dp"
+    android:scaleType="centerInside"
+    android:background="@drawable/circular_accent2" />

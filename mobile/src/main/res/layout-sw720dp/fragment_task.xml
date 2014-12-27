@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <fragment
+        android:layout_width="@dimen/task_list_width"
+        android:layout_height="match_parent"
+        android:name="eu.laprell.timetable.fragments.TaskListFragment"
+        android:id="@+id/tasks_list"
+        tools:layout="@layout/fragment_task_list" />
+
+    <fragment
+        android:layout_marginLeft="@dimen/task_list_width"
+        android:layout_marginStart="@dimen/task_list_width"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="eu.laprell.timetable.fragments.TaskViewFragment"
+        android:id="@+id/tasks_view"
+        tools:layout="@layout/fragment_task_view" />
+
+</FrameLayout>

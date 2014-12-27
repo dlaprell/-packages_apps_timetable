@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<eu.laprell.timetable.widgets.FloatingActionButton
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/fab_normal_dimen"
+    android:layout_height="@dimen/fab_normal_dimen"
+    android:layout_margin="8dp"
+    android:layout_gravity="end|bottom"
+    android:background="@color/accent"
+    android:id="@+id/fab_add"
+    android:scaleType="centerInside"
+    android:src="@drawable/ic_add_white_24dp" />

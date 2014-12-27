@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:id="@+id/day_text"
+        android:gravity="center"
+        android:textColor="#999999"
+        tools:text="Montag"
+        android:textAppearance="@android:style/TextAppearance.Medium" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="32dp"
+        android:id="@+id/list" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/empty_day"
+        android:gravity="center"
+        android:text="@string/today_no_lesson"
+        android:textColor="#999999"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:textAppearance="@android:style/TextAppearance.Medium" />
+
+</FrameLayout>

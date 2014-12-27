@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="progress_colors_material" translatable="false">
+        <item>0xFF2196F3</item>
+        <item>0xFFCDDC39</item>
+        <item>0xFFFF5722</item>
+        <item>0xFF4CAF50</item>
+        <item>0xFFE53935</item>
+    </integer-array>
+
+    <string-array name="array_list_popup_time_type" translatable="false">
+        <item>@string/lesson</item>
+        <item>@string/break_</item>
+    </string-array>
+
+    <string-array name="array_list_popup_edit_entry" translatable="false">
+        <item>kein Unterricht</item>
+        <item>in Unterricht ändern</item>
+    </string-array>
+</resources>

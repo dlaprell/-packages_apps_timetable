@@ -1,0 +1,71 @@
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--<PreferenceCategory
+        android:title="@string/prefc_main_settings">
+
+        <CheckBoxPreference
+            android:key="checkbox_preference"
+            android:title="@string/pref_enable_title"
+            android:summary="@string/pref_enable_summary" />
+
+    </PreferenceCategory> -->
+
+    <!--<PreferenceCategory
+        android:title="@string/dialog_based_preferences">
+
+        <EditTextPreference
+            android:key="edittext_preference"
+            android:title="@string/title_edittext_preference"
+            android:summary="@string/summary_edittext_preference"
+            android:dialogTitle="@string/dialog_title_edittext_preference" />
+
+        <ListPreference
+            android:key="list_preference"
+            android:title="@string/title_list_preference"
+            android:summary="@string/summary_list_preference"
+            android:entries="@array/entries_list_preference"
+            android:entryValues="@array/entryvalues_list_preference"
+            android:dialogTitle="@string/dialog_title_list_preference" />
+
+    </PreferenceCategory>-->
+
+    <PreferenceCategory
+        android:title="@string/prefc_notifications">
+
+        <CheckBoxPreference
+            android:key="pref_enable_notifications"
+            android:title="@string/pref_enable_notifications_title"
+            android:summary="@string/pref_enable_notifications_summary"
+            android:defaultValue="true" />
+
+        <!--<ListPreference
+            android:key="pref_list_notify_time_before_lesson"
+            android:title="@string/pref_list_notify_time_before_lesson_title"
+            android:summary="@string/pref_list_notify_time_before_lesson_summary"
+            android:entries="@array/array_minutes_before"
+            android:entryValues="@array/array_minutes_before_values"
+            android:dialogTitle="@string/pref_list_notify_time_before_lesson_title" />-->
+
+        <!--<CheckBoxPreference
+            android:key="pref_enable_wear_notifications"
+            android:dependency="pref_enable_notifications"
+            android:defaultValue="true"
+            android:title="@string/pref_enable_wear_notifications_title"
+            android:summary="@string/pref_enable_wear_notifications_summary" />-->
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="key_prefc_debug"
+        android:title="@string/prefc_debug">
+
+        <CheckBoxPreference
+            android:key="pref_enable_debug_notifications"
+            android:title="@string/pref_enable_debug_notif_title"
+            android:summary="@string/pref_enable_debug_notif_summary"
+            android:defaultValue="false" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

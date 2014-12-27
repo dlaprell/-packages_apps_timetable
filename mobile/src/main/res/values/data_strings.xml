@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="s_german">German</string>
+    <string name="s_english">English</string>
+    <string name="s_biology">Biology</string>
+    <string name="s_physics">Physics</string>
+    <string name="s_computer_science">Computer Science</string>
+    <string name="s_sport">Sport</string>
+    <string name="s_chemistry">Chemistry</string>
+    <string name="s_music">Music</string>
+    <string name="s_mathematics">Mathematics</string>
+    <string name="s_choir">Choir</string>
+    <string name="s_history">History</string>
+    <string name="s_pedagogy">Pedagogy</string>
+    <string name="s_geography">Geography</string>
+    <string name="s_religion">Religion</string>
+    <string name="s_philosophy">Philosophy</string>
+    <string name="s_politics">Politics</string>
+    <string name="s_social_sciences">Social Sciences</string>
+    <string name="s_art">Art</string>
+    <string name="s_latin">Latin</string>
+    <string name="s_french">French</string>
+    <string name="s_project_mathematics">Project course Mathematics</string>
+    <string name="s_project_art">Project course Art</string>
+    <string name="s_project_english">Project course English</string>
+    <string name="s_project_social_sciences">Project course Social Sciences</string>
+
+    <string name="day_monday">Monday</string>
+    <string name="day_tuesday">Tuesday</string>
+    <string name="day_wednesday">Wednesday</string>
+    <string name="day_thursday">Thursday</string>
+    <string name="day_friday">Friday</string>
+    <string name="day_saturday">Saturday</string>
+    <string name="day_sunday">Sunday</string>
+
+    <string name="info_open_source_projects">Open Source Projects</string>
+    <string name="info_about_caption" translatable="false">@string/app_name</string>
+    <string name="info_about_body">Copyright 2014 David Laprell</string>
+    <string name="info_about_right">All Rights Reserved</string>
+</resources>

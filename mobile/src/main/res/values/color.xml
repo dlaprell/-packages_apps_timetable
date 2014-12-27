@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="my_awesome_color_orig">#3F51B5</color>
+    <color name="my_awesome_darker_color_orig">#303F9F</color>
+    <color name="accent_orig">#03A9F4</color>
+    <color name="accent__orig">#E91E63</color>
+
+    <color name="my_awesome_color2">@color/material_green</color>
+    <color name="my_awesome_darker_color2">#388E3C</color>
+    <color name="accent2">#C0CA33</color>
+    <color name="accent_2">@color/material_deep_orange</color>
+
+    <color name="my_awesome_color">@color/material_cyan</color>
+    <color name="my_awesome_darker_color">#0097A7</color>
+    <color name="accent">@color/material_red</color>
+    <color name="accent_">@color/material_orange</color>
+
+    <color name="material_red">#F44336</color>
+    <color name="material_pink">#E91E63</color>
+    <color name="material_purple">#9C27B0</color>
+    <color name="material_deep_purple">#673AB7</color>
+    <color name="material_indigo">#3F51B5</color>
+    <color name="material_blue">#2196F3</color>
+    <color name="material_cyan">#00BCD4</color>
+    <color name="material_teal">#009688</color>
+    <color name="material_green">#4CAF50</color>
+    <color name="material_light_green">#8BC34A</color>
+    <color name="material_lime">#CDDC39</color>
+    <color name="material_yellow">#FFEB3B</color>
+    <color name="material_orange">#FF9800</color>
+    <color name="material_deep_orange">#FF5722</color>
+    <color name="material_brown">#795548</color>
+    <color name="material_blue_grey">#607D8B</color>
+</resources>

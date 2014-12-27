@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fab_mic_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <eu.laprell.timetable.widgets.FloatingActionButton
+        android:layout_width="@dimen/fab_normal_dimen"
+        android:layout_height="@dimen/fab_normal_dimen"
+        android:layout_margin="8dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:background="@color/material_pink"
+        android:id="@+id/fab_mic"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_mic_white_24dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fab_mic_des"
+        android:layout_centerVertical="true"
+        android:background="@drawable/bg_card"
+        android:layout_toLeftOf="@id/fab_mic"
+        android:layout_toStartOf="@id/fab_mic"
+        android:textSize="15sp"
+        android:padding="8dp"
+        android:gravity="right"
+        android:text="@string/add_by_suggestions"
+        android:textColor="#999"/>
+
+</RelativeLayout>

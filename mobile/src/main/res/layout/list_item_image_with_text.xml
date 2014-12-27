@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<eu.laprell.timetable.widgets.RippleFrameLayout2
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:minHeight="72dp"
+    android:clickable="false"
+    android:layout_marginLeft="@dimen/keyline_left_space"
+    android:layout_marginRight="@dimen/keyline_left_space"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
+
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:id="@+id/image"
+        android:src="@drawable/ic_event_grey600_48dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/text"
+        android:layout_marginLeft="56dp"
+        android:layout_marginStart="56dp"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+        android:gravity="start" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:id="@+id/view_underline"
+        android:layout_marginLeft="56dp"
+        android:layout_marginStart="56dp"
+        android:background="?attr/colorAccent"
+        android:layout_gravity="bottom"
+        android:alpha="0" />
+
+</eu.laprell.timetable.widgets.RippleFrameLayout2>

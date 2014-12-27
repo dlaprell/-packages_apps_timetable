@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Timetable</string>
+    <string name="settings">Settings</string>
+    <string name="info">Information</string>
+    <string name="image_hash">Image #</string>
+    <string name="select">Select</string>
+    <string name="select_subject">Select Subject</string>
+    <string name="select_teacher">Select Teacher</string>
+    <string name="subject">Subject</string>
+    <string name="select_room">Select Room</string>
+    <string name="place">Place</string>
+    <string name="tasks">Tasks</string>
+    <string name="new_place">New Place</string>
+    <string name="day_of_week">Day Of Week</string>
+    <string name="select_day_of_week">Select day of week</string>
+    <string name="time">Time</string>
+    <string name="new_time">New Time</string>
+    <string name="break_">Break</string>
+    <string name="break_first_letter">B</string>
+    <string name="lesson">Lesson</string>
+    <string name="color">Color</string>
+    <string name="select_color">Select a color</string>
+    <string name="free">Free</string>
+    <string name="choose">Choose</string>
+    <string name="cancel">Cancel</string>
+    <string name="today_no_lesson">No lessons today!</string>
+    <string name="title_activity_setup" translatable="false">SetupActivity</string>
+    <string name="hello_world" translatable="false">Hello world!</string>
+    <string name="action_change_image">Change Image</string>
+    <string name="action_change_color">Change Color</string>
+    <string name="create_as_new_lesson">Create as new lesson</string>
+    <string name="create_as_new_break">Create as new break</string>
+    <string name="create_as_new_free_time">Create as new free time</string>
+    <string name="replace_current_lesson" formatted="false">Replace current lesson (%s)</string>
+    <string name="setup_addon_choose">Choose your School from the list, otherwise skip the step</string>
+    <string name="title_activity_floating" translatable="false">Floating Activity</string>
+    <string name="overview">Overview</string>
+    <string name="week_overview">Week Overview</string>
+    <string name="time_grid">Time Grid</string>
+    <string name="insert_break">Insert break</string>
+    <string name="insert_break_dialog_text">The next time is normally a break. Insert a break instead of a lesson?</string>
+    <string name="done">Done</string>
+    <string name="day_overview">Day overview</string>
+    <string name="new_lesson">New Lesson</string>
+    <string name="new_subject">New Subject</string>
+    <string name="new_teacher">New Teacher</string>
+    <string name="add_new_task">Add a new task</string>
+    <string name="add_by_suggestions">Add by suggestions</string>
+    <string name="prefc_main_settings">General</string>
+    <string name="prefc_notifications">Notifications</string>
+    <string name="prefc_debug">Debug</string>
+    <string name="pref_enable_title" translatable="false">Enable</string>
+    <string name="pref_enable_summary" translatable="false">Enable summary</string>
+    <string name="pref_enable_debug_notif_title">Debug Notifications</string>
+    <string name="pref_enable_debug_notif_summary">Debug Notifications will be shown each 2 Minutes</string>
+    <string name="pref_enable_wear_notifications_title">Show on Wear Device</string>
+    <string name="pref_enable_wear_notifications_summary">Next Lessons will be shown on your wear device if connected</string>
+    <string name="pref_enable_notifications_title">Notifications</string>
+    <string name="pref_enable_notifications_summary">Disable Notifications if you do not want them in general</string>
+    <string name="pref_list_notify_time_before_lesson_title">Notify before in minutes</string>
+    <string name="pref_list_notify_time_before_lesson_summary">The minutes before a lesson, when the user will be notified</string>
+    <string name="title_activity_new_task" translatable="false">NewTaskActivity</string>
+    <string name="title_activity_lesson_view_task" translatable="false">LessonViewTask</string>
+    <string name="ad_unit_id" translatable="false">ca-app-pub-3281259391371340/1580552913</string>
+
+    <string name="min_5">5 minutes</string>
+    <string name="min_10">10 minutes</string>
+    <string name="min_15">15 minutes</string>
+    <string name="min_30">30 minutes</string>
+    <string name="min_45">45 minutes</string>
+    <string name="action_settings">Settings</string>
+    <string name="select_image">Select Image</string>
+
+</resources>
