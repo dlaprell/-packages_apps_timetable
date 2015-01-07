@@ -7,6 +7,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="160dp"
+        android:elevation="3dp"
         android:id="@+id/lesson_select"
         android:foreground="@drawable/base_ripple">
 
@@ -33,7 +34,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="176dp"
+        android:elevation="3dp"
         android:orientation="vertical"
         android:paddingLeft="@dimen/keyline_left_space"
         android:paddingRight="@dimen/keyline_left_space">
@@ -73,5 +75,7 @@
             android:id="@+id/edit_description" />
 
     </LinearLayout>
+
+    <include layout="@layout/fab_done" />
 
 </FrameLayout>

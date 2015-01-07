@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,6 +22,9 @@ public class NewTaskFragment extends Fragment {
     private TextView mLessonText;
     private ImageView mLessonImage;
 
+    private EditText mTaskTitle;
+    private EditText mTaskDescription;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_task_new, container, false);
@@ -28,6 +32,9 @@ public class NewTaskFragment extends Fragment {
         mImageSelect = (FrameLayout) v.findViewById(R.id.lesson_select);
         mLessonText = (TextView)mImageSelect.findViewById(R.id.text);
         mLessonImage = (ImageView)mImageSelect.findViewById(R.id.image);
+
+        mTaskTitle = (EditText)v.findViewById(R.id.edit_title);
+        mTaskDescription = (EditText) v.findViewById(R.id.edit_description);
 
         return v;
     }
