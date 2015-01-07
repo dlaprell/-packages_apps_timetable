@@ -36,7 +36,7 @@ public class WaveAnimator extends CAnimator {
         mApplier = a;
 
         mSet = new AnimatorSet();
-        mTargets = new ArrayList<Holder>();
+        mTargets = new ArrayList<>();
     }
 
     public WaveAnimator addTarget(View v) {
@@ -109,7 +109,7 @@ public class WaveAnimator extends CAnimator {
     @SuppressWarnings("unchecked")
     public void start() {
         synchronized (mLock) {
-            ArrayList<Holder> targets = new ArrayList<Holder>(mTargets.size());
+            ArrayList<Holder> targets = new ArrayList<>(mTargets.size());
 
             int pos;
 
