@@ -15,11 +15,13 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clipChildren="false"
             android:id="@+id/image_view_container">
 
             <fragment
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clipChildren="false"
                 android:id="@+id/fragment_lesson_image"
                 android:name="eu.laprell.timetable.fragments.LessonImageFragment"
                 tools:layout="@layout/fragment_lesson_image" />
