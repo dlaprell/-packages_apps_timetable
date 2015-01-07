@@ -3,6 +3,7 @@ package eu.laprell.timetable.background;
 import android.content.Context;
 import android.content.res.Resources;
 
+import eu.laprell.timetable.BuildConfig;
 import eu.laprell.timetable.R;
 
 /**
@@ -32,47 +33,86 @@ public class MenuNavigation {
     public MenuNavigation(Context c) {
         mContext = c;
 
-        mTitleStrings = new String[] {
-                getString(R.string.day_overview),
-                getString(R.string.week_overview),
-                getString(R.string.tasks),
-                getString(R.string.time_grid),
-                getString(R.string.settings),
-                getString(R.string.info)
-        };
+        if(BuildConfig.DEBUG) {
+            mTitleStrings = new String[]{
+                    getString(R.string.day_overview),
+                    getString(R.string.week_overview),
+                    getString(R.string.tasks),
+                    getString(R.string.time_grid),
+                    getString(R.string.settings),
+                    getString(R.string.info)
+            };
 
-        mMenus = new int[] {
-                MenuNavigation.Menu.MENU_DAY_OVERVIEW,
-                MenuNavigation.Menu.MENU_WEEK_OVERVIEW,
-                MenuNavigation.Menu.MENU_TASKS,
-                MenuNavigation.Menu.MENU_TIME_GRID,
-                MenuNavigation.Menu.MENU_SETTINGS,
-                MenuNavigation.Menu.MENU_INFO,
-        };
+            mMenus = new int[]{
+                    MenuNavigation.Menu.MENU_DAY_OVERVIEW,
+                    MenuNavigation.Menu.MENU_WEEK_OVERVIEW,
+                    MenuNavigation.Menu.MENU_TASKS,
+                    MenuNavigation.Menu.MENU_TIME_GRID,
+                    MenuNavigation.Menu.MENU_SETTINGS,
+                    MenuNavigation.Menu.MENU_INFO,
+            };
 
-        mMenuExtended = new int[] {
-                Menu.MENU_TOP,
-                Menu.MENU_SPACE,
-                0, // MENU_DAY_OVERVIEW
-                1, // MENU_WEEK_OVERVIEW
-                Menu.MENU_SPACE,
-                2, // MENU_TASKS
-                Menu.MENU_SPACE,
-                Menu.MENU_LINE,
-                Menu.MENU_SPACE,
-                3, // MENU_TIME_GRID
-                4, // MENU_SETTINGS
-                5, // MENU_INFO
-        };
+            mMenuExtended = new int[]{
+                    Menu.MENU_TOP,
+                    Menu.MENU_SPACE,
+                    0, // MENU_DAY_OVERVIEW
+                    1, // MENU_WEEK_OVERVIEW
+                    Menu.MENU_SPACE,
+                    2, // MENU_TASKS
+                    Menu.MENU_SPACE,
+                    Menu.MENU_LINE,
+                    Menu.MENU_SPACE,
+                    3, // MENU_TIME_GRID
+                    4, // MENU_SETTINGS
+                    5, // MENU_INFO
+            };
 
-        mImages = new int[] {
-                R.drawable.ic_view_day_grey600_24dp,
-                R.drawable.ic_view_week_grey600_24dp,
-                -1,
-                R.drawable.ic_view_list_grey600_24dp,
-                R.drawable.ic_settings_grey600_24dp,
-                R.drawable.ic_info_grey600_24dp
-        };
+            mImages = new int[]{
+                    R.drawable.ic_view_day_grey600_24dp,
+                    R.drawable.ic_view_week_grey600_24dp,
+                    -1,
+                    R.drawable.ic_view_list_grey600_24dp,
+                    R.drawable.ic_settings_grey600_24dp,
+                    R.drawable.ic_info_grey600_24dp
+            };
+        } else {
+            mTitleStrings = new String[]{
+                    getString(R.string.day_overview),
+                    getString(R.string.week_overview),
+                    getString(R.string.time_grid),
+                    getString(R.string.settings),
+                    getString(R.string.info)
+            };
+
+            mMenus = new int[]{
+                    MenuNavigation.Menu.MENU_DAY_OVERVIEW,
+                    MenuNavigation.Menu.MENU_WEEK_OVERVIEW,
+                    MenuNavigation.Menu.MENU_TIME_GRID,
+                    MenuNavigation.Menu.MENU_SETTINGS,
+                    MenuNavigation.Menu.MENU_INFO,
+            };
+
+            mMenuExtended = new int[]{
+                    Menu.MENU_TOP,
+                    Menu.MENU_SPACE,
+                    0, // MENU_DAY_OVERVIEW
+                    1, // MENU_WEEK_OVERVIEW
+                    Menu.MENU_SPACE,
+                    Menu.MENU_LINE,
+                    Menu.MENU_SPACE,
+                    2, // MENU_TIME_GRID
+                    3, // MENU_SETTINGS
+                    4, // MENU_INFO
+            };
+
+            mImages = new int[]{
+                    R.drawable.ic_view_day_grey600_24dp,
+                    R.drawable.ic_view_week_grey600_24dp,
+                    R.drawable.ic_view_list_grey600_24dp,
+                    R.drawable.ic_settings_grey600_24dp,
+                    R.drawable.ic_info_grey600_24dp
+            };
+        }
     }
 
     public int getImageAtPos(int pos) {
@@ -99,26 +139,10 @@ public class MenuNavigation {
         return mMenuExtended[pos];
     }
 
-    public int getPrevMenu(int m) {
-        for(int i = 0;i < mMenus.length;i++) {
-            if(mMenus[i] == m && i > 0)
-                return mMenus[i - 1];
-        }
-        return -1;
-    }
-
     public int getAbsPosOfMenu(int m) {
         for(int i = 0;i < mMenuExtended.length;i++) {
             if(mMenuExtended[i] >= 0 && mMenus[mMenuExtended[i]] == m)
                 return i;
-        }
-        return -1;
-    }
-
-    public int getNextMenu(int m) {
-        for(int i = 0;i < mMenus.length;i++) {
-            if(mMenus[i] == m && i + 1 < mMenus.length)
-                return mMenus[i + 1];
         }
         return -1;
     }
