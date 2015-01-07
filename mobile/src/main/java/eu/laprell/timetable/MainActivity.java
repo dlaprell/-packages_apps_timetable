@@ -171,6 +171,8 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
             } else
                 mBackend.navigateMenu(MenuNavigation.Menu.MENU_WEEK_OVERVIEW);
         }
+
+        WidgetService.updateWidgets(this);
     }
 
     private void checkForOpenDay() {
