@@ -66,5 +66,4 @@ public class WidgetProvider extends AppWidgetProvider {
         remoteViews.setEmptyView(R.id.list, R.id.empty_day);
         return remoteViews;
     }
-
 }

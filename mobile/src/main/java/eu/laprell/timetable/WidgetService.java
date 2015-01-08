@@ -32,7 +32,7 @@ public class WidgetService extends RemoteViewsService {
         int[] ids = widgetManager.getAppWidgetIds(new ComponentName(context, WidgetProvider.class));
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-            widgetManager.notifyAppWidgetViewDataChanged(ids, android.R.id.list);
+            widgetManager.notifyAppWidgetViewDataChanged(ids, R.id.list);
 
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
         context.sendBroadcast(intent);
