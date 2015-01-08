@@ -64,6 +64,7 @@
     <string name="title_activity_new_task" translatable="false">NewTaskActivity</string>
     <string name="title_activity_lesson_view_task" translatable="false">LessonViewTask</string>
     <string name="ad_unit_id" translatable="false">ca-app-pub-3281259391371340/1580552913</string>
+    <string name="new_">New</string>
 
     <string name="min_5">5 minutes</string>
     <string name="min_10">10 minutes</string>

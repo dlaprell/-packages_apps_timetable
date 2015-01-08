@@ -35,7 +35,7 @@ public class SetupActivity extends Activity {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
+        @SuppressWarnings("unused")
         private View mRootView;
 
         public ViewHolder(View v) {
@@ -93,7 +93,7 @@ public class SetupActivity extends Activity {
 
             if(viewType == 1) {
                 View v = LayoutInflater.from(SetupActivity.this).inflate(
-                        R.layout.activity_add_item_add, parent, false);
+                        R.layout.list_item_add_school, parent, false);
 
                 vh = new ViewHolder(v);
             } else if(viewType == 2) {

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<eu.laprell.timetable.widgets.RippleFrameLayout2
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:padding="16dp">
+
+    <include layout="@layout/abs_list_item_add_school" />
+
+</eu.laprell.timetable.widgets.RippleFrameLayout2>

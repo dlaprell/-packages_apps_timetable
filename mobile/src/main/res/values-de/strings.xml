@@ -96,4 +96,5 @@
     <string name="action_change_color">Farbe ändern</string>
     <string name="today_no_lesson">Kein Unterricht heute!</string>
     <string name="tasks">Aufgaben</string>
+    <string name="new_">Neu</string>
 </resources>
