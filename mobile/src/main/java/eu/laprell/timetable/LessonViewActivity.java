@@ -23,6 +23,7 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
@@ -73,6 +74,8 @@ public class LessonViewActivity extends ActionBarActivity implements LessonViewC
     private boolean mLessonDirty;
 
     private boolean mInEditMode;
+
+    private boolean mReloading;
 
     private CircleColorDrawable mAnimatingCircle;
 
@@ -132,6 +135,7 @@ public class LessonViewActivity extends ActionBarActivity implements LessonViewC
 
         mTitle.setText(mLesson.getTitle());
 
+        mReloading = savedInstanceState != null && savedInstanceState.getBoolean("reloading", false);
         AnimUtils.afterPreDraw(mFab, mEnterAnimation);
 
         mFab.setOnClickListener(new View.OnClickListener() {
@@ -172,29 +176,56 @@ public class LessonViewActivity extends ActionBarActivity implements LessonViewC
         public void run() {
             findViewById(R.id.image_view_container).setMinimumHeight(mContainer.getHeight());
 
-            boolean hasCustomTrans = false;
+            /*
+              At this point we have to think about some stages:
 
-            if(!mImageFragment.isBackground()) {
-                int height = mImageFragment.makeImageViewHeight();
+               * we are recreating an instance of the activity (-> coming from recents)
+                 -> all variants (phone + tablet) no animation, but show the rest
+                 -> on phones: calculate the new height: 16:9 pictures
+               * we are coming for the first time
+                 -> on tablets: no animation, but show the rest
+                 -> on phones: calculate the new height: 16:9 pictures + animation
 
-                RelativeLayout.LayoutParams pa = (RelativeLayout.LayoutParams) mFab.getLayoutParams();
-                pa.topMargin = height - (mFab.getHeight() / 2);
-                mFab.setLayoutParams(pa);
+             */
+            if(mReloading) {
+                if(BuildConfig.DEBUG)
+                    Toast.makeText(LessonViewActivity.this, "Reloading ...", Toast.LENGTH_SHORT).show();
 
-                hasCustomTrans = ActivityTransitions.animateHeroTransition(
-                        getIntent().getExtras(), mImageFragment.getImageView(),
-                        new ActivityTransitions.HeroTransitionInterface() {
-                            @Override
-                            public void setBackgroundColorAlpha(int alpha) {
-                                mContainer.setBackgroundColor(Color.argb(alpha, 0xFF, 0xFF, 0xFF));
-                            }
-                        }, ANIM_TIME, mShowOtherViewsRunnable, mImageFragment.getImageView().getWidth(), height);
-            } else {
+                if (!mImageFragment.isBackground()) {
+                    int height = mImageFragment.makeImageViewHeight();
+
+                    RelativeLayout.LayoutParams pa = (RelativeLayout.LayoutParams) mFab.getLayoutParams();
+                    pa.topMargin = height - (mFab.getHeight() / 2);
+                    mFab.setLayoutParams(pa);
+                }
+
                 mShowOtherViewsRunnable.run();
-            }
-
-            if(!hasCustomTrans) {
                 mImageFragment.loadImageFromDb();
+            } else {
+                boolean hasCustomTrans = false;
+
+                if (!mImageFragment.isBackground()) {
+                    int height = mImageFragment.makeImageViewHeight();
+
+                    RelativeLayout.LayoutParams pa = (RelativeLayout.LayoutParams) mFab.getLayoutParams();
+                    pa.topMargin = height - (mFab.getHeight() / 2);
+                    mFab.setLayoutParams(pa);
+
+                    hasCustomTrans = ActivityTransitions.animateHeroTransition(
+                            getIntent().getExtras(), mImageFragment.getImageView(),
+                            new ActivityTransitions.HeroTransitionInterface() {
+                                @Override
+                                public void setBackgroundColorAlpha(int alpha) {
+                                    mContainer.setBackgroundColor(Color.argb(alpha, 0xFF, 0xFF, 0xFF));
+                                }
+                            }, ANIM_TIME, mShowOtherViewsRunnable, mImageFragment.getImageView().getWidth(), height);
+                } else {
+                    mShowOtherViewsRunnable.run();
+                }
+
+                if (!hasCustomTrans) {
+                    mImageFragment.loadImageFromDb();
+                }
             }
         }
     };
@@ -406,6 +437,13 @@ public class LessonViewActivity extends ActionBarActivity implements LessonViewC
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putBoolean("reloading", true);
     }
 
     private void changeColor() {

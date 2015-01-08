@@ -56,8 +56,8 @@ public class ActivityTransitions {
     private ActivityTransitions(Application a) {
         sInstance = this;
 
-        mApp = new WeakReference<Application>(a);
-        mElements = new ArrayList<Bitmap>();
+        mApp = new WeakReference<>(a);
+        mElements = new ArrayList<>();
     }
 
     public void onTrimMemory(int level) {
@@ -76,6 +76,10 @@ public class ActivityTransitions {
 
     private Bitmap getBitmap(int id) {
         return mElements.get(id);
+    }
+
+    private boolean isAvailable(int id) {
+        return (id >= 0 && id < mElements.size() && mElements.get(id) != null);
     }
 
     private void clearRef(int id) {
@@ -237,12 +241,12 @@ public class ActivityTransitions {
         Drawable start;
         final Resources res = imageTarget.getResources();
 
-        if(in.getInt("hero_bitmap_id", -1) != -1) {
-            int id = in.getInt("hero_bitmap_id");
+        int id = in.getInt("hero_bitmap_id");
+        if(id != -1 && get().isAvailable(id)) {
             start = new BitmapDrawable(res, get().getBitmap(id));
 
             get().clearRef(id);
-        } else  if(config != null) {
+        } else if(config != null) {
             Bitmap b = BitmapUtils.scaleCenterCrop(
                     BitmapFactory.decodeResource(res, config.res_id), config);
 
