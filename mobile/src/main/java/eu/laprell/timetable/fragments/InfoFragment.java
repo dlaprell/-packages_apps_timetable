@@ -1,11 +1,16 @@
 package eu.laprell.timetable.fragments;
 
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import de.psdev.licensesdialog.LicensesDialog;
 import de.psdev.licensesdialog.licenses.ApacheSoftwareLicense20;
@@ -34,6 +39,15 @@ public class InfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_info, container, false);
+
+        Context c = inflater.getContext();
+        TextView tv = (TextView)view.findViewById(R.id.text_version);
+        try {
+            PackageInfo pInfo = c.getPackageManager().getPackageInfo(c.getPackageName(), 0);
+            tv.setText(pInfo.versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e("Timetable", "Failed to get the package version", e);
+        }
 
         view.findViewById(R.id.open_source).setOnClickListener(new View.OnClickListener() {
             @Override

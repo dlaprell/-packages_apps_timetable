@@ -14,9 +14,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="24dp"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
             android:text="@string/info_about_caption" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/text_version"
+            android:layout_marginBottom="24dp" />
 
         <TextView
             android:layout_width="wrap_content"
