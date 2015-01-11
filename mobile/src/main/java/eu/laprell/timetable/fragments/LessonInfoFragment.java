@@ -92,19 +92,19 @@ public class LessonInfoFragment extends Fragment implements LessonInfoCallback {
         View v = makeDayView();
 
         v.setAlpha(0f);
-        anim.addTarget(v);
+        anim.addTarget(v, this);
 
         v = makePriTimeView();
         v.setAlpha(0f);
-        anim.addTarget(v);
+        anim.addTarget(v, this);
 
         v = makePlaceView();
         v.setAlpha(0f);
-        anim.addTarget(v);
+        anim.addTarget(v, this);
 
         v = makeTeacherView();
         v.setAlpha(0f);
-        anim.addTarget(v);
+        anim.addTarget(v, this);
     }
 
     @Override

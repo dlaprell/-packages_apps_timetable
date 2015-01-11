@@ -19,8 +19,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.Interpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,6 +53,7 @@ import eu.laprell.timetable.fragments.interfaces.LessonInfoCallback;
 import eu.laprell.timetable.fragments.interfaces.LessonViewController;
 import eu.laprell.timetable.utils.AnimUtils;
 import eu.laprell.timetable.utils.ColorUtils;
+import eu.laprell.timetable.utils.Const;
 import eu.laprell.timetable.utils.Dialogs;
 import eu.laprell.timetable.utils.MetricsUtils;
 import eu.laprell.timetable.widgets.FloatingActionButton;
@@ -187,20 +191,31 @@ public class LessonViewActivity extends ActionBarActivity implements LessonViewC
                  -> on phones: calculate the new height: 16:9 pictures + animation
 
              */
-            if(mReloading) {
+            boolean fwHeroTrans = Const.FW_SUPPORTS_HERO_TRANSITION;
+
+            if(mReloading || fwHeroTrans) {
                 if(BuildConfig.DEBUG)
                     Toast.makeText(LessonViewActivity.this, "Reloading ...", Toast.LENGTH_SHORT).show();
 
+                int height;
                 if (!mImageFragment.isBackground()) {
-                    int height = mImageFragment.makeImageViewHeight();
+                    height = mImageFragment.makeImageViewHeight();
 
                     RelativeLayout.LayoutParams pa = (RelativeLayout.LayoutParams) mFab.getLayoutParams();
                     pa.topMargin = height - (mFab.getHeight() / 2);
                     mFab.setLayoutParams(pa);
-                }
+                } else height = 0;
 
                 mShowOtherViewsRunnable.run();
-                mImageFragment.loadImageFromDb();
+
+                if(!fwHeroTrans)
+                    mImageFragment.loadImageFromDb();
+                else {
+                    ImageView iv = mImageFragment.getImageView();
+                    Drawable b = ActivityTransitions.getHeroTransitionDrawable(getIntent().getExtras(),
+                            getResources(), iv.getWidth(), height);
+                    iv.setImageDrawable(b);
+                }
             } else {
                 boolean hasCustomTrans = false;
 
@@ -336,10 +351,28 @@ public class LessonViewActivity extends ActionBarActivity implements LessonViewC
         public void run() {
             mContainer.setBackgroundColor(0xFFFFFFFF);
 
+            final float distance = MetricsUtils.convertDpToPixel(120);
+            final Interpolator interpolator = new DecelerateInterpolator(2.0f);
             WaveAnimator anim = new WaveAnimator(new WaveAnimator.WaveAnimationApplier() {
                 @Override
                 public Animator makeAnimationForView(View v, Object data) {
-                    return ObjectAnimator.ofFloat(v, "alpha", 1f).setDuration(500);
+                    ObjectAnimator fade = ObjectAnimator.ofFloat(v, "alpha", 1f);
+
+                    if(data == null) { // All "info boxes" have an object
+                        fade.setDuration(500);
+                        return fade;
+                    }
+
+                    ObjectAnimator moveUp = ObjectAnimator.ofFloat(v, "translationY", distance, 0);
+                    moveUp.setInterpolator(interpolator);
+
+                    moveUp.setDuration(400);
+                    fade.setDuration(300);
+
+                    AnimatorSet set = new AnimatorSet();
+                    set.playTogether(fade, moveUp);
+
+                    return set;
                 }
             });
             anim.setStartAnchorView(mImageFragment.getImageView(), true);

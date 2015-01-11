@@ -1,5 +1,7 @@
 package eu.laprell.timetable.utils;
 
+import android.os.Build;
+
 /**
  * Created by david on 17.11.14.
  */
@@ -23,4 +25,10 @@ public class Const {
             "eu.laprell.timetable.NEXT_TIMEUNIT_PENDING_NEW";
 
     public static final int NOTIFICATION_ID_NEXT_LESSON = 1;
+
+    public static final boolean FW_SUPPORTS_HERO_TRANSITION =
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && false;
+
+    public static final boolean FW_SUPPORTS_DROP_SHADOWS =
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
 }

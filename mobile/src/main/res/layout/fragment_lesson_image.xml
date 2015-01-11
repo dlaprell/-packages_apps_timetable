@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:transitionName="@string/transition_name_lesson_image"
     android:id="@+id/lesson_image"
     android:elevation="2dp"
     tools:src="@drawable/math_grey" />

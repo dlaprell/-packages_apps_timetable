@@ -219,19 +219,8 @@ public class ActivityTransitions {
         }
     }
 
-    public static boolean animateHeroTransition(Bundle in, final ImageView imageTarget, HeroTransitionInterface i,
-                                             long timePer100dp, final Runnable endAction,
-                                             float width, float height) {
-        if(in == null || !in.getBoolean("hero_transition", false)) {
-            if(i != null) {
-                i.setBackgroundColorAlpha(255);
-            }
-            if(endAction != null) {
-                endAction.run();
-            }
-            return false;
-        }
-
+    public static TransitionDrawable getHeroTransitionDrawable(Bundle in, Resources res,
+                                                               int width, int height) {
         int heroColor = in.getInt("hero_color", Color.WHITE);
         int resId = in.getInt("hero_image_id", -1);
 
@@ -239,7 +228,6 @@ public class ActivityTransitions {
 
         Drawable end;
         Drawable start;
-        final Resources res = imageTarget.getResources();
 
         int id = in.getInt("hero_bitmap_id");
         if(id != -1 && get().isAvailable(id)) {
@@ -260,7 +248,7 @@ public class ActivityTransitions {
             end = new ColorDrawable(heroColor);
         else
             end = new BitmapDrawable(res, SpecialBitmapCache.getInstance().loadBitmap(
-                    endResId, imageTarget.getWidth(), imageTarget.getHeight()));
+                    endResId, width, height));
 
         end.setColorFilter(heroColor, PorterDuff.Mode.MULTIPLY);
 
@@ -269,7 +257,24 @@ public class ActivityTransitions {
                 end
         };
 
-        TransitionDrawable drawable = new TransitionDrawable(layers);
+        return new TransitionDrawable(layers);
+    }
+
+    public static boolean animateHeroTransition(Bundle in, final ImageView imageTarget, HeroTransitionInterface i,
+                                             long timePer100dp, final Runnable endAction,
+                                             float width, float height) {
+        if(in == null || !in.getBoolean("hero_transition", false)) {
+            if(i != null) {
+                i.setBackgroundColorAlpha(255);
+            }
+            if(endAction != null) {
+                endAction.run();
+            }
+            return false;
+        }
+
+        TransitionDrawable drawable = getHeroTransitionDrawable(in, imageTarget.getResources(),
+                imageTarget.getWidth(), imageTarget.getHeight());
 
         imageTarget.setImageDrawable(drawable);
 

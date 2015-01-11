@@ -8,6 +8,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -49,6 +50,7 @@ import eu.laprell.timetable.database.TimetableDatabase;
 import eu.laprell.timetable.utils.AnimUtils;
 import eu.laprell.timetable.utils.ArrayUtils;
 import eu.laprell.timetable.utils.BitmapUtils;
+import eu.laprell.timetable.utils.Const;
 import eu.laprell.timetable.utils.Dialogs;
 import eu.laprell.timetable.utils.MetricsUtils;
 import eu.laprell.timetable.widgets.LessonCardView;
@@ -338,9 +340,10 @@ public class TimeTableDayFragment2 extends Fragment {
                             i.putExtra("day_of_week", mDayToDisplay);
 
                             ActivityTransitions.makeHeroTransitionFromLessonView(card, color, d.scale_config, i);
-
                             startActivityForResult(i, REQUEST_CODE_MAYBE_REFRESH);
-                            getActivity().overridePendingTransition(0, 0);
+
+                            if(!Const.FW_SUPPORTS_HERO_TRANSITION)
+                                getActivity().overridePendingTransition(0, 0);
                         } else if (itemPosition == mList.size()) {
                             // Special case: Some time is missing!
                             if(mList.size() != 0

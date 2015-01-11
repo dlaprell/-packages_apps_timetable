@@ -66,6 +66,8 @@
     <string name="ad_unit_id" translatable="false">ca-app-pub-3281259391371340/1580552913</string>
     <string name="new_">New</string>
 
+    <string name="transition_name_lesson_image" translatable="false">lesson_image</string>
+
     <string name="min_5">5 minutes</string>
     <string name="min_10">10 minutes</string>
     <string name="min_15">15 minutes</string>
