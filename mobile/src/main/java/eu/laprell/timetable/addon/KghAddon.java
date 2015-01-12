@@ -63,10 +63,6 @@ public class KghAddon {
     }
 
     public static void initSchool(SharedPreferences pref) {
-        SharedPreferences.Editor e = pref.edit();
-
-        e.putInt("school_id", Addons.Ids.ID_KREISGYMNASIUM_HEINSBERG);
-
-        e.apply();
+        pref.edit().putInt("school_id", Addons.Ids.ID_KREISGYMNASIUM_HEINSBERG).apply();
     }
 }
