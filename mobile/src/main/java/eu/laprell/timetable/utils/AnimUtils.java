@@ -28,6 +28,24 @@ public class AnimUtils {
         A_SCALE = Math.max(1, scale);
     }
 
+    public static com.nineoldandroids.animation.Animator withLayer(final View target,
+            com.nineoldandroids.animation.Animator a) {
+        AnimatorListenerAdapter an = new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationStart(com.nineoldandroids.animation.Animator animation) {
+                target.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+            }
+
+            @Override
+            public void onAnimationEnd(com.nineoldandroids.animation.Animator animation) {
+                target.setLayerType(View.LAYER_TYPE_NONE, null);
+            }
+        };
+        a.addListener(an);
+
+        return a;
+    }
+
     public static void animateProgressExit(final View v) {
         ViewPropertyAnimator a = v.animate().alpha(0f).translationY(-300).setDuration(1000);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -104,7 +122,11 @@ public class AnimUtils {
         set.start();
     }
 
-    public static void animateViewDeletingInLayout(final View v, final ViewGroup g) {
+    public static void animateViewDeletingInLayout(View v, ViewGroup g) {
+        animateViewDeletingInLayout(v, g, null);
+    }
+
+    public static void animateViewDeletingInLayout(final View v, final ViewGroup g, final Runnable r) {
         v.setPivotX(v.getWidth() / 2);
         v.setPivotY(0);
 
@@ -144,6 +166,8 @@ public class AnimUtils {
                     g.getChildAt(i).setTranslationY(0);
                     g.getChildAt(i).setLayerType(View.LAYER_TYPE_NONE, null);
                 }
+
+                if(r != null) r.run();
             }
             @Override public void onAnimationCancel(Animator animation) {}
             @Override public void onAnimationRepeat(Animator animation) {}

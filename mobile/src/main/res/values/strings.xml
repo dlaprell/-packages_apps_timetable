@@ -66,6 +66,15 @@
     <string name="ad_unit_id" translatable="false">ca-app-pub-3281259391371340/1580552913</string>
     <string name="new_">New</string>
 
+    <string name="set_to_break">Set to break</string>
+    <string name="set_to_lesson">Set to lesson</string>
+    <string name="remove">Remove</string>
+    <string name="set_to_free">Set to free</string>
+
+    <string name="remove_timeunit">Remove Time Unit</string>
+    <string name="cannot_remove_timeunit_toast">Cannot remove last time unit. One needed at least</string>
+    <string name="remove_timeunit_dialog_text">This will remove the time unit (%s) and all lessons at that time unit. Proceed?</string>
+
     <string name="transition_name_lesson_image" translatable="false">lesson_image</string>
 
     <string name="min_5">5 minutes</string>

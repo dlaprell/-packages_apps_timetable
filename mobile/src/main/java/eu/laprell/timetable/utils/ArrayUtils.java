@@ -63,4 +63,16 @@ public class ArrayUtils {
         }
         return -1;
     }
+
+    public static long[] removeIndexFromLongArray(int index, long[]a) {
+        long[] res = new long[a.length - 1];
+        if(res.length > 0) {
+            if(index > 0)
+                System.arraycopy(a, 0, res, 0, index);
+
+            if(index - 1 < res.length)
+                System.arraycopy(a, index + 1, res, index, res.length - index);
+        }
+        return res;
+    }
 }

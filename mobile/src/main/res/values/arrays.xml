@@ -8,13 +8,14 @@
         <item>0xFFE53935</item>
     </integer-array>
 
-    <string-array name="array_list_popup_time_type" translatable="false">
-        <item>@string/lesson</item>
-        <item>@string/break_</item>
+    <string-array name="array_list_popup_time_more" translatable="false">
+        <item>@string/set_to_lesson</item>
+        <item>@string/set_to_break</item>
+        <item>@string/remove</item>
     </string-array>
 
     <string-array name="array_list_popup_edit_entry" translatable="false">
-        <item>kein Unterricht</item>
-        <item>in Unterricht ändern</item>
+        <item>@string/set_to_free</item>
+        <item>@string/set_to_lesson</item>
     </string-array>
 </resources>

@@ -340,6 +340,25 @@ public class AbsTimetableDatabase {
         return res;
     }
 
+    /**
+     * Deletes a DatabaseEntry from its Table
+     * @param e the DatabaseEntry to remove
+     * @return the num of affected rows, should normally be 1
+     */
+    public int removeDatabaseEntry(DatabaseEntry e) {
+        String selection = BaseColumns._ID + " LIKE ?";
+        String[] selectionArgs = { String.valueOf(e.getId()) };
+        String table = e.getTable();
+
+        int res;
+
+        synchronized (mWLock) {
+            res = getW().delete(table, selection, selectionArgs);
+        }
+
+        return res;
+    }
+
     protected Context getContext() {
         return mContext;
     }
