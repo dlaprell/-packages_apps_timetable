@@ -86,8 +86,6 @@ public class TimeTableDayFragment2 extends Fragment {
 
     private Button mDayText;
 
-    private boolean mInEditMode;
-
     public TimeTableDayFragment2() {
         mList = new ArrayList<Data>();
     }
@@ -124,7 +122,6 @@ public class TimeTableDayFragment2 extends Fragment {
         mEditList.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                mInEditMode = false;
                 mContainer.setEnableTouchEventsForChildren(true);
             }
         });
@@ -201,7 +198,6 @@ public class TimeTableDayFragment2 extends Fragment {
                         addFreeTime(t);
 
                         // TODO export into function
-                        mInEditMode = false;
                         mContainer.setEnableTouchEventsForChildren(true);
                     }
                 }).build();
@@ -235,7 +231,6 @@ public class TimeTableDayFragment2 extends Fragment {
 
         final TimeUnit t = tmp;
 
-        mInEditMode = false;
         mContainer.setEnableTouchEventsForChildren(true);
 
         Dialogs.makeSimpleLessonDialog(getActivity(), new Dialogs.LessonCreatedCallback() {
@@ -368,7 +363,6 @@ public class TimeTableDayFragment2 extends Fragment {
                                 mDay.setPlaces(pids);
                             }
 
-                            mInEditMode = true;
                             mContainer.setEnableTouchEventsForChildren(false);
 
                             mCurrentEdit = itemPosition;
@@ -411,7 +405,6 @@ public class TimeTableDayFragment2 extends Fragment {
                 card.setBackgroundColor(0xFFDDDDDD);
             }*/
 
-            mInEditMode = true;
             mContainer.setEnableTouchEventsForChildren(false);
 
             mEditList.setAnchorView(v);
