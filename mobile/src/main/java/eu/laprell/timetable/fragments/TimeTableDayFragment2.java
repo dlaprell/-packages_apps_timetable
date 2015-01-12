@@ -8,7 +8,6 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -38,6 +37,7 @@ import eu.laprell.timetable.BackgroundService;
 import eu.laprell.timetable.LessonViewActivity;
 import eu.laprell.timetable.R;
 import eu.laprell.timetable.animation.ActivityTransitions;
+import eu.laprell.timetable.background.Logger;
 import eu.laprell.timetable.background.SpecialBitmapCache;
 import eu.laprell.timetable.database.Creator;
 import eu.laprell.timetable.database.Day;
@@ -62,6 +62,8 @@ import fr.castorflex.android.circularprogressbar.CircularProgressBar;
  * Created by david on 07.11.14.
  */
 public class TimeTableDayFragment2 extends Fragment {
+
+    private static final String TAG = "TimeTableDayFragment2";
 
     private static final int REQUEST_CODE_MAYBE_REFRESH = 2;
 
@@ -642,7 +644,7 @@ public class TimeTableDayFragment2 extends Fragment {
 
             return new BitmapDrawable(getResources(), newB);
         } catch (Exception ex) {
-            Log.w("Timetable", "Failed to scale Drawable for Inserting", ex);
+            Logger.log(TAG, "Failed to scale Drawable for Inserting", ex);
         }
 
         return null;
@@ -793,7 +795,7 @@ public class TimeTableDayFragment2 extends Fragment {
                     txt += " holder.mView " + (holder.mView == null ? "==null" : holder.mView.getId());
                 }
 
-                Log.e("Timetable", txt, ex);
+                Logger.log(TAG, txt, ex);
 
                 //throw new RuntimeException(txt, ex);
             }

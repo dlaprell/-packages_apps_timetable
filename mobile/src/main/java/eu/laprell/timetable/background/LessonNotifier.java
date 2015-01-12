@@ -20,7 +20,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.text.format.DateFormat;
-import android.util.Log;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -42,6 +41,7 @@ import eu.laprell.timetable.utils.Const;
 @SuppressLint("CommitPrefEdits")
 public class LessonNotifier {
 
+    private static final String TAG = "LessonNotifier";
     private static final int VERSION = 1;
 
     private static final long RES_ALARM_ALREADY_SET = -1;
@@ -147,15 +147,17 @@ public class LessonNotifier {
     }
 
     private void _pendingTimeUnit(Intent intent) {
-        Logger.log("LessonNotifier", "got intent: " + intent.toString(), null);
+        Logger.log(TAG, "got intent: " + intent.toString());
 
         TimeUnit time = intent.getParcelableExtra("timeunit");
         Day day = intent.getParcelableExtra("day");
 
-        time = (TimeUnit) mDatabase.getDatabaseEntryById(TimetableDatabase.TYPE_TIMEUNIT, time.getId());
+        time = (TimeUnit) mDatabase.getDatabaseEntryById(TimetableDatabase.TYPE_TIMEUNIT,
+                time.getId());
         day = mDatabase.getDayForDayOfWeek(day.getDayOfWeek());
 
-        Log.d("Timetable" , "We have the day=" + day.getDayOfWeek() + " time=" + getDateM(time.getStartTime()));
+        Logger.log(TAG, "We have the day=" + day.getDayOfWeek() + " time=" +
+                getDateM(time.getStartTime()));
 
         executeNewPendingTimeUnit(day, time);
     }
@@ -168,13 +170,13 @@ public class LessonNotifier {
             Lesson les = (Lesson)mDatabase.getDatabaseEntryById(
                     TimetableDatabase.TYPE_LESSON, lid);
 
-            Log.d("Timetable", "Making Notification for=" + les.getTitle());
+            Logger.log(TAG, "Making Notification for=" + les.getTitle());
 
             // makeNotification returns true when showing a new notification
             // this should be kept and will replace the (maybe current one)
             maybeOldShown = !_makeNotification(les, time, day, false);
         } else {
-            Log.d("Timetable", "What no valid id here?");
+            Logger.log(TAG, "What no valid id here?");
             maybeOldShown = true;
         }
 
@@ -203,12 +205,12 @@ public class LessonNotifier {
 
             long result = checkForDayAndFromTime(d, time, skip, skipTime);
 
-            Log.d("Timetable", "Got result=" + result);
+            Logger.log(TAG, "Got result=" + result);
 
             if(result == RES_ALARM_ALREADY_SET) {
                 return;
             } else if (result == RES_NOTHING_FOUND) {
-                Log.d("Timetable", "We found nothing - go to next day");
+                Logger.log(TAG, "We found nothing - go to next day");
             } else {
                 return;
             }
@@ -223,11 +225,11 @@ public class LessonNotifier {
 
         for(TimeUnit t : mTimes) {
             String txt = d + " at " + getDateM(t.getStartTime());
-            Log.d("Timetable", txt);
+            Logger.log(TAG, txt);
 
             if(t.isAfter(time) && t.getStartTime() > skipAllBefore) {
                 if(t.getId() == skip) {
-                    Log.d("Timetable", "We are skipping the TimeUnit because after=" +
+                    Logger.log(TAG, "We are skipping the TimeUnit because after=" +
                             getDateM(skipAllBefore) + " at="
                             + getDateM(t.getStartTime()));
                     continue;
@@ -243,7 +245,7 @@ public class LessonNotifier {
 
                     return t.getId();
                 } else {
-                    Log.d("Timetable", "We already set the alarm for the next lesson: "
+                    Logger.log(TAG, "We already set the alarm for the next lesson: "
                             + t.getId() + " at=" + getDateM(t.getStartTime()));
                     return -1;
                 }
@@ -251,7 +253,7 @@ public class LessonNotifier {
                 if(!isAlreadyNotifiedToday(day.getDayOfWeek(), t)) {
                     //makeNotification()
 
-                    Log.d("Timetable", "Is in time with: " + getDateM(t.getStartTime()) + " " + t.getId());
+                    Logger.log(TAG, "Is in time with: " + getDateM(t.getStartTime()) + " " + t.getId());
                 }
             }
         }
@@ -271,7 +273,7 @@ public class LessonNotifier {
 
             if (day.getDayOfWeek() != getDayOfWeek()
                     || timediff > mNotifyInSBefore * 1.3f / 60) {
-                Log.d("Timetable", "Wrong time for: " + lesson.getTitle() + " timediff=" + timediff);
+                Logger.log(TAG, "Wrong time for: " + lesson.getTitle() + " timediff=" + timediff);
                 return false;
             }
 
@@ -453,7 +455,7 @@ public class LessonNotifier {
     }
 
     private void updateForNextWakeUp(PendingIntent p, long at) {
-        Log.d("Timetable", "Set alarmanager wakeup to " + getDate(at) + " p=" + p.toString());
+        Logger.log(TAG, "Set alarmanager wakeup to " + getDate(at) + " p=" + p.toString());
 
         AlarmManager alarmMgr = (AlarmManager)mContext.getSystemService(Context.ALARM_SERVICE);
         alarmMgr.set(AlarmManager.RTC_WAKEUP, at, p);

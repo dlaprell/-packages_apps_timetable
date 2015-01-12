@@ -286,8 +286,8 @@ public class ActivityTransitions {
         float beginX = origPosition.left - locS[0];
         float beginY = origPosition.top - locS[1];
 
-        Log.d("Timetable", "Heroanimation props: origPosition=" + origPosition.toString()
-                + " beginX=" + beginX + " beginY=" + beginY + " v_X=" + locS[0] + " v_Y=" + locS[1]);
+        /*Log.d("Timetable", "Heroanimation props: origPosition=" + origPosition.toString()
+                + " beginX=" + beginX + " beginY=" + beginY + " v_X=" + locS[0] + " v_Y=" + locS[1]);*/
 
         float beginScaleX = origPosition.width() / width;
         float beginScaleY = origPosition.height() / height;

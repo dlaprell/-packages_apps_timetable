@@ -4,12 +4,13 @@ import android.app.Application;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.util.LruCache;
-import android.util.Log;
 
 /**
  * Created by david on 18.12.14.
  */
 public class SpecialBitmapCache {
+
+    private static final String TAG = "SpecialBitmapCache";
 
     public static void init(Application a) {
         if(sCache == null && a != null) {
@@ -69,7 +70,7 @@ public class SpecialBitmapCache {
 
             mBitmaps.put(resId, b);
 
-            Log.d("Timetable", "Created a new Bitmap in cache: " + resId + " cache is now: " + mBitmaps.size());
+            Logger.log(TAG, "Created a new Bitmap in cache: " + resId + " cache is now: " + mBitmaps.size() + "kB");
         }
 
         return b;
