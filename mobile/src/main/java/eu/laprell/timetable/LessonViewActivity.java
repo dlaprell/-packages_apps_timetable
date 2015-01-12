@@ -360,6 +360,7 @@ public class LessonViewActivity extends ActionBarActivity implements LessonViewC
 
                     if(data == null) { // All "info boxes" have an object
                         fade.setDuration(500);
+                        AnimUtils.withLayer(v, fade);
                         return fade;
                     }
 
@@ -371,6 +372,7 @@ public class LessonViewActivity extends ActionBarActivity implements LessonViewC
 
                     AnimatorSet set = new AnimatorSet();
                     set.playTogether(fade, moveUp);
+                    AnimUtils.withLayer(v, set);
 
                     return set;
                 }

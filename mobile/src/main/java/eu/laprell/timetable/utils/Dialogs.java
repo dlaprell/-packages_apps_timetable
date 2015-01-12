@@ -32,7 +32,7 @@ public class Dialogs {
     public static void showNewRoomDialog(Context c, final CustomRoomDialogCallback cb) {
         new MaterialDialog.Builder(c)
                 .title(R.string.new_place)
-                .customView(R.layout.dialog_new_place)
+                .customView(R.layout.dialog_new_place, false)
                 .positiveText(android.R.string.ok)
                 .negativeText(android.R.string.cancel)
                 .autoDismiss(true)
@@ -56,7 +56,7 @@ public class Dialogs {
     public static void showNewSubjectDialog(Context c, final CustomSubjectDialogCallback cb) {
         new MaterialDialog.Builder(c)
                 .title(R.string.new_subject)
-                .customView(R.layout.dialog_new_place)
+                .customView(R.layout.dialog_new_place, false)
                 .positiveText(android.R.string.ok)
                 .negativeText(android.R.string.cancel)
                 .autoDismiss(true)
@@ -80,7 +80,7 @@ public class Dialogs {
     public static void showNewTeacherDialog(Context c, final CustomTeacherDialogCallback cb) {
         new MaterialDialog.Builder(c)
                 .title(R.string.new_teacher)
-                .customView(R.layout.dialog_new_place)
+                .customView(R.layout.dialog_new_place, false)
                 .positiveText(android.R.string.ok)
                 .negativeText(android.R.string.cancel)
                 .autoDismiss(true)
@@ -347,7 +347,7 @@ public class Dialogs {
 
             mDialog = new MaterialDialog.Builder(c)
                     .title(R.string.new_lesson)
-                    .customView(R.layout.dialog_new_lesson)
+                    .customView(R.layout.dialog_new_lesson, true)
                     .positiveText(R.string.done)
                     .negativeText(android.R.string.cancel)
                     .autoDismiss(false)
@@ -484,11 +484,5 @@ public class Dialogs {
     public interface RoomDialogCallback {
         public void selectedRoom(Place p, String text);
         public void selectedCustomRoom(String text);
-    }
-
-    public static class Callback {
-        public static int getColorFromCallback(CharSequence text) {
-            return Integer.valueOf(text.toString());
-        }
     }
 }
