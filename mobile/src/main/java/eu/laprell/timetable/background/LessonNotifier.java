@@ -2,6 +2,7 @@ package eu.laprell.timetable.background;
 
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -146,7 +147,7 @@ public class LessonNotifier {
     }
 
     private void _pendingTimeUnit(Intent intent) {
-        Log.d("Timetable", "got intent: " + intent.toString());
+        Logger.log("LessonNotifier", "got intent: " + intent.toString(), null);
 
         TimeUnit time = intent.getParcelableExtra("timeunit");
         Day day = intent.getParcelableExtra("day");
@@ -161,6 +162,7 @@ public class LessonNotifier {
 
     private void executeNewPendingTimeUnit(Day day, TimeUnit time) {
         long lid = day.getLessonIdAt(time);
+        boolean maybeOldShown;
 
         if(!TimetableDatabase.isNoId(lid)) {
             Lesson les = (Lesson)mDatabase.getDatabaseEntryById(
@@ -168,9 +170,17 @@ public class LessonNotifier {
 
             Log.d("Timetable", "Making Notification for=" + les.getTitle());
 
-            makeNotification(les, time, day);
+            // makeNotification returns true when showing a new notification
+            // this should be kept and will replace the (maybe current one)
+            maybeOldShown = !_makeNotification(les, time, day, false);
         } else {
             Log.d("Timetable", "What no valid id here?");
+            maybeOldShown = true;
+        }
+
+        if(maybeOldShown && PreferenceManager.getDefaultSharedPreferences(mContext)
+                .getBoolean("pref_dismiss_notif_when_past", true)) {
+            cancelCurrentNotification();
         }
 
         _check(time.getId());
@@ -249,38 +259,60 @@ public class LessonNotifier {
         return -2;
     }
 
-    private boolean makeNotification(Lesson lesson, TimeUnit time, Day day) {
-        long now = getCurrentTimeInM();
+    public boolean makeTestNotification(Lesson lesson, TimeUnit time, Day day) {
+        return _makeNotification(lesson, time, day, true);
+    }
 
-        long timediff = Math.abs(now - time.getStartTime());
+    private boolean _makeNotification(Lesson lesson, TimeUnit time, Day day, boolean test) {
+        if(!test) {
+            long now = getCurrentTimeInM();
 
-        if(day.getDayOfWeek() != getDayOfWeek()
-                || timediff > mNotifyInSBefore * 1.3f / 60) {
-            Log.d("Timetable", "Wrong time for: " + lesson.getTitle() + " timediff=" + timediff);
-            return false;
+            long timediff = Math.abs(now - time.getStartTime());
+
+            if (day.getDayOfWeek() != getDayOfWeek()
+                    || timediff > mNotifyInSBefore * 1.3f / 60) {
+                Log.d("Timetable", "Wrong time for: " + lesson.getTitle() + " timediff=" + timediff);
+                return false;
+            }
+
+            mNotifPref.edit().putInt(getNotiPrefFor(day.getDayOfWeek(),
+                    time.getId()), getDayOfYear()).apply();
         }
 
-        mNotifPref.edit().putInt(getNotiPrefFor(day.getDayOfWeek(),
-                time.getId()), getDayOfYear()).apply();
-
-        Place place = (Place) mDatabase.getDatabaseEntryById(TimetableDatabase.TYPE_PLACE, day.getPlaceIdAt(time));
+        Place place = null;
+        if(test) {
+            place = new Place(-1);
+            place.setTitle("Test-Place");
+        } else {
+            place = (Place) mDatabase.getDatabaseEntryById(TimetableDatabase.TYPE_PLACE,
+                    day.getPlaceIdAt(time));
+        }
 
         String title = lesson.getTitle();
-        String content = time.makeTimeString("s - e") + "\n";
+        String content = time.makeTimeString("s - e");
+
+        String secText = "";
 
         if(place != null)
-            content += place.getTitle();
+            secText += place.getTitle() + "\n";
+
+        if(lesson.getTeacher() != null)
+            secText += lesson.getTeacher();
+
+        if(secText.length() == 0) secText = null;
 
         int imageId = mDatabase.getImageIdForLesson(lesson);
+        Bitmap image = getBitmapForWearable(imageId, lesson.getColor());
+        int nid = test ? Const.NOTIFICATION_ID_NEXT_LESSON_TEST : Const.NOTIFICATION_ID_NEXT_LESSON;
 
-        showNextSubjectNotification(title, content,
-                getBitmapForWearable(imageId, lesson.getColor()), lesson.getId());
+        showNextSubjectNotification(title, content, image, lesson.getId(), secText, nid);
 
         return true;
     }
 
     private void showNextSubjectNotification(String contentTitle, String contentText,
-                                            Bitmap background, long lid) {
+                                            Bitmap background, long lid,
+                                            String secText, int notifId) {
         // Build intent for notification content
         Intent viewIntent = new Intent(mContext, MainActivity.class);
         viewIntent.setAction(Const.ACTION_VIEW_IN_TIMETABLE);
@@ -303,26 +335,39 @@ public class LessonNotifier {
                         .addAction(R.drawable.ic_done_white_48dp,
                                 mContext.getString(R.string.done), cancelPendingIntent);
 
-        if(PreferenceManager.getDefaultSharedPreferences(mContext)
-                .getBoolean("pref_enable_wear_notifications", true)) {
+        NotificationCompat.WearableExtender wearableExtender =
+                new NotificationCompat.WearableExtender()
+                        .setBackground(background);
 
-            NotificationCompat.WearableExtender wearableExtender =
-                    new NotificationCompat.WearableExtender()
-                            .setBackground(background);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
 
-            notificationBuilder.extend(wearableExtender);
+        if(secText != null && prefs.getBoolean("pref_wear_extended_infos", true)) {
+            // Create a big text style for the second page
+            NotificationCompat.BigTextStyle secondPageStyle
+                    = new NotificationCompat.BigTextStyle();
+
+            secondPageStyle.setBigContentTitle("Page 2") // TODO: find where is the title needed?!
+                    .bigText(secText);
+
+            // Create second page notification
+            Notification secondPageNotification =
+                    new NotificationCompat.Builder(mContext)
+                            .setStyle(secondPageStyle)
+                            .build();
+
+            wearableExtender.addPage(secondPageNotification);
         }
 
-        if(PreferenceManager.getDefaultSharedPreferences(mContext)
-                .getBoolean("pref_enable_notifications", true)) {
+        notificationBuilder.extend(wearableExtender);
+
+        if(prefs.getBoolean("pref_enable_notifications", true)) {
 
             // Get an instance of the NotificationManager service
             NotificationManagerCompat notificationManager =
                     NotificationManagerCompat.from(mContext);
 
             // Build the notification and issues it with notification manager.
-            notificationManager.notify(Const.NOTIFICATION_ID_NEXT_LESSON,
-                    notificationBuilder.build());
+            notificationManager.notify(notifId, notificationBuilder.build());
         }
     }
 

@@ -24,6 +24,7 @@ import com.google.android.gms.ads.AdView;
 import eu.laprell.timetable.background.MenuNavigation;
 import eu.laprell.timetable.database.Day;
 import eu.laprell.timetable.fragments.DayOverviewFragment;
+import eu.laprell.timetable.fragments.DebugFragment;
 import eu.laprell.timetable.fragments.DrawerFragment;
 import eu.laprell.timetable.fragments.InfoFragment;
 import eu.laprell.timetable.fragments.SettingsFragmentCompat;
@@ -285,6 +286,8 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
             checkForOpenDay();
         } else if(menu == MenuNavigation.Menu.MENU_TASKS) {
             mFragment = new TaskFragment();
+        } else if(menu == MenuNavigation.Menu.MENU_DEBUG) {
+            mFragment = new DebugFragment();
         }
 
 

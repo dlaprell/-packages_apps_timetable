@@ -22,6 +22,8 @@ public class MenuNavigation {
         public static final int MENU_SPACE = -1;
         public static final int MENU_LINE = -2;
         public static final int MENU_TOP = -3;
+
+        public static final int MENU_DEBUG = 99;
     }
 
     private Context mContext;
@@ -29,6 +31,7 @@ public class MenuNavigation {
     private int[] mImages;
     private int[] mMenus;
     private int[] mMenuExtended;
+
 
     public MenuNavigation(Context c) {
         mContext = c;
@@ -40,16 +43,28 @@ public class MenuNavigation {
                     getString(R.string.tasks),
                     getString(R.string.time_grid),
                     getString(R.string.settings),
-                    getString(R.string.info)
+                    getString(R.string.info),
+                    "Debug"
             };
 
             mMenus = new int[]{
-                    MenuNavigation.Menu.MENU_DAY_OVERVIEW,
-                    MenuNavigation.Menu.MENU_WEEK_OVERVIEW,
-                    MenuNavigation.Menu.MENU_TASKS,
-                    MenuNavigation.Menu.MENU_TIME_GRID,
-                    MenuNavigation.Menu.MENU_SETTINGS,
-                    MenuNavigation.Menu.MENU_INFO,
+                    Menu.MENU_DAY_OVERVIEW,
+                    Menu.MENU_WEEK_OVERVIEW,
+                    Menu.MENU_TASKS,
+                    Menu.MENU_TIME_GRID,
+                    Menu.MENU_SETTINGS,
+                    Menu.MENU_INFO,
+                    Menu.MENU_DEBUG
+            };
+
+            mImages = new int[]{
+                    R.drawable.ic_view_day_grey600_24dp,
+                    R.drawable.ic_view_week_grey600_24dp,
+                    -1,
+                    R.drawable.ic_view_list_grey600_24dp,
+                    R.drawable.ic_settings_grey600_24dp,
+                    R.drawable.ic_info_grey600_24dp,
+                    -1
             };
 
             mMenuExtended = new int[]{
@@ -65,15 +80,7 @@ public class MenuNavigation {
                     3, // MENU_TIME_GRID
                     4, // MENU_SETTINGS
                     5, // MENU_INFO
-            };
-
-            mImages = new int[]{
-                    R.drawable.ic_view_day_grey600_24dp,
-                    R.drawable.ic_view_week_grey600_24dp,
-                    -1,
-                    R.drawable.ic_view_list_grey600_24dp,
-                    R.drawable.ic_settings_grey600_24dp,
-                    R.drawable.ic_info_grey600_24dp
+                    6, // MENU_DEBUG
             };
         } else {
             mTitleStrings = new String[]{
@@ -92,6 +99,14 @@ public class MenuNavigation {
                     MenuNavigation.Menu.MENU_INFO,
             };
 
+            mImages = new int[] {
+                    R.drawable.ic_view_day_grey600_24dp,
+                    R.drawable.ic_view_week_grey600_24dp,
+                    R.drawable.ic_view_list_grey600_24dp,
+                    R.drawable.ic_settings_grey600_24dp,
+                    R.drawable.ic_info_grey600_24dp
+            };
+
             mMenuExtended = new int[]{
                     Menu.MENU_TOP,
                     Menu.MENU_SPACE,
@@ -103,14 +118,6 @@ public class MenuNavigation {
                     2, // MENU_TIME_GRID
                     3, // MENU_SETTINGS
                     4, // MENU_INFO
-            };
-
-            mImages = new int[]{
-                    R.drawable.ic_view_day_grey600_24dp,
-                    R.drawable.ic_view_week_grey600_24dp,
-                    R.drawable.ic_view_list_grey600_24dp,
-                    R.drawable.ic_settings_grey600_24dp,
-                    R.drawable.ic_info_grey600_24dp
             };
         }
     }
