@@ -408,8 +408,11 @@ public class TimeTableDayFragment2 extends Fragment {
             mContainer.setEnableTouchEventsForChildren(false);
 
             mEditList.setAnchorView(v);
+            mEditList.setVerticalOffset(-v.getHeight());
             mEditList.setContentWidth((int) MetricsUtils.convertDpToPixel(196f));
             mEditList.show();
+
+            AnimUtils.animateListPopupWindowIn(mEditList);
 
             mCurrentEdit = itemPosition;
         }
@@ -615,11 +618,6 @@ public class TimeTableDayFragment2 extends Fragment {
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
     }
 
     private BitmapDrawable scaleForInserting(int resid, Rect r, Data data) {
