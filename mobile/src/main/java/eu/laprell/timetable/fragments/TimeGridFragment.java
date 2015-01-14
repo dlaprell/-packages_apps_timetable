@@ -1,5 +1,6 @@
 package eu.laprell.timetable.fragments;
 
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -7,6 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.ListPopupWindow;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +17,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.adnansm.timelytextview.TimelyView;
 import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.ObjectAnimator;
+import com.nineoldandroids.view.ViewPropertyAnimator;
 import com.sleepbot.datetimepicker.time.RadialPickerLayout;
 import com.sleepbot.datetimepicker.time.TimePickerDialog;
 
@@ -358,7 +365,9 @@ public class TimeGridFragment extends Fragment {
         private void showMoreMenu() {
             final ListPopupWindow popUp = new ListPopupWindow(getActivity());
             popUp.setAnchorView(mData.more);
+            popUp.setDropDownGravity(Gravity.LEFT | Gravity.TOP);
             popUp.setWidth((int) MetricsUtils.convertDpToPixel(180));
+            popUp.setVerticalOffset(-mData.more.getHeight());
             popUp.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -366,12 +375,12 @@ public class TimeGridFragment extends Fragment {
                         if (mData.time.isBreak()) {
                             updateNumForAllAfter(mList.indexOf(mData), true);
                         }
-                    } else if(position == 1) {
+                    } else if (position == 1) {
                         if (!mData.time.isBreak()) {
                             updateNumForAllAfter(mList.indexOf(mData), false);
                         }
                     } else {
-                        if(mList.size() <= 1) {
+                        if (mList.size() <= 1) {
                             Toast.makeText(getActivity(), R.string.cannot_remove_timeunit_toast,
                                     Toast.LENGTH_SHORT).show();
                         } else {
@@ -394,9 +403,19 @@ public class TimeGridFragment extends Fragment {
                     popUp.dismiss();
                 }
             });
+            popUp.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    mData.view.setBackgroundColor(Color.TRANSPARENT);
+                }
+            });
             popUp.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.adapter_list_popup_item,
                     android.R.id.text1, getResources().getStringArray(R.array.array_list_popup_time_more)));
             popUp.show();
+
+            AnimUtils.animateListPopupWindowIn(popUp);
+
+            mData.view.setBackgroundColor(0x77AAAAAA);
         }
     }
 

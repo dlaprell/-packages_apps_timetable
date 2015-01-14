@@ -3,14 +3,19 @@ package eu.laprell.timetable.utils;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.ListPopupWindow;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewPropertyAnimator;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.ListView;
 
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 
@@ -297,5 +302,71 @@ public class AnimUtils {
         public void onAnimationEnd(com.nineoldandroids.animation.Animator animation) {
             mTargetView.setLayerType(View.LAYER_TYPE_NONE, null);
         }
+    }
+
+    @SuppressLint("RtlHardcoded")
+    public static int[] getViewLoc(View v/*, int gravity*/) {
+        int[] loc = new int[2];
+        v.getLocationOnScreen(loc);
+
+        /*if((gravity & Gravity.RIGHT) == Gravity.RIGHT) {
+            loc[0] += v.getWidth();
+        } else if((gravity & Gravity.CENTER_HORIZONTAL) == Gravity.CENTER_HORIZONTAL) {
+            loc[0] += v.getHeight() / 2;
+        }
+
+        if((gravity & Gravity.BOTTOM) == Gravity.BOTTOM) {
+            loc[0] += v.getWidth();
+        } else if((gravity & Gravity.CENTER_VERTICAL) == Gravity.CENTER_VERTICAL) {
+            loc[0] += v.getHeight() / 2;
+        }*/
+
+        return loc;
+    }
+
+    public static void animateListPopupWindowIn(ListPopupWindow popUp) {
+        final ListView list = popUp.getListView();
+        final View parent = (View) list.getParent();
+        final View anchor = popUp.getAnchorView();
+
+        parent.setPivotX(0);
+        parent.setPivotY(0);
+
+        AnimUtils.afterPreDraw(list, new Runnable() {
+            @Override
+            public void run() {
+                list.setVisibility(View.INVISIBLE);
+
+                float iniScaleX = anchor.getWidth() / (float)parent.getWidth();
+                float iniScaleY = anchor.getHeight() / (float)parent.getHeight();
+
+                parent.setScaleX(iniScaleX);
+                parent.setScaleY(iniScaleY);
+
+                int[] aLoc = AnimUtils.getViewLoc(anchor);
+                int[] popLoc = AnimUtils.getViewLoc(parent);
+
+                float pivX = aLoc[0] - popLoc[0] + anchor.getWidth()/* / 2*/;
+                float pivY = aLoc[1] - popLoc[1] /*+ mData.more.getHeight() / 2*/;
+
+                Log.d("Timetable", "aLoc[" + aLoc[0] + "," + aLoc[1] + "]" +
+                        "popLoc[" + popLoc[0] + "," + popLoc[1] + "]" +
+                        " pivX=" + pivX + " pivY=" + pivY);
+
+                parent.setPivotX(pivX);
+                parent.setPivotY(pivY);
+
+                com.nineoldandroids.view.ViewPropertyAnimator.animate(parent)
+                        .scaleY(1f).scaleX(1f).setDuration(150).setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(com.nineoldandroids.animation.Animator animation) {
+                        list.setVisibility(View.VISIBLE);
+                        list.setAlpha(0f);
+                        com.nineoldandroids.view.ViewPropertyAnimator.animate(list).alpha(1f)
+                                .setDuration(300).setListener(new LayerAdapter(list));
+                    }
+                });
+            }
+        });
     }
 }
