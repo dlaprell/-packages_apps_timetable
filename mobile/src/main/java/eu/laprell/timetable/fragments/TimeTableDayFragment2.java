@@ -106,7 +106,7 @@ public class TimeTableDayFragment2 extends Fragment {
                 android.R.id.text1, options);
         mEditList = new ListPopupWindow(getActivity());
         mEditList.setAdapter(mEditAdapter);
-
+        mEditList.setModal(true);
         mEditList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

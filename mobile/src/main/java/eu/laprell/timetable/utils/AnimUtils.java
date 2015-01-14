@@ -307,7 +307,16 @@ public class AnimUtils {
     @SuppressLint("RtlHardcoded")
     public static int[] getViewLoc(View v/*, int gravity*/) {
         int[] loc = new int[2];
+        float pivX = v.getPivotX();
+        float pivY = v.getPivotY();
+
+        v.setPivotX(0);
+        v.setPivotY(0);
+
         v.getLocationOnScreen(loc);
+
+        v.setPivotX(pivX);
+        v.setPivotY(pivY);
 
         /*if((gravity & Gravity.RIGHT) == Gravity.RIGHT) {
             loc[0] += v.getWidth();

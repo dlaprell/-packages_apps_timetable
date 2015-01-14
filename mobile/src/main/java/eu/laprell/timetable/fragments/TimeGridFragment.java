@@ -365,9 +365,9 @@ public class TimeGridFragment extends Fragment {
         private void showMoreMenu() {
             final ListPopupWindow popUp = new ListPopupWindow(getActivity());
             popUp.setAnchorView(mData.more);
-            popUp.setDropDownGravity(Gravity.LEFT | Gravity.TOP);
             popUp.setWidth((int) MetricsUtils.convertDpToPixel(180));
             popUp.setVerticalOffset(-mData.more.getHeight());
+            popUp.setModal(true);
             popUp.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
