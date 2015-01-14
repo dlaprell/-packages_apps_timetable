@@ -45,6 +45,7 @@ import eu.laprell.timetable.database.DbAccess;
 import eu.laprell.timetable.database.DbUtils;
 import eu.laprell.timetable.database.Lesson;
 import eu.laprell.timetable.database.Place;
+import eu.laprell.timetable.database.Teacher;
 import eu.laprell.timetable.database.TimeUnit;
 import eu.laprell.timetable.database.TimetableDatabase;
 import eu.laprell.timetable.utils.AnimUtils;
@@ -334,6 +335,7 @@ public class TimeTableDayFragment2 extends Fragment {
                             i.putExtra("lesson", d.lesson);
                             i.putExtra("timeunit", d.time);
                             i.putExtra("place", d.place);
+                            i.putExtra("teacher", d.teacher);
                             i.putExtra("day_of_week", mDayToDisplay);
 
                             ActivityTransitions.makeHeroTransitionFromLessonView(card, color, d.scale_config, i);
@@ -440,7 +442,14 @@ public class TimeTableDayFragment2 extends Fragment {
             return null;
 
         if(!t.isBreak() || lid != -1) {
-            data.lesson = (Lesson) db.getDatabaseEntryById(TimetableDatabase.TYPE_LESSON, lid);
+            if(lid != -1) {
+                data.lesson = (Lesson) db.getDatabaseEntryById(TimetableDatabase.TYPE_LESSON, lid);
+
+                if(data.lesson != null && data.lesson.getTeacherId() != -1) {
+                    data.teacher = (Teacher) db.getDatabaseEntryById(
+                            TimetableDatabase.TYPE_TEACHER, data.lesson.getTeacherId());
+                }
+            }
 
             data.num = t.isBreak() ? -1 : lessonNum;
         }
@@ -576,6 +585,7 @@ public class TimeTableDayFragment2 extends Fragment {
         private Lesson lesson;
         private TimeUnit time;
         private Place place;
+        private Teacher teacher;
         private int num;
         private boolean first = true;
         private BitmapDrawable image;

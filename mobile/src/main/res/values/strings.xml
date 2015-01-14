@@ -71,6 +71,11 @@
     <string name="remove">Remove</string>
     <string name="set_to_free">Set to free</string>
 
+    <string name="first_name">First name</string>
+    <string name="second_name">Second name</string>
+    <string name="prefix">Prefix</string>
+    <string name="dialog_new_teacher_failed">You have to enter at least a second name</string>
+
     <string name="remove_timeunit">Remove Time Unit</string>
     <string name="cannot_remove_timeunit_toast">Cannot remove last time unit. One needed at least</string>
     <string name="remove_timeunit_dialog_text">This will remove the time unit (%s) and all lessons at that time unit. Proceed?</string>

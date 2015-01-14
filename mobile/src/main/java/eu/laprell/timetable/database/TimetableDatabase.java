@@ -118,6 +118,13 @@ public class TimetableDatabase extends AbsTimetableDatabase {
         return t;
     }
 
+    public Teacher[] getTeachersByIds(long[] ids) {
+        Teacher[] t = new Teacher[ids.length];
+        for(int i = 0;i < t.length;i++)
+            t[i] = (Teacher) getDatabaseEntryById(TYPE_TEACHER, ids[i]);
+        return t;
+    }
+
     public Place getPlaceByTitle(String title) {
         // Define 'where' part of query.
         String selection = PlaceEntry.COLUMN_NAME_TITLE + " LIKE ?";

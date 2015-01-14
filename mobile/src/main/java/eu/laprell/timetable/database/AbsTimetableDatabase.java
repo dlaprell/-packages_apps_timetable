@@ -9,6 +9,10 @@ import android.provider.BaseColumns;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import eu.laprell.timetable.R;
+import eu.laprell.timetable.addon.Addons;
+import eu.laprell.timetable.utils.PrefUtils;
+
 /**
  * Created by david on 09.11.14
  */
@@ -22,6 +26,7 @@ public class AbsTimetableDatabase {
     public static final TimeUnit TYPE_TIMEUNIT = new TimeUnit(-1);
     public static final Day TYPE_DAY = new Day(-1);
     public static final Place TYPE_PLACE = new Place(-1);
+    public static final Teacher TYPE_TEACHER = new Teacher(-1);
     public static final Task TYPE_TASK = new Task(-1);
 
     private static final String TEXT_TYPE = " TEXT";
@@ -103,6 +108,15 @@ public class AbsTimetableDatabase {
                     DatabaseEntry.COLUMN_NAME_LAST_CHANGED + INT_TYPE +
             ")";
 
+    private static final String SQL_CREATE_ENTRIES_TEACHERS =
+            "CREATE TABLE " + TeacherEntry.TABLE_NAME + " (" +
+                    TeacherEntry._ID + INT_TYPE + " PRIMARY KEY," +
+                    TeacherEntry.COLUMN_NAME_FIRST_NAME + TEXT_TYPE + COMMA_SEP +
+                    TeacherEntry.COLUMN_NAME_SECOND_NAME + TEXT_TYPE + COMMA_SEP +
+                    TeacherEntry.COLUMN_NAME_PREFIX + INT_TYPE + COMMA_SEP +
+                    DatabaseEntry.COLUMN_NAME_LAST_CHANGED + INT_TYPE +
+                    ")";
+
     private Context mContext;
     private TableDbHelper mHelper;
 
@@ -173,6 +187,7 @@ public class AbsTimetableDatabase {
      * @see #TYPE_LESSON
      * @see #TYPE_DAY
      * @see #TYPE_TASK
+     * @see #TYPE_TEACHER
      *
      * @param e a arbitrary DatabaseEntry
      * @return true if it is, false if not
@@ -181,7 +196,10 @@ public class AbsTimetableDatabase {
         return (e == TYPE_DAY
             || e == TYPE_LESSON
             || e == TYPE_PLACE
-            || e == TYPE_TIMEUNIT);
+            || e == TYPE_TIMEUNIT
+            || e == TYPE_TASK
+            || e == TYPE_TEACHER
+        );
     }
 
     /**
@@ -413,40 +431,79 @@ public class AbsTimetableDatabase {
         public static final String COLUMN_NAME_READY = "ready";
     }
 
+    public static abstract class TeacherEntry implements BaseColumns {
+        public static final String TABLE_NAME = "teachers";
+        public static final String COLUMN_NAME_PREFIX = "prefix";
+        public static final String COLUMN_NAME_FIRST_NAME = "first_name";
+        public static final String COLUMN_NAME_SECOND_NAME = "second_name";
+    }
+
     private class TableDbHelper extends SQLiteOpenHelper {
         // If you change the database schema, you must increment the database version.
-        public static final int DATABASE_VERSION = 4;
+        public static final int DATABASE_VERSION = 5;
         public static final String DATABASE_NAME = "Timetable.db";
 
         public TableDbHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
         }
+
         public void onCreate(SQLiteDatabase db) {
             db.execSQL(SQL_CREATE_ENTRIES_LESSONS);
             db.execSQL(SQL_CREATE_ENTRIES_DAYS);
             db.execSQL(SQL_CREATE_ENTRIES_TIMEUNITS);
             db.execSQL(SQL_CREATE_ENTRIES_PLACES);
             db.execSQL(SQL_CREATE_ENTRIES_TASKS);
+            db.execSQL(SQL_CREATE_ENTRIES_TEACHERS);
         }
+
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-            if(oldVersion < 2 && newVersion >= 2) {
+            if (oldVersion < 2 && newVersion >= 2) {
                 db.execSQL(SQL_ALTER1_ENTRIES_LESSONS);
             }
 
-            if(oldVersion < 3 && newVersion >= 3) {
+            if (oldVersion < 3 && newVersion >= 3) {
                 db.execSQL(SQL_ALTER2_ENTRIES_DAYS);
                 db.execSQL(SQL_ALTER2_ENTRIES_LESSONS);
                 db.execSQL(SQL_ALTER2_ENTRIES_TIMEUNITS);
                 db.execSQL(SQL_ALTER2_ENTRIES_PLACES);
             }
 
-            if(oldVersion < 4 && newVersion >= 4) {
+            if (oldVersion < 4 && newVersion >= 4) {
                 db.execSQL(SQL_CREATE_ENTRIES_TASKS);
+            }
+
+            if (oldVersion < 5 && newVersion >= 5) {
+                db.execSQL(SQL_CREATE_ENTRIES_TEACHERS);
+
+                // HACK: In versions prior to this we hardcoded the kgh.
+                //       That means we have to to a compat saving if the
+                //       Kgh was selected.
+                if(PrefUtils.getSchoolPref(getContext()).getInt("school_id", 0)
+                        == Addons.Ids.ID_KREISGYMNASIUM_HEINSBERG) {
+                    makeKghTeacherListCompat(db);
+                }
             }
         }
         public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             onUpgrade(db, oldVersion, newVersion);
+        }
+
+        private void makeKghTeacherListCompat(SQLiteDatabase db) {
+            final Context c = getContext();
+
+            String[] teachersList = c.getResources().getStringArray(R.array.addon_array_kgh_teachers);
+
+            Teacher t = new Teacher(-1);
+            for (int i = 0;i < teachersList.length;i++) {
+                String[] data = teachersList[i].split("\\|");
+
+                t.setPrefix(data[0]); // Should be at least Herr
+                t.setFirstName(data[1].length() == 0 ? null : data[1]);
+                t.setSecondName(data[2]);
+
+                db.insert(TeacherEntry.TABLE_NAME, null, t.convertToContentValues());
+            }
         }
     }
 }

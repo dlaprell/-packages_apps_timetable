@@ -19,6 +19,7 @@ import eu.laprell.timetable.R;
 import eu.laprell.timetable.database.DbAccess;
 import eu.laprell.timetable.database.Lesson;
 import eu.laprell.timetable.database.Place;
+import eu.laprell.timetable.database.Teacher;
 import eu.laprell.timetable.database.TimeUnit;
 import eu.laprell.timetable.database.TimetableDatabase;
 import eu.laprell.timetable.fragments.dialogs.SubjectChooseDialog;
@@ -77,28 +78,42 @@ public class Dialogs {
         public void newSubject(String text);
     }
 
-    public static void showNewTeacherDialog(Context c, final CustomTeacherDialogCallback cb) {
+    public static void showNewTeacherDialog(final Context c,
+                                             final CustomTeacherDialogCallback cb) {
         new MaterialDialog.Builder(c)
                 .title(R.string.new_teacher)
-                .customView(R.layout.dialog_new_place, false)
+                .customView(R.layout.dialog_new_teacher, false)
                 .positiveText(android.R.string.ok)
                 .negativeText(android.R.string.cancel)
-                .autoDismiss(true)
+                .autoDismiss(false)
                 .callback(new MaterialDialog.Callback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
-                        EditText e = (EditText) dialog.findViewById(R.id.place);
-                        cb.newTeacher(e.getEditableText().toString());
+                        EditText p = (EditText) dialog.findViewById(R.id.prefix);
+                        EditText f = (EditText) dialog.findViewById(R.id.first_name);
+                        EditText s = (EditText) dialog.findViewById(R.id.second_name);
+
+                        if(s.getEditableText().toString().length() == 0) {
+                            Toast.makeText(c, R.string.dialog_new_teacher_failed,
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            cb.newTeacher(
+                                    p.getEditableText().toString(),
+                                    f.getEditableText().toString(),
+                                    s.getEditableText().toString());
+                            dialog.dismiss();
+                        }
                     }
 
                     @Override
                     public void onNegative(MaterialDialog dialog) {
+                        dialog.dismiss();
                     }
                 }).build().show();
     }
 
     public interface CustomTeacherDialogCallback {
-        public void newTeacher(String text);
+        public void newTeacher(String prefix, String firstname, String secname);
     }
 
     public static void showDayOfWeekList(Context c, final DayOfWeekCallback cb)  {
@@ -172,44 +187,52 @@ public class Dialogs {
      TODO: make it school dependent
      */
     public static void showTeachersList(final Context c, final TeacherSelectedCallback cb) {
-        String[] teachersList = c.getResources().getStringArray(R.array.addon_array_kgh_teachers);
+        new AsyncTask<Void, Void, Teacher[]>() {
+            @Override
+            protected Teacher[] doInBackground(Void... params) {
+                DbAccess access = new DbAccess(c);
+                long[] ids = access.get().getDatabaseEntries(TimetableDatabase.TYPE_TEACHER);
 
-        new MaterialDialog.Builder(c)
-                .title(c.getString(R.string.select_teacher))
-                .items(teachersList)
-                .itemsCallback(new MaterialDialog.ListCallback() {
-                    @Override
-                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                        cb.selectedTeacher(text.toString());
-                    }
-                })
-                //.positiveColorRes(R.color.accent_)
-                //.positiveText(R.string.choose)
-                //.negativeText(R.string.cancel)
-                .neutralText(R.string.new_teacher)
-                .callback(new MaterialDialog.FullCallback() {
-                    @Override
-                    public void onNeutral(MaterialDialog materialDialog) {
-                        Dialogs.showNewTeacherDialog(c, new CustomTeacherDialogCallback() {
+                return access.get().getTeachersByIds(ids);
+            }
+
+            @Override
+            protected void onPostExecute(final Teacher[] teachersList) {
+                String[] teachers = new String[teachersList.length];
+                for(int i = 0;i < teachers.length;i++)
+                    teachers[i] = teachersList[i].getFullName();
+
+                new MaterialDialog.Builder(c)
+                        .title(c.getString(R.string.select_subject))
+                        .items(teachers)
+                        .itemsCallback(new MaterialDialog.ListCallback() {
                             @Override
-                            public void newTeacher(String text) {
-                                cb.selectedTeacher(text);
+                            public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                                cb.selectedTeacher(teachersList[which]);
                             }
-                        });
-                    }
+                        })
+                        .neutralText(R.string.new_teacher)
+                        .callback(new MaterialDialog.ButtonCallback() {
+                            @Override
+                            public void onNeutral(MaterialDialog materialDialog) {
+                                Dialogs.showNewTeacherDialog(c, new CustomTeacherDialogCallback() {
+                                    @Override
+                                    public void newTeacher(String prefix, String firstname,
+                                                           String secname) {
+                                        Teacher t = new Teacher(-1);
+                                        t.setPrefix(prefix.length() == 0 ? null : prefix);
+                                        t.setFirstName(firstname.length() == 0 ? null : firstname);
+                                        t.setSecondName(secname);
 
-                    @Override
-                    public void onNegative(MaterialDialog materialDialog) {
-
-                    }
-
-                    @Override
-                    public void onPositive(MaterialDialog materialDialog) {
-
-                    }
-                })
-                .build()
-                .show();
+                                        cb.selectedTeacher(t);
+                                    }
+                                });
+                            }
+                        })
+                        .build()
+                        .show();
+            }
+        }.execute();
     }
 
     public static void showTimeList(final Context c, final TimeDialogCallback cb) {
@@ -257,7 +280,7 @@ public class Dialogs {
     }
 
     public interface TeacherSelectedCallback {
-        public void selectedTeacher(String name);
+        public void selectedTeacher(Teacher teacher);
     }
     public interface ColorSelectedCallback {
         public void selectedColor(int color);

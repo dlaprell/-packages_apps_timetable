@@ -18,7 +18,7 @@ import static eu.laprell.timetable.database.AbsTimetableDatabase.LessonEntry.TAB
  */
 public class Lesson extends DatabaseEntry<Lesson> implements Parcelable {
 
-    private String mTeacher;
+    private long mTeacherId = -1;
     private String mIdNumber;
     private String mTitle;
     private int mTime;
@@ -32,7 +32,7 @@ public class Lesson extends DatabaseEntry<Lesson> implements Parcelable {
     public Lesson(long mId, Lesson l) {
         super(mId, l);
 
-        this.mTeacher = l.mTeacher;
+        this.mTeacherId = l.mTeacherId;
         this.mIdNumber = l.mIdNumber;
         this.mTitle = l.mTitle;
         this.mTime = l.mTime;
@@ -53,12 +53,12 @@ public class Lesson extends DatabaseEntry<Lesson> implements Parcelable {
         this.mImageId = mImageId;
     }
 
-    public String getTeacher() {
-        return mTeacher;
+    public long getTeacherId() {
+        return mTeacherId;
     }
 
-    public void setTeacher(String mTeacher) {
-        this.mTeacher = mTeacher;
+    public void setTeacherId(long teacherId) {
+        this.mTeacherId = teacherId;
     }
 
     public String getIdNumber() {
@@ -85,7 +85,7 @@ public class Lesson extends DatabaseEntry<Lesson> implements Parcelable {
     @Override
     protected void inContentValues(ContentValues v) {
         v.put(COLUMN_NAME_TITLE, getTitle());
-        v.put(COLUMN_NAME_TEACHER, getTeacher());
+        v.put(COLUMN_NAME_TEACHER, String.valueOf(getTeacherId()));
         v.put(COLUMN_NAME_ID_NUMBER, getIdNumber());
         v.put(COLUMN_NAME_COLOR, getColor());
         v.put(COLUMN_NAME_ID_IMAGE, getImageId());
@@ -95,9 +95,18 @@ public class Lesson extends DatabaseEntry<Lesson> implements Parcelable {
     protected void generateFromCursor(@NonNull Cursor c) {
         setIdNumber(c.getString(c.getColumnIndex(COLUMN_NAME_ID_NUMBER)));
         setTitle(c.getString(c.getColumnIndex(COLUMN_NAME_TITLE)));
-        setTeacher(c.getString(c.getColumnIndex(COLUMN_NAME_TEACHER)));
         setColor(c.getInt(c.getColumnIndex(COLUMN_NAME_COLOR)));
         setImageId(c.getInt(c.getColumnIndex(COLUMN_NAME_ID_IMAGE)));
+
+        long tId = -1;
+        try {
+            String num = c.getString(c.getColumnIndex(COLUMN_NAME_TEACHER));
+            tId = Long.parseLong(num);
+        } catch (NumberFormatException ignored) {
+            // Not much we can do here ...
+        }
+
+        mTeacherId = tId;
     }
 
     @Override
@@ -135,7 +144,7 @@ public class Lesson extends DatabaseEntry<Lesson> implements Parcelable {
         super(in.readLong());
         fromParcel(in);
 
-        mTeacher = in.readString();
+        mTeacherId = in.readLong();
         mIdNumber = in.readString();
         mTitle = in.readString();
         mTime = in.readInt();
@@ -153,7 +162,7 @@ public class Lesson extends DatabaseEntry<Lesson> implements Parcelable {
         dest.writeLong(getId());
         inParcel(dest);
 
-        dest.writeString(mTeacher);
+        dest.writeLong(mTeacherId);
         dest.writeString(mIdNumber);
         dest.writeString(mTitle);
         dest.writeInt(mTime);

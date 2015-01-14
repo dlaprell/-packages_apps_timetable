@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import eu.laprell.timetable.R;
 import eu.laprell.timetable.animation.WaveAnimator;
 import eu.laprell.timetable.database.Place;
+import eu.laprell.timetable.database.Teacher;
 import eu.laprell.timetable.fragments.interfaces.LessonInfoCallback;
 import eu.laprell.timetable.fragments.interfaces.LessonViewController;
 import eu.laprell.timetable.utils.Dialogs;
@@ -177,10 +178,12 @@ public class LessonInfoFragment extends Fragment implements LessonInfoCallback {
                     Dialogs.showTeachersList(getActivity(),
                             new Dialogs.TeacherSelectedCallback() {
                                 @Override
-                                public void selectedTeacher(String name) {
-                                    mCon.getLesson().setTeacher(name);
+                                public void selectedTeacher(Teacher t) {
+                                    mCon.getLesson().setTeacherId(t.getId());
+                                    mCon.setTeacher(t);
+                                    mCon.makeTeacherDirty();
 
-                                    holder.tv.setText(name);
+                                    holder.tv.setText(t.getFullName());
                                     mCon.makeLessonDirty();
                                 }
                             });
@@ -222,8 +225,8 @@ public class LessonInfoFragment extends Fragment implements LessonInfoCallback {
     private View makeTeacherView() {
         String teacher = "";
 
-        if(mCon.getLesson().getTeacher() != null)
-            teacher = mCon.getLesson().getTeacher();
+        if(mCon.getTeacher() != null)
+            teacher = mCon.getTeacher().getFullName();
 
         return makeFieldAndAdd(R.drawable.ic_person_grey600_48dp, teacher, TYPE_SIMPLE_BOX);
     }

@@ -31,6 +31,7 @@ import eu.laprell.timetable.database.AbsTimetableDatabase;
 import eu.laprell.timetable.database.Day;
 import eu.laprell.timetable.database.Lesson;
 import eu.laprell.timetable.database.Place;
+import eu.laprell.timetable.database.Teacher;
 import eu.laprell.timetable.database.TimeUnit;
 import eu.laprell.timetable.database.TimetableDatabase;
 import eu.laprell.timetable.utils.Const;
@@ -290,6 +291,17 @@ public class LessonNotifier {
                     day.getPlaceIdAt(time));
         }
 
+        Teacher teacher = null;
+        if(test) {
+            teacher = new Teacher(-1);
+            teacher.setPrefix("Herr Prof.");
+            teacher.setFirstName("Albert");
+            teacher.setSecondName("Einstein");
+        } else {
+            teacher = (Teacher) mDatabase.getDatabaseEntryById(TimetableDatabase.TYPE_TEACHER,
+                    lesson.getTeacherId());
+        }
+
         String title = lesson.getTitle();
         String content = time.makeTimeString("s - e");
 
@@ -298,8 +310,8 @@ public class LessonNotifier {
         if(place != null)
             secText += place.getTitle() + "\n";
 
-        if(lesson.getTeacher() != null)
-            secText += lesson.getTeacher();
+        if(teacher != null)
+            secText += teacher.getFullName();
 
         if(secText.length() == 0) secText = null;
 

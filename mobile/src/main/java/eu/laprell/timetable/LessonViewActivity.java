@@ -45,6 +45,7 @@ import eu.laprell.timetable.database.DbAccess;
 import eu.laprell.timetable.database.ImageDb;
 import eu.laprell.timetable.database.Lesson;
 import eu.laprell.timetable.database.Place;
+import eu.laprell.timetable.database.Teacher;
 import eu.laprell.timetable.database.TimeUnit;
 import eu.laprell.timetable.database.TimetableDatabase;
 import eu.laprell.timetable.fragments.ChangeImageFragment;
@@ -72,10 +73,12 @@ public class LessonViewActivity extends ActionBarActivity implements LessonViewC
     private Lesson mLesson;
     private TimeUnit mTimeUnit;
     private Place mPlace;
+    private Teacher mTeacher;
     private int mDayOfWeek;
 
     private boolean mPlaceDirty;
     private boolean mLessonDirty;
+    private boolean mTeacherDirty;
 
     private boolean mInEditMode;
 
@@ -102,6 +105,7 @@ public class LessonViewActivity extends ActionBarActivity implements LessonViewC
         mTimeUnit = getIntent().getParcelableExtra("timeunit");
         mPlace = getIntent().getParcelableExtra("place");
         mDayOfWeek = getIntent().getIntExtra("day_of_week", 0);
+        mTeacher = getIntent().getParcelableExtra("teacher");
 
         setContentView(R.layout.activity_lesson_view);
 
@@ -430,6 +434,17 @@ public class LessonViewActivity extends ActionBarActivity implements LessonViewC
                     mPlaceDirty = false;
                 }
 
+                if(mTeacherDirty) {
+                    if (mTeacher.getId() == -1)
+                        mTeacher = (Teacher)db.insertDatabaseEntryForId(mTeacher);
+                    else
+                        db.updateDatabaseEntry(mTeacher);
+
+                    mLesson.setTeacherId(mTeacher.getId());
+                    mLessonDirty = true;
+                    mTeacherDirty = false;
+                }
+
                 if(mLessonDirty) {
                     db.updateDatabaseEntry(mLesson);
 
@@ -684,5 +699,20 @@ public class LessonViewActivity extends ActionBarActivity implements LessonViewC
     @Override
     public TimeUnit getTimeUnit() {
         return mTimeUnit;
+    }
+
+    @Override
+    public Teacher getTeacher() {
+        return mTeacher;
+    }
+
+    @Override
+    public void setTeacher(Teacher t) {
+        mTeacher = t;
+    }
+
+    @Override
+    public void makeTeacherDirty() {
+        mTeacherDirty = true;
     }
 }

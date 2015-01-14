@@ -65,8 +65,8 @@ public abstract class Creator {
             if ((data.color & 0x00FFFFFF) != 0)
                 lessonToSave.setColor(data.color);
 
-            if(data.teacher != null)
-                lessonToSave.setTeacher(data.teacher);
+            /*if(data.teacher != null)
+                lessonToSave.setTeacher(data.teacher);*/
 
             // Now save the lesson in the db
             if (lessonToSave.getId() == -1) {

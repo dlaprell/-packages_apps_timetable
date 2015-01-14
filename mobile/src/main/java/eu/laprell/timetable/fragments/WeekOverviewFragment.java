@@ -21,6 +21,7 @@ import eu.laprell.timetable.database.Day;
 import eu.laprell.timetable.database.DbAccess;
 import eu.laprell.timetable.database.Lesson;
 import eu.laprell.timetable.database.Place;
+import eu.laprell.timetable.database.Teacher;
 import eu.laprell.timetable.database.TimeUnit;
 import eu.laprell.timetable.database.TimetableDatabase;
 import eu.laprell.timetable.widgets.TableView;
@@ -69,6 +70,7 @@ public class WeekOverviewFragment extends Fragment {
         private Day mDay;
         private Lesson[] mLessons;
         private Place[] mPlaces;
+        private Teacher[] mTeachers;
     }
 
     public WeekOverviewFragment() {
@@ -110,12 +112,14 @@ public class WeekOverviewFragment extends Fragment {
                         Place p = data.mPlaces[y];
                         Lesson l = data.mLessons[y];
                         TimeUnit t = data.mTimes[y];
+                        Teacher te = data.mTeachers[y];
 
                         Intent i = new Intent(getActivity(), LessonViewActivity.class);
 
                         i.putExtra("lesson", l);
                         i.putExtra("timeunit", t);
                         i.putExtra("place", p);
+                        i.putExtra("teacher", te);
                         i.putExtra("day_of_week", data.mDay.getDayOfWeek());
 
                         startActivityForResult(i, 1);
@@ -168,6 +172,7 @@ public class WeekOverviewFragment extends Fragment {
                     d.mTimes = new TimeUnit[mAbsTimes.length];
                     d.mLessons = new Lesson[mAbsTimes.length];
                     d.mPlaces = new Place[mAbsTimes.length];
+                    d.mTeachers = new Teacher[mAbsTimes.length];
 
                     long[]lids = d.mDay.getLessons();
                     long[]tids = d.mDay.getTimeUnits();
@@ -183,6 +188,12 @@ public class WeekOverviewFragment extends Fragment {
                                         lids[j]);
                                 d.mPlaces[z] = (Place) db.getDatabaseEntryById(TimetableDatabase.TYPE_PLACE,
                                         pids[j]);
+
+                                if(d.mLessons[z] != null && d.mLessons[z].getTeacherId() > 0) {
+                                    d.mTeachers[z] = (Teacher) db.getDatabaseEntryById(
+                                            TimetableDatabase.TYPE_TEACHER, d.mLessons[z].getTeacherId());
+                                }
+
                                 tids[j] = -1;
 
                                 break;

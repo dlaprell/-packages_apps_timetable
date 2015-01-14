@@ -104,4 +104,8 @@
     <string name="remove_timeunit">Zeiteinheit entfernen</string>
     <string name="remove_timeunit_dialog_text">Die Zeiteinheit (%s) wird mit allen Stunden zu dieser Zeit entfernt. Forfahren?</string>
     <string name="cannot_remove_timeunit_toast">Letzte Zeiteinheit kann nicht entfernt werden. Mindestens eine benötigt</string>
+    <string name="first_name">Vorname</string>
+    <string name="prefix">Präfix</string>
+    <string name="second_name">Nachname</string>
+    <string name="dialog_new_teacher_failed">Mindestens der Nachname muss angegeben werden</string>
 </resources>

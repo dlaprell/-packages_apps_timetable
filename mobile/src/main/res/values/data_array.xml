@@ -122,95 +122,95 @@
     </integer-array>
 
     <string-array name="addon_array_kgh_teachers" translatable="false">
-        <item>Frau Adams</item>
-        <item>Frau Backhaus</item>
-        <item>Herr Bork</item>
-        <item>Frau Boymans</item>
-        <item>Herr Bartels</item>
-        <item>Frau Bies</item>
-        <item>Frau Braß</item>
-        <item>Frau Brüggemann</item>
-        <item>Frau Call</item>
-        <item>Frau Cockx</item>
-        <item>Frau Conen</item>
-        <item>Frau Dahlmanns</item>
-        <item>Herr Dahlmanns</item>
-        <item>Frau Depke</item>
-        <item>Frau Diehl</item>
-        <item>Herr Dohmen</item>
-        <item>Frau Dohmen</item>
-        <item>Herr Draudt</item>
-        <item>Herr M.von den Driesch</item>
-        <item>Herr F.von den Driesch</item>
-        <item>Herr Dumke</item>
-        <item>Frau Frenken-Ollertz</item>
-        <item>Frau Greve</item>
-        <item>Herr Göricke</item>
-        <item>Frau Hallmann-Müller</item>
-        <item>Frau Hasse</item>
-        <item>Herr Hastenrath</item>
-        <item>Herr Heimanns</item>
-        <item>Frau Henkes</item>
-        <item>Frau Heppener</item>
-        <item>Frau Hillebrand</item>
-        <item>Herr Hils</item>
-        <item>Herr Hoffmann D.</item>
-        <item>Herr Hoffmann P.</item>
-        <item>Herr Houben</item>
-        <item>Herr Jansen</item>
-        <item>Herr Jumpertz</item>
-        <item>Herr Dr. Kasulke</item>
-        <item>Frau Kaufmann</item>
-        <item>Herr Kleinlosen</item>
-        <item>Herr Kludt</item>
-        <item>Herr Koch</item>
-        <item>Herr Kofferschläger</item>
-        <item>Frau Körlings</item>
-        <item>Frau Krägler</item>
-        <item>Frau Krewald</item>
-        <item>Herr Krings</item>
-        <item>Herr Laumen</item>
-        <item>Frau Laumen</item>
-        <item>Frau Lay</item>
-        <item>Herr Leinders</item>
-        <item>Frau Lennertz</item>
-        <item>Frau Lengersdorf-Roeben</item>
-        <item>Herr Lengert</item>
-        <item>Frau Maaßen</item>
-        <item>Frau Mair</item>
-        <item>Herr Matzerath</item>
-        <item>Frau Maybaum</item>
-        <item>Herr Dr. Mechlinsky</item>
-        <item>Frau Merkle</item>
-        <item>Herr Dr. Metz</item>
-        <item>Frau Nelissen</item>
-        <item>Herr Nijs</item>
-        <item>Frau Ofers</item>
-        <item>Frau Pakusa</item>
-        <item>Frau Poot</item>
-        <item>Frau Peter</item>
-        <item>Herr Dr. Prinzen</item>
-        <item>Herr Dr. Reckendorf</item>
-        <item>Frau Roeb</item>
-        <item>Herr Schaaf</item>
-        <item>Frau Schael</item>
-        <item>Frau Schauerte</item>
-        <item>Frau Schwinden</item>
-        <item>Herr Schindler</item>
-        <item>Herr Schröder</item>
-        <item>Frau Schröder</item>
-        <item>Frau Schulte-Sperlich</item>
-        <item>Frau Sega</item>
-        <item>Frau Sontag</item>
-        <item>Frau Struve</item>
-        <item>Herr Thevis</item>
-        <item>Frau Thies</item>
-        <item>Frau Thilo</item>
-        <item>Herr Ullm</item>
-        <item>Frau Wagemann</item>
-        <item>Herr Walther</item>
-        <item>Frau Weiß</item>
-        <item>Frau Wolff</item>
+        <item>Frau||Adams</item>
+        <item>Frau||Backhaus</item>
+        <item>Herr||Bork</item>
+        <item>Frau||Boymans</item>
+        <item>Herr||Bartels</item>
+        <item>Frau||Bies</item>
+        <item>Frau||Braß</item>
+        <item>Frau||Brüggemann</item>
+        <item>Frau||Call</item>
+        <item>Frau||Cockx</item>
+        <item>Frau||Conen</item>
+        <item>Frau||Dahlmanns</item>
+        <item>Herr||Dahlmanns</item>
+        <item>Frau||Depke</item>
+        <item>Frau||Diehl</item>
+        <item>Herr||Dohmen</item>
+        <item>Frau||Dohmen</item>
+        <item>Herr||Draudt</item>
+        <item>Herr|M.|von den Driesch</item>
+        <item>Herr|F.|von den Driesch</item>
+        <item>Herr||Dumke</item>
+        <item>Frau||Frenken-Ollertz</item>
+        <item>Frau||Greve</item>
+        <item>Herr||Göricke</item>
+        <item>Frau||Hallmann-Müller</item>
+        <item>Frau||Hasse</item>
+        <item>Herr||Hastenrath</item>
+        <item>Herr||Heimanns</item>
+        <item>Frau||Henkes</item>
+        <item>Frau||Heppener</item>
+        <item>Frau||Hillebrand</item>
+        <item>Herr||Hils</item>
+        <item>Herr|D.|Hoffmann</item>
+        <item>Herr|P.|Hoffmann</item>
+        <item>Herr||Houben</item>
+        <item>Herr||Jansen</item>
+        <item>Herr||Jumpertz</item>
+        <item>Herr Dr||Kasulke</item>
+        <item>Frau||Kaufmann</item>
+        <item>Herr||Kleinlosen</item>
+        <item>Herr||Kludt</item>
+        <item>Herr||Koch</item>
+        <item>Herr||Kofferschläger</item>
+        <item>Frau||Körlings</item>
+        <item>Frau||Krägler</item>
+        <item>Frau||Krewald</item>
+        <item>Herr||Krings</item>
+        <item>Herr||Laumen</item>
+        <item>Frau||Laumen</item>
+        <item>Frau||Lay</item>
+        <item>Herr||Leinders</item>
+        <item>Frau||Lennertz</item>
+        <item>Frau||Lengersdorf-Roeben</item>
+        <item>Herr||Lengert</item>
+        <item>Frau||Maaßen</item>
+        <item>Frau||Mair</item>
+        <item>Herr||Matzerath</item>
+        <item>Frau||Maybaum</item>
+        <item>Herr Dr||Mechlinsky</item>
+        <item>Frau||Merkle</item>
+        <item>Herr Dr||Metz</item>
+        <item>Frau||Nelissen</item>
+        <item>Herr||Nijs</item>
+        <item>Frau||Ofers</item>
+        <item>Frau||Pakusa</item>
+        <item>Frau||Poot</item>
+        <item>Frau||Peter</item>
+        <item>Herr Dr||Prinzen</item>
+        <item>Herr Dr||Reckendorf</item>
+        <item>Frau||Roeb</item>
+        <item>Herr||Schaaf</item>
+        <item>Frau||Schael</item>
+        <item>Frau||Schauerte</item>
+        <item>Frau||Schwinden</item>
+        <item>Herr||Schindler</item>
+        <item>Herr||Schröder</item>
+        <item>Frau||Schröder</item>
+        <item>Frau||Schulte-Sperlich</item>
+        <item>Frau||Sega</item>
+        <item>Frau||Sontag</item>
+        <item>Frau||Struve</item>
+        <item>Herr||Thevis</item>
+        <item>Frau||Thies</item>
+        <item>Frau||Thilo</item>
+        <item>Herr||Ullm</item>
+        <item>Frau||Wagemann</item>
+        <item>Herr||Walther</item>
+        <item>Frau||Weiß</item>
+        <item>Frau||Wolff</item>
     </string-array>
 
     <string-array name="array_minutes_before" translatable="false">

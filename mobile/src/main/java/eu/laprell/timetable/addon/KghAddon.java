@@ -3,6 +3,8 @@ package eu.laprell.timetable.addon;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import eu.laprell.timetable.R;
+import eu.laprell.timetable.database.Teacher;
 import eu.laprell.timetable.database.TimeUnit;
 import eu.laprell.timetable.database.TimetableDatabase;
 import eu.laprell.timetable.utils.PrefUtils;
@@ -13,11 +15,11 @@ import eu.laprell.timetable.utils.PrefUtils;
 public class KghAddon {
 
     public static void runAddon(Context c) {
-        initSchool(PrefUtils.getSchoolPref(c));
-
         TimetableDatabase db = new TimetableDatabase(c);
 
+        initSchool(PrefUtils.getSchoolPref(c));
         addTimeTable(db);
+        addTeachers(c, db);
 
         db.clearCache();
     }
@@ -64,5 +66,20 @@ public class KghAddon {
 
     public static void initSchool(SharedPreferences pref) {
         pref.edit().putInt("school_id", Addons.Ids.ID_KREISGYMNASIUM_HEINSBERG).apply();
+    }
+
+    public static void addTeachers(Context c, TimetableDatabase db) {
+        String[] teachersList = c.getResources().getStringArray(R.array.addon_array_kgh_teachers);
+
+        Teacher t = new Teacher(-1);
+        for (int i = 0;i < teachersList.length;i++) {
+            String[] data = teachersList[i].split("\\|");
+
+            t.setPrefix(data[0]); // Should be at least Herr
+            t.setFirstName(data[1].length() == 0 ? null : data[1]);
+            t.setSecondName(data[2]);
+
+            db.insertDatabaseEntryForId(t);
+        }
     }
 }
