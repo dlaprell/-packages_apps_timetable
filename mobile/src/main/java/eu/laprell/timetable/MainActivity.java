@@ -131,6 +131,10 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerLayout.setDrawerListener(mDrawerListener);
 
+        if(p.getBoolean("is_first_start", true)) {
+            mDrawerLayout.openDrawer(Gravity.START);
+        }
+
         mContent = findViewById(R.id.content);
 
         mAdView = (AdView) findViewById(R.id.adView);

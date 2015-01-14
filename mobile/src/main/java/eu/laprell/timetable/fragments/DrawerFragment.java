@@ -143,11 +143,14 @@ public class DrawerFragment extends Fragment {
                 if(schoolId != 0) {
                     if(schoolId == Addons.Ids.ID_KREISGYMNASIUM_HEINSBERG) {
                         mSchoolImageId = R.drawable.kgh;
-                        mSchoolImage = BitmapFactory.decodeResource(getResources(), mSchoolImageId);
-
                         mSchoolName = "Kreisgymnasium Heinsberg";
                     }
+                } else {
+                    mSchoolName = "";
+                    mSchoolImageId = R.drawable.room_hightech;
                 }
+
+                mSchoolImage = BitmapFactory.decodeResource(getResources(), mSchoolImageId);
 
                 mTopTitle = (TextView)mDrawerTopContainer.findViewById(
                         R.id.top_text_view);
