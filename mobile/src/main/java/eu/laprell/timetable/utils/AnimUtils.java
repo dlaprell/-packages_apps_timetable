@@ -8,7 +8,6 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.ListPopupWindow;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewPropertyAnimator;
@@ -157,15 +156,14 @@ public class AnimUtils {
 
         ObjectAnimator a = ObjectAnimator.ofFloat(v, "rotationX", 0f, -90f);
 
-        final View view = v;
         set.playTogether(a);
 
         set.start();
         set.addListener(new Animator.AnimatorListener() {
             @Override public void onAnimationStart(Animator animation) {}
             @Override public void onAnimationEnd(Animator animation) {
-                view.setVisibility(View.GONE);
-                g.removeView(view);
+                v.setVisibility(View.GONE);
+                g.removeView(v);
 
                 for(int i = 0;i < g.getChildCount();i++) {
                     g.getChildAt(i).setTranslationY(0);
@@ -352,8 +350,8 @@ public class AnimUtils {
                 parent.setScaleX(iniScaleX);
                 parent.setScaleY(iniScaleY);
 
-                int[] aLoc = AnimUtils.getViewLoc(anchor);
-                int[] popLoc = AnimUtils.getViewLoc(parent);
+                int[] aLoc = getViewLoc(anchor);
+                int[] popLoc = getViewLoc(parent);
 
                 float pivX = aLoc[0] - popLoc[0] + anchor.getWidth()/* / 2*/;
                 float pivY = aLoc[1] - popLoc[1] /*+ mData.more.getHeight() / 2*/;
@@ -366,13 +364,13 @@ public class AnimUtils {
                 parent.setPivotY(pivY);
 
                 com.nineoldandroids.view.ViewPropertyAnimator.animate(parent)
-                        .scaleY(1f).scaleX(1f).setDuration(150).setListener(new AnimatorListenerAdapter() {
+                        .scaleY(1f).scaleX(1f).setDuration(180).setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(com.nineoldandroids.animation.Animator animation) {
                         list.setVisibility(View.VISIBLE);
                         list.setAlpha(0f);
                         com.nineoldandroids.view.ViewPropertyAnimator.animate(list).alpha(1f)
-                                .setDuration(300).setListener(new LayerAdapter(list));
+                                .setDuration(200).setListener(new LayerAdapter(list));
                     }
                 });
             }
