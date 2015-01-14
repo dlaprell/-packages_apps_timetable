@@ -99,7 +99,7 @@ public class LessonCardView extends View implements Drawable.Callback {
     private void init() {
         float nrTextSize = MetricsUtils.convertSpToPixel(40);
         float titleTextSize = MetricsUtils.convertSpToPixel(24);
-        float addInfoTextSize = MetricsUtils.convertSpToPixel(18);
+        float addInfoTextSize = MetricsUtils.convertSpToPixel(16);
 
         mInfoPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mInfoPaint.setColor(mLessonInfoColor | 0xFF000000);
@@ -129,10 +129,7 @@ public class LessonCardView extends View implements Drawable.Callback {
     }
 
     public void calculateSizes(int w, int h) {
-        // This are the absolute text heights of the differnent paints
-        mTextSizeNr = -1 * mNrPaint.ascent() + mNrPaint.descent();
-        mTextSizeAdd = -1 * mInfoPaint.ascent() + mInfoPaint.descent();
-        mTextSizeTi = -1 * mTitlePaint.ascent() + mTitlePaint.descent();
+        calculateTextSizes();
 
         mColumnLeftStart = getPaddingLeft();
         mColumnRightStart = mColumnLeftStart + MetricsUtils.convertDpToPixel(8) + mNrBoxWidth;
@@ -141,11 +138,9 @@ public class LessonCardView extends View implements Drawable.Callback {
         mTextPosNr = getPaddingTop() + mTextSizeNr;
         mTextStartNr = mColumnLeftStart + (mNrBoxWidth / 2) - (mNrPaint.measureText(mLessonNr) / 2);
 
-        mTextPosSTime = mTextPosNr + mTextSizeAdd + MetricsUtils.convertDpToPixel(4);
-        mTextStartSTime = mColumnLeftStart + (mNrBoxWidth / 2) - (mInfoPaint.measureText(mStartTime) / 2);
+        measureStartTimeBox();
 
-        mTextPosETime = mTextPosSTime + mTextSizeAdd + MetricsUtils.convertDpToPixel(2);
-        mTextStartETime = mColumnLeftStart + (mNrBoxWidth / 2) - (mInfoPaint.measureText(mEndTime) / 2);
+        measureEndTimeBox();
 
         final float bottom = h - getPaddingBottom();
 
@@ -157,6 +152,23 @@ public class LessonCardView extends View implements Drawable.Callback {
 
         int imageBottom = (int)(bottom - (mTextSizeTi + MetricsUtils.convertDpToPixel(8)));
         mImageRect.set((int)mColumnRightStart, getPaddingTop(), (int)mColumnRightEnd, imageBottom);
+    }
+
+    private void calculateTextSizes() {
+        // This are the absolute text heights of the different paints
+        mTextSizeNr = -1 * mNrPaint.ascent() + mNrPaint.descent();
+        mTextSizeAdd = -1 * mInfoPaint.ascent() + mInfoPaint.descent();
+        mTextSizeTi = -1 * mTitlePaint.ascent() + mTitlePaint.descent();
+    }
+
+    private void measureEndTimeBox() {
+        mTextPosETime = mTextPosSTime + mTextSizeAdd + MetricsUtils.convertDpToPixel(2);
+        mTextStartETime = mColumnLeftStart + (mNrBoxWidth / 2) - (mInfoPaint.measureText(mEndTime) / 2);
+    }
+
+    private void measureStartTimeBox() {
+        mTextPosSTime = mTextPosNr + mTextSizeAdd + MetricsUtils.convertDpToPixel(4);
+        mTextStartSTime = mColumnLeftStart + (mNrBoxWidth / 2) - (mInfoPaint.measureText(mStartTime) / 2);
     }
 
     @Override

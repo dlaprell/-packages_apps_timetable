@@ -12,7 +12,7 @@
         android:id="@+id/time"
         android:layout_width="48dp"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:gravity="center_horizontal"
         tools:text="17:45\n8:53"
         android:layout_marginRight="8dp"
