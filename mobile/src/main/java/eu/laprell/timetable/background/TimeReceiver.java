@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import eu.laprell.timetable.BackgroundService;
+import eu.laprell.timetable.MainApplication;
 import eu.laprell.timetable.utils.Const;
 
 public class TimeReceiver extends BroadcastReceiver {
@@ -19,9 +19,17 @@ public class TimeReceiver extends BroadcastReceiver {
 
             //BackgroundService.get().updateNextLesson(lid, tid, pid);
         } else if(Const.ACTION_CANCEL_NEXT_LESSON_NOTIFICATION.equals(intent.getAction())) {
-            BackgroundService.get().getLessonNotifier().cancelCurrentNotification();
+            getLessonNotifier(context).cancelCurrentNotification();
         } else if(Const.ACTION_NEXT_TIMEUNIT_PENDING.equals(act)) {
-            BackgroundService.get().getLessonNotifier().pendingTimeUnit(intent);
+            getLessonNotifier(context).pendingTimeUnit(intent);
+        }
+    }
+
+    public LessonNotifier getLessonNotifier(Context c) {
+        if(c.getApplicationContext() instanceof MainApplication) {
+            return ((MainApplication) c.getApplicationContext()).getLessonNotifier();
+        } else {
+            return new LessonNotifier(c);
         }
     }
 }

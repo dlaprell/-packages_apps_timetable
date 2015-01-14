@@ -14,7 +14,7 @@ import android.widget.TextView;
 import eu.laprell.timetable.R;
 
 /**
- * Created by david on 24.12.14
+ * Created by david on 24.12.14 with love :-)
  */
 public class NewTaskFragment extends Fragment {
 

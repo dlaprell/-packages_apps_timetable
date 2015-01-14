@@ -6,7 +6,6 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 
-import eu.laprell.timetable.BackgroundService;
 import eu.laprell.timetable.BuildConfig;
 import eu.laprell.timetable.R;
 
@@ -40,11 +39,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if("pref_enable_debug_notifications".equals(preference.getKey())) {
-            if((Boolean)newValue) {
-                BackgroundService.get().getLessonNotifier().checkForNewNotifications();
-            }
-        }
 
         return true;
     }

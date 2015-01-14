@@ -63,9 +63,9 @@ public class BackgroundService extends Service {
         mWorkerThread.start();
     }
 
-    public LessonNotifier getLessonNotifier() {
+    /*public LessonNotifier getLessonNotifier() {
         return mNotifier;
-    }
+    }*/
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {

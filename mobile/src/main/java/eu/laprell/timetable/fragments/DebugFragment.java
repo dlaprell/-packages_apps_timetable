@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +13,6 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.Random;
 
-import eu.laprell.timetable.BackgroundService;
-import eu.laprell.timetable.MainActivity;
 import eu.laprell.timetable.MainApplication;
 import eu.laprell.timetable.R;
 import eu.laprell.timetable.background.Logger;
@@ -30,7 +27,7 @@ import eu.laprell.timetable.utils.IntentUtils;
 /**
  * Created by david on 11.01.15
  */
-public class DebugFragment extends Fragment implements View.OnClickListener {
+public class DebugFragment extends BaseFragment implements View.OnClickListener {
 
     private Button mLoggingButton;
 
@@ -134,7 +131,7 @@ public class DebugFragment extends Fragment implements View.OnClickListener {
 
                 Day d = db.getDayForDayOfWeek(r.nextInt(5) + 1);
 
-                BackgroundService.get().getLessonNotifier().makeTestNotification(l, t, d);
+                getLessonNotifier().makeTestNotification(l, t, d);
 
                 access.close();
                 return null;

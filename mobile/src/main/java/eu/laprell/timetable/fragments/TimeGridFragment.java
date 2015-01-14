@@ -5,11 +5,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.ListPopupWindow;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,22 +14,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.adnansm.timelytextview.TimelyView;
 import com.nineoldandroids.animation.Animator;
-import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.ObjectAnimator;
-import com.nineoldandroids.view.ViewPropertyAnimator;
 import com.sleepbot.datetimepicker.time.RadialPickerLayout;
 import com.sleepbot.datetimepicker.time.TimePickerDialog;
 
 import java.util.ArrayList;
 
-import eu.laprell.timetable.BackgroundService;
 import eu.laprell.timetable.R;
 import eu.laprell.timetable.animation.WaveAnimator;
 import eu.laprell.timetable.database.Day;
@@ -48,7 +41,7 @@ import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 /**
  * Created by david on 07.11.14.
  */
-public class TimeGridFragment extends Fragment {
+public class TimeGridFragment extends BaseFragment {
 
     private LinearLayout mTimeContainer;
 
@@ -475,7 +468,7 @@ public class TimeGridFragment extends Fragment {
                 d.time = (TimeUnit) db.insertDatabaseEntryForId(d.time);
             }
 
-            BackgroundService.get().getLessonNotifier().checkForNewNotifications();
+            getLessonNotifier().checkForNewNotifications();
 
             access.close();
 
