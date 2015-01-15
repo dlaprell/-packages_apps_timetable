@@ -36,14 +36,41 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 
+@SuppressWarnings("UnusedDeclaration")
 public class SecurePreferences {
 
     public static class SecurePreferencesException extends RuntimeException {
+        public SecurePreferencesException() {
+        }
+
+        public SecurePreferencesException(String detailMessage) {
+            super(detailMessage);
+        }
+
+        public SecurePreferencesException(String detailMessage, Throwable throwable) {
+            super(detailMessage, throwable);
+        }
 
         public SecurePreferencesException(Throwable e) {
             super(e);
         }
+    }
 
+    public class SecurePreferenceFormatExeception extends SecurePreferencesException {
+        public SecurePreferenceFormatExeception() {
+        }
+
+        public SecurePreferenceFormatExeception(String detailMessage) {
+            super(detailMessage);
+        }
+
+        public SecurePreferenceFormatExeception(String detailMessage, Throwable throwable) {
+            super(detailMessage, throwable);
+        }
+
+        public SecurePreferenceFormatExeception(Throwable e) {
+            super(e);
+        }
     }
 
     private static final String TRANSFORMATION = "AES/CBC/PKCS5Padding";
@@ -80,10 +107,7 @@ public class SecurePreferences {
 
             this.encryptKeys = encryptKeys;
         }
-        catch (GeneralSecurityException e) {
-            throw new SecurePreferencesException(e);
-        }
-        catch (UnsupportedEncodingException e) {
+        catch (GeneralSecurityException | UnsupportedEncodingException e) {
             throw new SecurePreferencesException(e);
         }
     }
@@ -112,8 +136,7 @@ public class SecurePreferences {
     protected byte[] createKeyBytes(String key) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance(SECRET_KEY_HASH_TRANSFORMATION);
         md.reset();
-        byte[] keyBytes = md.digest(key.getBytes(CHARSET));
-        return keyBytes;
+        return md.digest(key.getBytes(CHARSET));
     }
 
     public void put(String key, String value) {
@@ -125,6 +148,26 @@ public class SecurePreferences {
         }
     }
 
+    public void put(String key, int i) {
+        put(key, String.valueOf(i));
+    }
+
+    public void put(String key, boolean i) {
+        put(key, String.valueOf(i));
+    }
+
+    public void put(String key, long i) {
+        put(key, String.valueOf(i));
+    }
+
+    public void put(String key, double i) {
+        put(key, String.valueOf(i));
+    }
+
+    public void put(String key, float i) {
+        put(key, String.valueOf(i));
+    }
+
     public boolean containsKey(String key) {
         return preferences.contains(toKey(key));
     }
@@ -133,12 +176,81 @@ public class SecurePreferences {
         preferences.edit().remove(toKey(key)).apply();
     }
 
-    public String getString(String key) throws SecurePreferencesException {
+    public String getString(String key, String defaultValue) throws SecurePreferencesException {
         if (preferences.contains(toKey(key))) {
             String securedEncodedValue = preferences.getString(toKey(key), "");
             return decrypt(securedEncodedValue);
         }
-        return null;
+        return defaultValue;
+    }
+
+    public String getString(String key) throws SecurePreferencesException {
+        return getString(key, null);
+    }
+
+    public int getInt(String key, int defaultValue) throws SecurePreferencesException {
+        try {
+            String s = getString(key, null);
+
+            if(s == null)
+                return defaultValue;
+
+            return Integer.parseInt(s);
+        } catch (NumberFormatException ex) {
+            throw new SecurePreferenceFormatExeception("The value with key="
+                    + key + " was no int.", ex);
+        }
+    }
+
+    public long getLong(String key, long defaultValue) throws SecurePreferencesException {
+        try {
+            String s = getString(key, null);
+
+            if(s == null)
+                return defaultValue;
+
+            return Long.parseLong(s);
+        } catch (NumberFormatException ex) {
+            throw new SecurePreferenceFormatExeception("The value with key="
+                    + key + " was no long.", ex);
+        }
+    }
+
+    public double getDouble(String key, double defaultValue) throws SecurePreferencesException {
+        try {
+            String s = getString(key, null);
+
+            if(s == null)
+                return defaultValue;
+
+            return Double.parseDouble(s);
+        } catch (NumberFormatException ex) {
+            throw new SecurePreferenceFormatExeception("The value with key="
+                    + key + " was no double.", ex);
+        }
+    }
+
+    public float getFloat(String key, float defaultValue) throws SecurePreferencesException {
+        try {
+            String s = getString(key, null);
+
+            if(s == null)
+                return defaultValue;
+
+            return Float.parseFloat(s);
+        } catch (NumberFormatException ex) {
+            throw new SecurePreferenceFormatExeception("The value with key="
+                    + key + " was no float.", ex);
+        }
+    }
+
+    public boolean getBoolean(String key, boolean defaultValue) throws SecurePreferencesException {
+        String s = getString(key, null);
+
+        if(s == null)
+            return defaultValue;
+
+        return Boolean.parseBoolean(s);
     }
 
     public void clear() {
