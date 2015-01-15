@@ -494,6 +494,31 @@ public class AbsTimetableDatabase {
 
             String[] teachersList = c.getResources().getStringArray(R.array.addon_array_kgh_teachers);
 
+            // Me must try to match the earlier just "name" location to the new one
+            mReadable = db;
+            mWriteable = db;
+
+            long[] lids = getDatabaseEntries(TYPE_LESSON);
+            Lesson[] lessons = new Lesson[lids.length];
+            String[] teacherNames = new String[lids.length];
+
+            for (int i = 0;i < lids.length;i++) {
+                lessons[i] = (Lesson)getDatabaseEntryById(TYPE_TEACHER, lids[i]);
+
+                Cursor cu = db.query(
+                        TYPE_LESSON.getTable(),
+                        new String[]{LessonEntry.COLUMN_NAME_TEACHER},
+                        LessonEntry._ID + " LIKE ?",
+                        new String[]{String.valueOf(lids[i])},
+                        null,
+                        null,
+                        null
+                );
+                cu.moveToFirst();
+                teacherNames[i] = cu.getString(cu.getColumnIndex(LessonEntry.COLUMN_NAME_TEACHER));
+                cu.close();
+            }
+
             Teacher t = new Teacher(-1);
             for (int i = 0;i < teachersList.length;i++) {
                 String[] data = teachersList[i].split("\\|");
@@ -502,8 +527,23 @@ public class AbsTimetableDatabase {
                 t.setFirstName(data[1].length() == 0 ? null : data[1]);
                 t.setSecondName(data[2]);
 
-                db.insert(TeacherEntry.TABLE_NAME, null, t.convertToContentValues());
+                long id = db.insert(TeacherEntry.TABLE_NAME, null, t.convertToContentValues());
+
+                for (int j = 0;j < lids.length;j++) {
+                    if(teacherNames[j].contains(data[0])
+                            && teacherNames[j].contains(data[2])
+                            && (data[1].length() == 0 || teacherNames[j].contains(data[1]))) {
+                        lessons[i].setTeacherId(id);
+                    }
+                }
             }
+
+            for (Lesson l : lessons) {
+                updateDatabaseEntry(l);
+            }
+
+            mReadable = null; // Make sure to go back to starting point
+            mWriteable = null;
         }
     }
 }
