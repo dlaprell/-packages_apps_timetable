@@ -533,7 +533,8 @@ public class AbsTimetableDatabase {
                 long id = db.insert(TeacherEntry.TABLE_NAME, null, t.convertToContentValues());
 
                 for (int j = 0;j < lids.length;j++) {
-                    if(teacherNames[j].contains(data[0])
+                    if(teacherNames[j] != null
+                            && teacherNames[j].contains(data[0])
                             && teacherNames[j].contains(data[2])
                             && (data[1].length() == 0 || teacherNames[j].contains(data[1]))) {
                         lessons[j].setTeacherId(id);
