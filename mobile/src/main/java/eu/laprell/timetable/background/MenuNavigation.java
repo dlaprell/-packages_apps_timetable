@@ -3,6 +3,8 @@ package eu.laprell.timetable.background;
 import android.content.Context;
 import android.content.res.Resources;
 
+import java.util.ArrayList;
+
 import eu.laprell.timetable.BuildConfig;
 import eu.laprell.timetable.R;
 
@@ -27,136 +29,121 @@ public class MenuNavigation {
     }
 
     private Context mContext;
-    private String[] mTitleStrings;
-    private int[] mImages;
-    private int[] mMenus;
-    private int[] mMenuExtended;
+    private ArrayList<String> mTitleStrings;
+    private ArrayList<Integer> mImages;
+    private ArrayList<Integer> mMenus;
+    private ArrayList<Integer> mMenuExtended;
 
 
     public MenuNavigation(Context c) {
         mContext = c;
 
+        mTitleStrings = new ArrayList<>();
+        mImages = new ArrayList<>();
+        mMenus = new ArrayList<>();
+        mMenuExtended = new ArrayList<>();
+
+        reloadFromConfiguration();
+    }
+
+    private void reloadFromConfiguration() {
+        int curPos = -1;
+
+        GlobalConfigs c = new GlobalConfigs(mContext);
+
+        mMenuExtended.add(Menu.MENU_TOP);
+
+        // Day Overview
+        mTitleStrings.add(getString(R.string.day_overview));
+        mMenus.add(Menu.MENU_DAY_OVERVIEW);
+        mImages.add(R.drawable.ic_view_day_grey600_24dp);
+        mMenuExtended.add(++curPos);
+
+        // Week Overview
+        mTitleStrings.add(getString(R.string.week_overview));
+        mMenus.add(Menu.MENU_WEEK_OVERVIEW);
+        mImages.add(R.drawable.ic_view_week_grey600_24dp);
+        mMenuExtended.add(++curPos);
+
+        // For now only allow Tasks in Debug builds
         if(BuildConfig.DEBUG) {
-            mTitleStrings = new String[]{
-                    getString(R.string.day_overview),
-                    getString(R.string.week_overview),
-                    getString(R.string.tasks),
-                    getString(R.string.time_grid),
-                    getString(R.string.settings),
-                    getString(R.string.info),
-                    "Debug"
-            };
+            mMenuExtended.add(Menu.MENU_SPACE);
 
-            mMenus = new int[]{
-                    Menu.MENU_DAY_OVERVIEW,
-                    Menu.MENU_WEEK_OVERVIEW,
-                    Menu.MENU_TASKS,
-                    Menu.MENU_TIME_GRID,
-                    Menu.MENU_SETTINGS,
-                    Menu.MENU_INFO,
-                    Menu.MENU_DEBUG
-            };
+            mTitleStrings.add(getString(R.string.tasks));
+            mMenus.add(Menu.MENU_TASKS);
+            mImages.add(-1);
+            mMenuExtended.add(++curPos);
+        }
 
-            mImages = new int[]{
-                    R.drawable.ic_view_day_grey600_24dp,
-                    R.drawable.ic_view_week_grey600_24dp,
-                    -1,
-                    R.drawable.ic_view_list_grey600_24dp,
-                    R.drawable.ic_settings_grey600_24dp,
-                    R.drawable.ic_info_grey600_24dp,
-                    -1
-            };
+        mMenuExtended.add(Menu.MENU_LINE);
 
-            mMenuExtended = new int[]{
-                    Menu.MENU_TOP,
-                    Menu.MENU_SPACE,
-                    0, // MENU_DAY_OVERVIEW
-                    1, // MENU_WEEK_OVERVIEW
-                    Menu.MENU_SPACE,
-                    2, // MENU_TASKS
-                    Menu.MENU_SPACE,
-                    Menu.MENU_LINE,
-                    Menu.MENU_SPACE,
-                    3, // MENU_TIME_GRID
-                    4, // MENU_SETTINGS
-                    5, // MENU_INFO
-                    6, // MENU_DEBUG
-            };
-        } else {
-            mTitleStrings = new String[]{
-                    getString(R.string.day_overview),
-                    getString(R.string.week_overview),
-                    getString(R.string.time_grid),
-                    getString(R.string.settings),
-                    getString(R.string.info)
-            };
+        // Time Grid
+        mTitleStrings.add(getString(R.string.time_grid));
+        mMenus.add(Menu.MENU_TIME_GRID);
+        mImages.add(R.drawable.ic_view_list_grey600_24dp);
+        mMenuExtended.add(++curPos);
 
-            mMenus = new int[]{
-                    MenuNavigation.Menu.MENU_DAY_OVERVIEW,
-                    MenuNavigation.Menu.MENU_WEEK_OVERVIEW,
-                    MenuNavigation.Menu.MENU_TIME_GRID,
-                    MenuNavigation.Menu.MENU_SETTINGS,
-                    MenuNavigation.Menu.MENU_INFO,
-            };
+        // Settings
+        mTitleStrings.add(getString(R.string.settings));
+        mMenus.add(Menu.MENU_SETTINGS);
+        mImages.add(R.drawable.ic_settings_grey600_24dp);
+        mMenuExtended.add(++curPos);
 
-            mImages = new int[] {
-                    R.drawable.ic_view_day_grey600_24dp,
-                    R.drawable.ic_view_week_grey600_24dp,
-                    R.drawable.ic_view_list_grey600_24dp,
-                    R.drawable.ic_settings_grey600_24dp,
-                    R.drawable.ic_info_grey600_24dp
-            };
+        // Info
+        mTitleStrings.add(getString(R.string.info));
+        mMenus.add(Menu.MENU_INFO);
+        mImages.add(R.drawable.ic_info_grey600_24dp);
+        mMenuExtended.add(++curPos);
 
-            mMenuExtended = new int[]{
-                    Menu.MENU_TOP,
-                    Menu.MENU_SPACE,
-                    0, // MENU_DAY_OVERVIEW
-                    1, // MENU_WEEK_OVERVIEW
-                    Menu.MENU_SPACE,
-                    Menu.MENU_LINE,
-                    Menu.MENU_SPACE,
-                    2, // MENU_TIME_GRID
-                    3, // MENU_SETTINGS
-                    4, // MENU_INFO
-            };
+        // Debug
+        if(c.isDebugMenuEnabled()) {
+            mTitleStrings.add("Debug");
+            mMenus.add(Menu.MENU_DEBUG);
+            mImages.add(-1);
+            mMenuExtended.add(++curPos);
         }
     }
 
+    public void forceReloading() {
+        mMenuExtended.clear();
+        mMenus.clear();
+        mImages.clear();
+        mTitleStrings.clear();
+
+        reloadFromConfiguration();
+    }
+
     public int getImageAtPos(int pos) {
-        return mImages[pos];
+        return mImages.get(pos);
     }
 
     public String getTitleAtPos(int pos) {
-        return mTitleStrings[pos];
+        return mTitleStrings.get(pos);
     }
 
     public int getMenuAtPos(int pos) {
-        return mMenus[pos];
+        return mMenus.get(pos);
     }
 
     public int getMenuCountFull() {
-        return mMenuExtended.length;
-    }
-
-    public int getMenuCountSimple() {
-        return mMenus.length;
+        return mMenuExtended.size();
     }
 
     public int getMenuRefAt(int pos) {
-        return mMenuExtended[pos];
+        return mMenuExtended.get(pos);
     }
 
     public int getAbsPosOfMenu(int m) {
-        for(int i = 0;i < mMenuExtended.length;i++) {
-            if(mMenuExtended[i] >= 0 && mMenus[mMenuExtended[i]] == m)
+        for(int i = 0;i < mMenuExtended.size();i++) {
+            if(mMenuExtended.get(i) >= 0 && mMenus.get(mMenuExtended.get(i)) == m)
                 return i;
         }
         return -1;
     }
 
     public int getMenuPosition(int menu) {
-        for (int i = 0;i < mMenus.length;i++) {
-            if(mMenus[i] == menu)
+        for (int i = 0;i < mMenus.size();i++) {
+            if(mMenus.get(i) == menu)
                 return i;
         }
         return -1;

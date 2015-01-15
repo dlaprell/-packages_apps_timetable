@@ -95,5 +95,6 @@
     <string name="dbg_stop_logging" translatable="false">Stop Logging</string>
     <string name="dbg_share_last_log" translatable="false">Share last log</string>
     <string name="dbg_clear_log" translatable="false">Clear log</string>
+    <string name="dbg_deactivate_debug_menu" translatable="false">Deactivate debug menu</string>
 
 </resources>

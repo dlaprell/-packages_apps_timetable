@@ -64,6 +64,12 @@ public class DrawerFragment extends Fragment {
                 public void navigateMenu(int menu) {
                     _navigate(mAdapter.mNav.getAbsPosOfMenu(menu));
                 }
+
+                @Override
+                public void reloadDrawer() {
+                    mAdapter.mNav.forceReloading();
+                    mAdapter.notifyDataSetChanged();
+                }
             });
         }
     }
@@ -332,5 +338,6 @@ public class DrawerFragment extends Fragment {
 
     public interface DrawerNavigationBackend {
         public void navigateMenu(int menu);
+        public void reloadDrawer();
     }
 }

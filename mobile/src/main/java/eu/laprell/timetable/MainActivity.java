@@ -133,6 +133,7 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
 
         if(p.getBoolean("is_first_start", true)) {
             mDrawerLayout.openDrawer(Gravity.START);
+            p.edit().putBoolean("is_first_start", true).apply();
         }
 
         mContent = findViewById(R.id.content);
@@ -306,5 +307,12 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
     @Override
     public void setDrawerNavigationBackend(DrawerFragment.DrawerNavigationBackend b) {
         mBackend = b;
+    }
+
+    public void reloadDrawer() {
+        if(mBackend != null) {
+            mNav.forceReloading();
+            mBackend.reloadDrawer();
+        }
     }
 }

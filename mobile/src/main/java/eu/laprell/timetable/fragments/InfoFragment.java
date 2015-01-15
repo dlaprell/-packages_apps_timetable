@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import de.psdev.licensesdialog.LicensesDialog;
 import de.psdev.licensesdialog.licenses.ApacheSoftwareLicense20;
@@ -18,7 +20,9 @@ import de.psdev.licensesdialog.licenses.CreativeCommonsAttributionNoDerivs30Unpo
 import de.psdev.licensesdialog.licenses.MITLicense;
 import de.psdev.licensesdialog.model.Notice;
 import de.psdev.licensesdialog.model.Notices;
+import eu.laprell.timetable.MainActivity;
 import eu.laprell.timetable.R;
+import eu.laprell.timetable.background.GlobalConfigs;
 
 /**
  * Created by david on 07.11.14.
@@ -42,6 +46,7 @@ public class InfoFragment extends Fragment {
 
         Context c = inflater.getContext();
         TextView tv = (TextView)view.findViewById(R.id.text_version);
+        tv.setOnClickListener(mListener);
         try {
             PackageInfo pInfo = c.getPackageManager().getPackageInfo(c.getPackageName(), 0);
             tv.setText(pInfo.versionName);
@@ -58,6 +63,37 @@ public class InfoFragment extends Fragment {
 
         return view;
     }
+
+    private long mLastClick = 0;
+    private int mClickCount = 0;
+    private View.OnClickListener mListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            long now = SystemClock.uptimeMillis();
+
+            if(mLastClick + 100 * 1000 > now)
+                mClickCount++;
+            else
+                mClickCount = 0;
+
+            mLastClick = now;
+
+            if(mClickCount > 20) {
+                GlobalConfigs c = new GlobalConfigs(v.getContext());
+
+                if(!c.isDebugMenuEnabled()) {
+                    c.setDebugMenuEnabled(true);
+
+                    if(getActivity() instanceof MainActivity) {
+                        ((MainActivity) getActivity()).reloadDrawer();
+                    }
+
+                    Toast.makeText(v.getContext(), "You unlocked the debug menu",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    };
 
     private void showLicensesDialog() {
         final Notices notices = new Notices();

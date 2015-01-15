@@ -15,6 +15,7 @@ import java.util.Random;
 
 import eu.laprell.timetable.MainApplication;
 import eu.laprell.timetable.R;
+import eu.laprell.timetable.background.GlobalConfigs;
 import eu.laprell.timetable.background.Logger;
 import eu.laprell.timetable.database.AbsTimetableDatabase;
 import eu.laprell.timetable.database.Day;
@@ -39,6 +40,7 @@ public class DebugFragment extends BaseFragment implements View.OnClickListener 
         v.findViewById(R.id.dbg_show_test_notif).setOnClickListener(this);
         v.findViewById(R.id.dbg_share_last_log).setOnClickListener(this);
         v.findViewById(R.id.dbg_clear_log).setOnClickListener(this);
+        v.findViewById(R.id.dbg_deactivate_debug_menu).setOnClickListener(this);
 
         mLoggingButton = (Button)v.findViewById(R.id.dbg_toggle_logging);
         mLoggingButton.setOnClickListener(this);
@@ -66,6 +68,10 @@ public class DebugFragment extends BaseFragment implements View.OnClickListener 
                 break;
             case R.id.dbg_clear_log:
                 Logger.clearLog();
+                break;
+            case R.id.dbg_deactivate_debug_menu:
+                v.setEnabled(false);
+                new GlobalConfigs(v.getContext()).setDebugMenuEnabled(false);
                 break;
         }
     }
