@@ -12,6 +12,8 @@ public class TimeReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         String act = intent.getAction();
 
+        Logger.log("TimeReceiver", "Got intent action=" + act);
+
         if (Const.ACTION_NOTIFY_NEXT_LESSON.equals(intent.getAction())) {
             final long lid = intent.getLongExtra(Const.EXTRA_LESSON_ID, -1);
             final long tid = intent.getLongExtra(Const.EXTRA_TIMEUNIT_ID, -1);
@@ -29,6 +31,8 @@ public class TimeReceiver extends BroadcastReceiver {
         if(c.getApplicationContext() instanceof MainApplication) {
             return ((MainApplication) c.getApplicationContext()).getLessonNotifier();
         } else {
+            Logger.log("TimeReceiver", "Couldn't get Application from ApplicationContext: "
+                    + c.getApplicationContext().toString());
             return new LessonNotifier(c);
         }
     }
