@@ -98,14 +98,11 @@ public class TimeGridFragment extends BaseFragment {
 
             t.setStartTime(time);
             t.setEndTime(time + 1);
-            d.num = pre.num + 1;
-        } else {
-            d.num = 0;
         }
-
         d.time = t;
 
         mList.add(d);
+        updateAllNums(-3); // The newly created timeunit has an id of -1! So do not skip it
 
         displayNewItem(mList.size() - 1);
 
@@ -222,20 +219,12 @@ public class TimeGridFragment extends BaseFragment {
                 }
 
                 int pos = -1;
-                int num = 1;
                 for (int i = 0;i < mList.size();i++) {
                     if (mList.get(i).time.getId() == t.getId())
                         pos = i;
-                    else {
-                        Data d = mList.get(i);
-                        if(d.time.isBreak()) {
-                            d.num = 0;
-                        } else {
-                            d.num = num;
-                            num++;
-                        }
-                    }
                 }
+
+                updateAllNums(t.getId());
 
                 db.removeDatabaseEntry(t);
                 access.close();
@@ -277,6 +266,21 @@ public class TimeGridFragment extends BaseFragment {
 
             }
         }.execute();
+    }
+
+    private void updateAllNums(long skipId) {
+        int num = 1;
+
+        for(int i = 0;i < mList.size();i++) {
+            if(skipId != mList.get(i).time.getId()) {
+                if(mList.get(i).time.isBreak()) {
+                    mList.get(i).num = -1;
+                } else {
+                    mList.get(i).num = num;
+                    num++;
+                }
+            }
+        }
     }
 
     /**
