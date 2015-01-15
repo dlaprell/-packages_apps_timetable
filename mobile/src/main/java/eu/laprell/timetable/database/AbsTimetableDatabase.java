@@ -492,6 +492,9 @@ public class AbsTimetableDatabase {
         private void makeKghTeacherListCompat(SQLiteDatabase db) {
             final Context c = getContext();
 
+            // Make sure nothing is left
+            db.execSQL("DELETE FROM "+ TeacherEntry.TABLE_NAME);
+
             String[] teachersList = c.getResources().getStringArray(R.array.addon_array_kgh_teachers);
 
             // Me must try to match the earlier just "name" location to the new one
@@ -503,7 +506,7 @@ public class AbsTimetableDatabase {
             String[] teacherNames = new String[lids.length];
 
             for (int i = 0;i < lids.length;i++) {
-                lessons[i] = (Lesson)getDatabaseEntryById(TYPE_TEACHER, lids[i]);
+                lessons[i] = (Lesson)getDatabaseEntryById(TYPE_LESSON, lids[i]);
 
                 Cursor cu = db.query(
                         TYPE_LESSON.getTable(),
@@ -533,7 +536,7 @@ public class AbsTimetableDatabase {
                     if(teacherNames[j].contains(data[0])
                             && teacherNames[j].contains(data[2])
                             && (data[1].length() == 0 || teacherNames[j].contains(data[1]))) {
-                        lessons[i].setTeacherId(id);
+                        lessons[j].setTeacherId(id);
                     }
                 }
             }
