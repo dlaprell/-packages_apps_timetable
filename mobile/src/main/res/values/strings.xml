@@ -57,8 +57,8 @@
     <string name="pref_enable_debug_notif_summary">Debug Notifications will be shown each 2 Minutes</string>
     <string name="pref_enable_wear_notifications_title">Show on Wear Device</string>
     <string name="pref_enable_wear_notifications_summary">Next Lessons will be shown on your wear device if connected</string>
-    <string name="pref_enable_notifications_title">Notifications</string>
-    <string name="pref_enable_notifications_summary">Disable Notifications if you do not want them in general</string>
+    <string name="pref_enable_notifications_title">Enable Notifications</string>
+    <string name="pref_enable_notifications_summary">Notifications will show you your next lesson</string>
     <string name="pref_list_notify_time_before_lesson_title">Notify before in minutes</string>
     <string name="pref_list_notify_time_before_lesson_summary">The minutes before a lesson, when the user will be notified</string>
     <string name="title_activity_new_task" translatable="false">NewTaskActivity</string>
