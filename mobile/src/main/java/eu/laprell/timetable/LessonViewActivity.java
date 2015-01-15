@@ -325,7 +325,22 @@ public class LessonViewActivity extends ActionBarActivity implements LessonViewC
         });
 
         AnimatorSet set = new AnimatorSet();
-        set.play(radius).with(moveDown).before(fadeOut);
+        set.play(radius).with(moveDown);
+        set.play(fadeOut).after(moveDown);
+
+        if(Const.FW_SUPPORTS_DROP_SHADOWS) {
+            float dp5 = MetricsUtils.convertDpToPixel(5);
+
+            ObjectAnimator raise = ObjectAnimator.ofFloat(mContainer, "translationZ", 0, dp5)
+                    .setDuration(250);
+
+            ObjectAnimator revRaise = ObjectAnimator.ofFloat(mContainer, "translationZ", dp5, 0)
+                    .setDuration(400);
+
+            set.play(radius).with(raise);
+            set.play(fadeOut).with(revRaise);
+        }
+
         set.start();
     }
 

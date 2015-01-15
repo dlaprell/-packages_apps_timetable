@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<eu.laprell.timetable.widgets.RippleFrameLayout2
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="72dp"
     android:minHeight="72dp"
+    android:foreground="@drawable/base_ripple"
     android:clickable="false"
     android:layout_marginLeft="@dimen/keyline_left_space"
     android:layout_marginRight="@dimen/keyline_left_space"
@@ -35,4 +36,4 @@
         android:layout_gravity="bottom"
         android:alpha="0" />
 
-</eu.laprell.timetable.widgets.RippleFrameLayout2>
+</FrameLayout>
