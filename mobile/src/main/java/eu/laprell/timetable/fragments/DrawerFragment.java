@@ -70,6 +70,11 @@ public class DrawerFragment extends Fragment {
                     mAdapter.mNav.forceReloading();
                     mAdapter.notifyDataSetChanged();
                 }
+
+                @Override
+                public int getDrawerContentWidth() {
+                    return mRecyclerView.getWidth();
+                }
             });
         }
     }
@@ -339,5 +344,6 @@ public class DrawerFragment extends Fragment {
     public interface DrawerNavigationBackend {
         public void navigateMenu(int menu);
         public void reloadDrawer();
+        public int getDrawerContentWidth();
     }
 }

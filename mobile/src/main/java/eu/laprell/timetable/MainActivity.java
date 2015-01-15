@@ -71,8 +71,8 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
             }
 
             if(update) {
-                final int w = mDrawerLayout.getWidth();
-                mRFrame.set(w * mLastPosition, 0, w, mDrawerLayout.getHeight());
+                final float overDrawWidth = mBackend.getDrawerContentWidth() * mLastPosition;
+                mRFrame.set(overDrawWidth, 0, mDrawerLayout.getWidth(), mDrawerLayout.getHeight());
                 mFrame.setDrawingFrame(mRFrame);
             }
 
