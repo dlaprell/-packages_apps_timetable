@@ -133,7 +133,7 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
 
         if(p.getBoolean("is_first_start", true)) {
             mDrawerLayout.openDrawer(Gravity.START);
-            p.edit().putBoolean("is_first_start", true).apply();
+            p.edit().putBoolean("is_first_start", false).apply();
         }
 
         mContent = findViewById(R.id.content);
