@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +26,7 @@ import eu.laprell.timetable.background.GlobalConfigs;
 /**
  * Created by david on 07.11.14.
  */
-public class InfoFragment extends Fragment {
+public class InfoFragment extends BaseFragment {
 
     public InfoFragment() {
 

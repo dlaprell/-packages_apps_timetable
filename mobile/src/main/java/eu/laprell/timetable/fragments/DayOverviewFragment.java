@@ -19,7 +19,7 @@ import eu.laprell.timetable.database.Day;
 /**
  * Created by david on 12.12.14.
  */
-public class DayOverviewFragment extends Fragment {
+public class DayOverviewFragment extends BaseFragment {
 
     private ViewPager mPager;
     private PagerTabStrip mStrip;
@@ -43,6 +43,11 @@ public class DayOverviewFragment extends Fragment {
         }
 
         mColumnsCount = getResources().getInteger(R.integer.day_overview_columns);
+    }
+
+    @Override
+    public float getToolbarElevationDp() {
+        return 0;
     }
 
     @Override

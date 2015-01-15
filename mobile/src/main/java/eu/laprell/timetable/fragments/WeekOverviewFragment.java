@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +28,7 @@ import eu.laprell.timetable.widgets.TableView;
 /**
  * Created by david on 06.11.14.
  */
-public class WeekOverviewFragment extends Fragment {
+public class WeekOverviewFragment extends BaseFragment {
 
     private TableView.DataProvider mFakeProvider = new TableView.DataProvider() {
         @Override

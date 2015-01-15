@@ -1,5 +1,6 @@
 package eu.laprell.timetable;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,6 +24,7 @@ import com.google.android.gms.ads.AdView;
 
 import eu.laprell.timetable.background.MenuNavigation;
 import eu.laprell.timetable.database.Day;
+import eu.laprell.timetable.fragments.BaseFragment;
 import eu.laprell.timetable.fragments.DayOverviewFragment;
 import eu.laprell.timetable.fragments.DebugFragment;
 import eu.laprell.timetable.fragments.DrawerFragment;
@@ -32,6 +34,7 @@ import eu.laprell.timetable.fragments.TaskFragment;
 import eu.laprell.timetable.fragments.TimeGridFragment;
 import eu.laprell.timetable.fragments.WeekOverviewFragment;
 import eu.laprell.timetable.utils.Const;
+import eu.laprell.timetable.utils.MetricsUtils;
 import eu.laprell.timetable.utils.ToastAdListener;
 import eu.laprell.timetable.widgets.PartialDrawRelativeLayout;
 
@@ -270,6 +273,7 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
         return false;
     }
 
+    @SuppressLint("NewApi")
     private void changeFragment(int menu, int aIn, int aOut) {
         mToolbar.setSubtitle(mNav.getTitleAtPos(mNav.getMenuPosition(menu)));
 
@@ -302,6 +306,12 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
 
         fragmentTransaction.replace(mContent.getId(), mFragment);
         fragmentTransaction.commit();
+
+        if(mFragment instanceof BaseFragment && Const.FW_SUPPORTS_DROP_SHADOWS) {
+            float elZ = MetricsUtils.convertDpToPixel(
+                    ((BaseFragment) mFragment).getToolbarElevationDp());
+            mToolbar.setElevation(elZ);
+        }
     }
 
     @Override

@@ -10,7 +10,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.RecyclerView;
@@ -62,7 +61,7 @@ import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 /**
  * Created by david on 07.11.14.
  */
-public class TimeTableDayFragment2 extends Fragment {
+public class TimeTableDayFragment2 extends BaseFragment {
 
     private static final String TAG = "TimeTableDayFragment2";
 

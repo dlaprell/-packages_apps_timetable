@@ -15,7 +15,7 @@ import eu.laprell.timetable.database.Task;
 /**
  * Created by david on 23.12.14.
  */
-public class TaskFragment extends Fragment implements TaskListFragment.TaskListCallback {
+public class TaskFragment extends BaseFragment implements TaskListFragment.TaskListCallback {
 
     private TaskListFragment mListFragment;
     private TaskViewFragment mViewFragment;

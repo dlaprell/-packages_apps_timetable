@@ -16,7 +16,8 @@
             android:layout_gravity="top"
             android:background="?attr/colorPrimary"
             android:textColor="#FFF"
-            android:gravity="center_vertical" />
+            android:gravity="center_vertical"
+            android:elevation="4dp" />
 
     </android.support.v4.view.ViewPager>
 
