@@ -9,8 +9,9 @@
     <com.github.adnansm.timelytextview.TimelyView
         android:layout_width="48dp"
         android:layout_height="match_parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:padding="4dp"
         android:gravity="center"
         android:id="@+id/btn_num" />
 

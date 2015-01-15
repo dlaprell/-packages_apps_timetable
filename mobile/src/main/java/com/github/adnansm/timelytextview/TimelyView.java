@@ -16,8 +16,10 @@ import com.nineoldandroids.util.Property;
 import eu.laprell.timetable.utils.MetricsUtils;
 
 public class TimelyView extends View {
-    private static final float                           RATIO                   = 1f;
-    private static final Property<TimelyView, float[][]> CONTROL_POINTS_PROPERTY = new Property<TimelyView, float[][]>(float[][].class, "controlPoints") {
+    private static final float RATIO = 1f;
+
+    private static final Property<TimelyView, float[][]> CONTROL_POINTS_PROPERTY
+            = new Property<TimelyView, float[][]>(float[][].class, "controlPoints") {
         @Override
         public float[][] get(TimelyView object) {
             return object.getControlPoints();
@@ -28,12 +30,15 @@ public class TimelyView extends View {
             object.setControlPoints(value);
         }
     };
-    private              Paint                           mPaint                  = null;
-    private              Path                            mPath                   = null;
-    private              float[][]                       controlPoints           = null;
+
+    private Paint mPaint = null;
+    private final Path mPath = new Path();
+    private float[][] mControlPoints = null;
 
     private int mTextColor = Color.BLACK;
-    private int mTextStroke = (int)MetricsUtils.convertDpToPixel(1);
+    private int mTextStroke = (int)MetricsUtils.convertSpToPixel(1);
+
+    private float mMinDimens;
 
     public TimelyView(Context context) {
         super(context);
@@ -51,12 +56,31 @@ public class TimelyView extends View {
     }
 
     public float[][] getControlPoints() {
-        return controlPoints;
+        return mControlPoints;
     }
 
     public void setControlPoints(float[][] controlPoints) {
-        this.controlPoints = controlPoints;
+        mControlPoints = controlPoints;
+
+        initControlPoints();
+
         invalidate();
+    }
+
+    private void initControlPoints() {
+        if(mControlPoints != null) {
+            int length = mControlPoints.length;
+
+            mPath.reset();
+            mPath.moveTo(mMinDimens * mControlPoints[0][0], mMinDimens * mControlPoints[0][1]);
+            for (int i = 1; i < length; i += 3) {
+                mPath.cubicTo(
+                        mMinDimens * mControlPoints[i    ][0], mMinDimens * mControlPoints[i    ][1],
+                        mMinDimens * mControlPoints[i + 1][0], mMinDimens * mControlPoints[i + 1][1],
+                        mMinDimens * mControlPoints[i + 2][0], mMinDimens * mControlPoints[i + 2][1]
+                );
+            }
+        }
     }
 
     public ObjectAnimator animate(int start, int end) {
@@ -74,26 +98,23 @@ public class TimelyView extends View {
     }
 
     @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+
+        int avW = w - (getPaddingLeft() + getPaddingRight());
+        int avH = h - (getPaddingTop() + getPaddingBottom());
+
+        mMinDimens = Math.min(avW, avH);
+    }
+
+    @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if (controlPoints == null) return;
-
-        int length = controlPoints.length;
-
-        int height = getMeasuredHeight();
-        int width = getMeasuredWidth();
-
-        float minDimen = height > width ? width : height;
-
-        mPath.reset();
-        mPath.moveTo(minDimen * controlPoints[0][0], minDimen * controlPoints[0][1]);
-        for (int i = 1; i < length; i += 3) {
-            mPath.cubicTo(minDimen * controlPoints[i][0], minDimen * controlPoints[i][1],
-                          minDimen * controlPoints[i + 1][0], minDimen * controlPoints[i + 1][1],
-                          minDimen * controlPoints[i + 2][0], minDimen * controlPoints[i + 2][1]);
+        if (mControlPoints != null) {
+            canvas.translate(getPaddingLeft(), getPaddingTop());
+            canvas.drawPath(mPath, mPaint);
         }
-        canvas.drawPath(mPath, mPaint);
     }
 
     @Override
@@ -125,7 +146,8 @@ public class TimelyView extends View {
         mPaint.setStrokeWidth(mTextStroke);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
-        mPath = new Path();
+
+        initControlPoints();
     }
 
     public int getTextColor() {
