@@ -381,7 +381,7 @@ public class TimeGridFragment extends BaseFragment {
                             Toast.makeText(getActivity(), R.string.cannot_remove_timeunit_toast,
                                     Toast.LENGTH_SHORT).show();
                         } else {
-                            new MaterialDialog.Builder(getActivity())
+                            MaterialDialog d = new MaterialDialog.Builder(getActivity())
                                     .title(R.string.remove_timeunit)
                                     .content(R.string.remove_timeunit_dialog_text,
                                             mData.time.makeTimeString("s - e"))
@@ -393,8 +393,11 @@ public class TimeGridFragment extends BaseFragment {
                                             removeTimeUnit(mData.time);
                                         }
                                     })
-                                    .build()
-                                    .show();
+                                    .build();
+
+                            d.show();
+
+                            //AnimUtils.animateMaterialDialogIn(view, d);
                         }
                     }
                     popUp.dismiss();

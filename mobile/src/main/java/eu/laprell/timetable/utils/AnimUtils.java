@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.ListPopupWindow;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewPropertyAnimator;
 import android.view.ViewTreeObserver;
@@ -16,6 +17,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ListView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 
 /**
@@ -331,6 +333,69 @@ public class AnimUtils {
         return loc;
     }
 
+    public static void animateMaterialDialogIn(final View anchor, final MaterialDialog dialog) {
+        final View decorView = dialog.getWindow().getDecorView();
+        final View content = (View)dialog.getTitleFrame().getParent().getParent();
+
+        final int[] anchorLoc = getViewLoc(anchor);
+        anchorLoc[0] += anchor.getWidth() / 2;
+        anchorLoc[1] += anchor.getHeight() / 2;
+
+        AnimUtils.afterPreDraw(decorView, new Runnable() {
+            @Override
+            public void run() {
+                int[] decorLoc = getViewLoc(decorView);
+
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+                    int centerX = Math.min(anchorLoc[0] - decorLoc[0], decorView.getWidth());
+                    centerX = Math.max(centerX, 0);
+
+                    int centerY = Math.min(anchorLoc[1] - decorLoc[1], decorView.getHeight());
+                    centerY = Math.max(centerY, 0);
+
+                    float startRadius = Math.min(anchor.getWidth(), anchor.getHeight());
+                    float endRadius = Math.max(decorView.getWidth(), decorView.getHeight()) * 1.2f;
+
+                    Animator a = ViewAnimationUtils.createCircularReveal(
+                            decorView,
+                            centerX,
+                            centerY,
+                            startRadius,
+                            endRadius
+                    );
+
+                    final int revDur = 320;
+                    final int fadeDur = 150;
+
+                    a.setDuration(revDur);
+                    a.start();
+
+                    content.setAlpha(0f);
+                    com.nineoldandroids.view.ViewPropertyAnimator.animate(content)
+                            .alpha(1f)
+                            .setStartDelay(revDur - fadeDur)
+                            .setDuration(fadeDur)
+                            .setListener(new LayerAdapter(content));
+                } else {
+                    decorView.setScaleX(0);
+                    decorView.setScaleY(0);
+
+                    com.nineoldandroids.view.ViewPropertyAnimator.animate(decorView)
+                            .scaleY(1f).scaleX(1f).setDuration(5000).setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(com.nineoldandroids.animation.Animator animation) {
+                            content.setVisibility(View.VISIBLE);
+                            content.setAlpha(0f);
+                            com.nineoldandroids.view.ViewPropertyAnimator.animate(content).alpha(1f)
+                                    .setDuration(2000).setListener(new LayerAdapter(content));
+                        }
+                    });
+                }
+            }
+        });
+    }
+
     public static void animateListPopupWindowIn(ListPopupWindow popUp) {
         final ListView list = popUp.getListView();
         final View parent = (View) list.getParent();
@@ -364,13 +429,13 @@ public class AnimUtils {
                 parent.setPivotY(pivY);
 
                 com.nineoldandroids.view.ViewPropertyAnimator.animate(parent)
-                        .scaleY(1f).scaleX(1f).setDuration(180).setListener(new AnimatorListenerAdapter() {
+                        .scaleY(1f).scaleX(1f).setDuration(170).setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(com.nineoldandroids.animation.Animator animation) {
                         list.setVisibility(View.VISIBLE);
                         list.setAlpha(0f);
                         com.nineoldandroids.view.ViewPropertyAnimator.animate(list).alpha(1f)
-                                .setDuration(200).setListener(new LayerAdapter(list));
+                                .setDuration(150).setListener(new LayerAdapter(list));
                     }
                 });
             }
