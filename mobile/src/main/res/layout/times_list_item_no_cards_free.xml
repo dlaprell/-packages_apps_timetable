@@ -15,12 +15,13 @@
         android:layout_marginRight="8dp"
         android:layout_marginEnd="8dp"
         tools:text="1"
-        android:gravity="center" />
+        android:gravity="center_vertical|start" />
 
     <TextView
         android:id="@+id/time"
-        android:layout_width="48dp"
+        android:layout_width="wrap_content"
         android:layout_height="64dp"
+        android:maxWidth="48dp"
         android:textSize="16sp"
         android:gravity="center_horizontal"
         tools:text="7:45\n8:53"
@@ -37,8 +38,7 @@
         android:layout_marginLeft="56dp"
         android:layout_marginStart="56dp"
         android:text="@string/free"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:textSize="24sp" />
 
     <include layout="@layout/times_list_item_more" />
 
