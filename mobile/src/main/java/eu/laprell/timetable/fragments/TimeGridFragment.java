@@ -22,6 +22,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.adnansm.timelytextview.TimelyView;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.ObjectAnimator;
+import com.nineoldandroids.animation.TypeEvaluator;
+import com.nineoldandroids.util.Property;
 import com.sleepbot.datetimepicker.time.RadialPickerLayout;
 import com.sleepbot.datetimepicker.time.TimePickerDialog;
 
@@ -150,7 +152,8 @@ public class TimeGridFragment extends BaseFragment {
                     @Override
                     public Animator makeAnimationForView(View v, Object data) {
                         //ObjectAnimator move = ObjectAnimator.ofFloat(v, "translationY", distance, 0);
-                        ObjectAnimator alpha = ObjectAnimator.ofFloat(v, "alpha", 0f, 1f);
+                        ObjectAnimator alpha = ObjectAnimator.ofObject(v, MOVE_IN_PROPERTY,
+                                new MoveUpEvaluator(), 0f, 1f);
 
                         //AnimatorSet set = new AnimatorSet();
                         //set.playTogether(move, alpha);
@@ -176,6 +179,28 @@ public class TimeGridFragment extends BaseFragment {
                 anim.startOnPreDraw(mTimeContainer);
             }
         }.execute();
+    }
+
+    private static final float DISTANCE = MetricsUtils.convertDpToPixel(24);
+    private static final Property<View, Float> MOVE_IN_PROPERTY
+            = new Property<View, Float>(Float.class, "moveIn") {
+        @Override
+        public Float get(View object) {
+            return object.getAlpha();
+        }
+
+        @Override
+        public void set(View object, Float value) {
+            object.setAlpha(value);
+            object.setTranslationY(DISTANCE * (1f - value));
+        }
+    };
+
+    private class MoveUpEvaluator implements TypeEvaluator<Float> {
+        @Override
+        public Float evaluate(float fraction, Float startValue, Float endValue) {
+            return startValue + ((endValue - startValue) * fraction);
+        }
     }
 
     private View displayNewItem(int pos, boolean withAnimation) {

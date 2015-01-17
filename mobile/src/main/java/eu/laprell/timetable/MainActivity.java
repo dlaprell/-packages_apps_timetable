@@ -146,10 +146,11 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
         if(BuildConfig.DEBUG)
             mAdView.setAdListener(new ToastAdListener(this));
         mAdView.loadAd(new AdRequest.Builder()
-                .addKeyword("school")
+                /*.addKeyword("school")
                 .addKeyword("student")
                 .addKeyword("time")
-                .addKeyword("book").build());
+                .addKeyword("book")*/
+                .build());
 
         startService(new Intent(this, BackgroundService.class));
 
