@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -36,6 +38,7 @@ import eu.laprell.timetable.fragments.WeekOverviewFragment;
 import eu.laprell.timetable.utils.Const;
 import eu.laprell.timetable.utils.MetricsUtils;
 import eu.laprell.timetable.utils.ToastAdListener;
+import eu.laprell.timetable.widgets.ColorFilterDrawerLayout;
 import eu.laprell.timetable.widgets.PartialDrawRelativeLayout;
 
 /**
@@ -52,32 +55,25 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
 
     private ActionBarDrawerToggle mDrawerToggle;
     private Toolbar mToolbar;
-    private DrawerLayout mDrawerLayout;
+    private ColorFilterDrawerLayout mDrawerLayout;
     private DrawerLayout.DrawerListener mDrawerListener = new DrawerLayout.DrawerListener() {
-        private static final float STEP = 0.1f;
 
-        private float mLastPosition = 0f;
         private RectF mRFrame = new RectF();
 
         @Override
         public void onDrawerSlide(View view, float v) {
             mFrame.setPartialDrawEnabled(true);
+            mDrawerLayout.setColorDrawing(true);
 
-            boolean update = false;
+            final float overDrawWidth = mBackend.getDrawerContentWidth() * v;
+            mRFrame.set(overDrawWidth, 0, mDrawerLayout.getWidth(), mDrawerLayout.getHeight());
 
-            if(mLastPosition + STEP > v) {
-                update = true;
-                mLastPosition = Math.max(v - (STEP / 2), 0f);
-            } else if(mLastPosition - STEP < v) {
-                update = true;
-                mLastPosition = Math.max(v - (STEP / 2), 0f);
-            }
+            mFrame.setDrawingFrame(mRFrame);
+            mDrawerLayout.setColorDrawingFrame(mRFrame);
 
-            if(update) {
-                final float overDrawWidth = mBackend.getDrawerContentWidth() * mLastPosition;
-                mRFrame.set(overDrawWidth, 0, mDrawerLayout.getWidth(), mDrawerLayout.getHeight());
-                mFrame.setDrawingFrame(mRFrame);
-            }
+            int c = (int) (100 * v);
+
+            mDrawerLayout.setColorFilter(Color.argb(c, 0, 0, 0), PorterDuff.Mode.SRC_ATOP);
 
             mDrawerToggle.onDrawerSlide(view, v);
         }
@@ -90,6 +86,7 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
         @Override
         public void onDrawerClosed(View view) {
             mFrame.setPartialDrawEnabled(false);
+            mDrawerLayout.setColorDrawing(false);
 
             mDrawerToggle.onDrawerClosed(view);
         }
@@ -120,7 +117,7 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        mDrawerLayout = (ColorFilterDrawerLayout)findViewById(R.id.drawer_layout);
         mFrame = (PartialDrawRelativeLayout)findViewById(R.id.main_fragment_container);
 
         mDrawerToggle = new ActionBarDrawerToggle(
@@ -131,7 +128,7 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
                 R.string.app_name
         );
 
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerLayout.setScrimColor(Color.TRANSPARENT);
         mDrawerLayout.setDrawerListener(mDrawerListener);
 
         if(p.getBoolean("is_first_start", true)) {

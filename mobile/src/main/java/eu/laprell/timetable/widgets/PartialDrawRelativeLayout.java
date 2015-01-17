@@ -3,6 +3,7 @@ package eu.laprell.timetable.widgets;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.RectF;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
@@ -35,7 +36,7 @@ public class PartialDrawRelativeLayout extends RelativeLayout{
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    public void draw(@NonNull Canvas canvas) {
         if(mPartialDraw) {
             canvas.clipRect(mFrame.left, mFrame.top, mFrame.right, mFrame.bottom);
         }

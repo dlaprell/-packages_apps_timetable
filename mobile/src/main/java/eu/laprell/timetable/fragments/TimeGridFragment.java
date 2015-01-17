@@ -10,6 +10,7 @@ import android.support.v7.widget.ListPopupWindow;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -76,9 +77,7 @@ public class TimeGridFragment extends BaseFragment {
                 R.layout.fragment_timegrid, container, false);
 
         mTimeContainer = (LinearLayout)v.findViewById(R.id.time_container);
-
         mProgress = (CircularProgressBar)v.findViewById(R.id.circular_loading);
-
         v.findViewById(R.id.add).setOnClickListener(mClickListener);
 
         loadTable();
@@ -104,7 +103,7 @@ public class TimeGridFragment extends BaseFragment {
         mList.add(d);
         updateAllNums(-3); // The newly created timeunit has an id of -1! So do not skip it
 
-        displayNewItem(mList.size() - 1);
+        displayNewItem(mList.size() - 1, true);
 
         mTask.doExecute(d);
     }
@@ -146,28 +145,71 @@ public class TimeGridFragment extends BaseFragment {
                     return;
                 }
 
-                for (int i = 0;i < mList.size();i++)
-                    displayNewItem(i);
+                //final float distance = MetricsUtils.convertDpToPixel(64);
+                WaveAnimator anim = new WaveAnimator(new WaveAnimator.WaveAnimationApplier() {
+                    @Override
+                    public Animator makeAnimationForView(View v, Object data) {
+                        //ObjectAnimator move = ObjectAnimator.ofFloat(v, "translationY", distance, 0);
+                        ObjectAnimator alpha = ObjectAnimator.ofFloat(v, "alpha", 0f, 1f);
+
+                        //AnimatorSet set = new AnimatorSet();
+                        //set.playTogether(move, alpha);
+                        alpha.setDuration(200);
+                        alpha.setInterpolator(new DecelerateInterpolator());
+                        alpha.addListener(new AnimUtils.LayerAdapter(v));
+
+                        return alpha;
+                    }
+                });
+                anim.setSpeed(MetricsUtils.convertDpToPixel(72));
+                int[] loc = AnimUtils.getViewLoc(mTimeContainer);
+                loc[0] += mTimeContainer.getWidth() / 2;
+                anim.setStartPoint(loc);
+                anim.setComputeMoreExactly(true);
+
+                for (int i = 0;i < mList.size();i++) {
+                    View v = displayNewItem(i, false);
+                    v.setAlpha(0f);
+                    anim.addTarget(v);
+                }
+
+                anim.startOnPreDraw(mTimeContainer);
             }
         }.execute();
     }
 
-    private void displayNewItem(int pos) {
+    private View displayNewItem(int pos, boolean withAnimation) {
         Data d = mList.get(pos);
 
         d.view = LayoutInflater.from(mTimeContainer.getContext()).inflate(
                 R.layout.list_item_time_grid, mTimeContainer, false);
         d.lis = new ButtonClickListener(d);
 
-        updateView(d);
+        if(withAnimation) {
+            updateView(d);
+            AnimUtils.animateViewAddingInLayout(d.view, mTimeContainer, pos);
+        } else {
+            updateTime(d);
+            //int num = getNumToShow(d);
+            //if(num >= 0)d.numView.setNumber(num);
+            ObjectAnimator a = animateNumView(d);
+            a.setDuration(0);
+            a.start();
 
-        AnimUtils.animateViewAddingInLayout(d.view, mTimeContainer, pos);
+            mTimeContainer.addView(d.view, pos);
+        }
+
+        return d.view;
     }
 
     private void updateView(Data d) {
         ObjectAnimator a = animateNumView(d);
         if(a != null)a.start();
 
+        updateTime(d);
+    }
+
+    private void updateTime(Data d) {
         d.startButton.setText(d.time.makeTimeString("s"));
         d.endButton.setText(d.time.makeTimeString("e"));
     }
@@ -184,6 +226,14 @@ public class TimeGridFragment extends BaseFragment {
         }
 
         return a;
+    }
+
+    private int getNumToShow(Data d) {
+        if(!d.time.isBreak()) {
+            return d.num;
+        } else {
+            return -1;
+        }
     }
 
     private void removeTimeUnit(final TimeUnit t) {

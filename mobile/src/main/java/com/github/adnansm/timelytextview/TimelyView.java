@@ -83,6 +83,12 @@ public class TimelyView extends View {
         }
     }
 
+    public void setNumber(int num) {
+        float[][] endPoints = NumberUtils.getControlPointsFor(num);
+
+        setControlPoints(endPoints);
+    }
+
     public ObjectAnimator animate(int start, int end) {
         float[][] startPoints = NumberUtils.getControlPointsFor(start);
         float[][] endPoints = NumberUtils.getControlPointsFor(end);
