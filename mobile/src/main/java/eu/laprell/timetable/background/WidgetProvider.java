@@ -4,6 +4,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.widget.RemoteViews;
 
@@ -39,6 +40,15 @@ public class WidgetProvider extends AppWidgetProvider {
             appWidgetManager.updateAppWidget(appWidgetIds[i],
                     remoteViews);
         }
+
+        SharedPreferences pref = context.getSharedPreferences("widgets", 0);
+        int day = LessonNotifier.getDayOfYear();
+        if(pref.getInt("last_day_shown", -1) != day) {
+            WidgetService.updateWidgets(context);
+
+            pref.edit().putInt("last_day_shown", day).apply();
+        }
+
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 
