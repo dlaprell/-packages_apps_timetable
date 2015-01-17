@@ -27,10 +27,10 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     wearApp project(':wear')
-    compile 'com.google.android.gms:play-services:+'
-    //compile 'com.google.android.gms:play-services-base:6.5.+'
-    //compile 'com.google.android.gms:play-services-wearable:6.5.+'
-    //compile 'com.google.android.gms:play-services-ads:6.5.+'
+    //compile 'com.google.android.gms:play-services:+'
+    compile 'com.google.android.gms:play-services-base:6.5.+'
+    compile 'com.google.android.gms:play-services-wearable:6.5.+'
+    compile 'com.google.android.gms:play-services-ads:6.5.+'
 
     // Non g-Play Services
 
