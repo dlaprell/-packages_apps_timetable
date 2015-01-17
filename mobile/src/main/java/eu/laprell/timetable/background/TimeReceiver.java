@@ -21,7 +21,7 @@ public class TimeReceiver extends BroadcastReceiver {
         }
     }
 
-    public LessonNotifier getLessonNotifier(Context c) {
+    public static LessonNotifier getLessonNotifier(Context c) {
         if(c.getApplicationContext() instanceof MainApplication) {
             return ((MainApplication) c.getApplicationContext()).getLessonNotifier();
         } else {

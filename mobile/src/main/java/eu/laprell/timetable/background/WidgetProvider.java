@@ -45,6 +45,7 @@ public class WidgetProvider extends AppWidgetProvider {
         int day = LessonNotifier.getDayOfYear();
         if(pref.getInt("last_day_shown", -1) != day) {
             WidgetService.updateWidgets(context);
+            TimeReceiver.getLessonNotifier(context).checkForNewNotifications();
 
             pref.edit().putInt("last_day_shown", day).apply();
         }
