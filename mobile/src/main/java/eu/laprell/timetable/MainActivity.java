@@ -137,6 +137,8 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
         mDrawerLayout.setScrimColor(Color.TRANSPARENT);
         mDrawerLayout.setDrawerListener(mDrawerListener);
 
+        mContent = findViewById(R.id.content);
+
         if(p.getBoolean("is_first_start", true)) {
             mDrawerLayout.openDrawer(Gravity.START);
 
@@ -145,8 +147,6 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
 
             p.edit().putBoolean("is_first_start", false).apply();
         }
-
-        mContent = findViewById(R.id.content);
 
         mAdView = (AdView) findViewById(R.id.adView);
         if(BuildConfig.DEBUG)
@@ -227,6 +227,8 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
     protected void onDestroy() {
         super.onDestroy();
         mAdView.destroy();
+
+        stopService(new Intent(this, BackgroundService.class));
     }
 
     @Override
