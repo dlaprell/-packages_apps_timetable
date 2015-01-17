@@ -79,6 +79,8 @@ public class LessonNotifier {
                 mNotifPref.edit().clear().commit();
                 mNotifPref.edit().putInt("version", VERSION).commit();
             }
+
+            checkForNewNotifications();
         }
     };
 
