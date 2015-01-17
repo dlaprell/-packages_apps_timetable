@@ -11,8 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.astuetz.PagerSlidingTabStrip;
-
 import eu.laprell.timetable.R;
 import eu.laprell.timetable.database.Day;
 
@@ -121,11 +119,4 @@ public class DayOverviewFragment extends BaseFragment {
             return mWeekdays[position];
         }
     }
-
-    private PagerSlidingTabStrip.CustomTabProvider mProvider = new PagerSlidingTabStrip.CustomTabProvider() {
-        @Override
-        public View getCustomTabView(ViewGroup viewGroup, int i) {
-            return null;
-        }
-    };
 }

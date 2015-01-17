@@ -13,7 +13,7 @@ android {
     }
     buildTypes {
         release {
-            //runProguard false
+            //minifyEnabled false
             //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
@@ -49,12 +49,6 @@ dependencies {
     compile 'com.github.flavienlaurent.datetimepicker:library:0.0.2'
 
     compile 'com.github.machinarius:preferencefragment:0.1.1'
-
-    compile 'com.jpardogo.materialtabstrip:library:1.0.6'
-
-    //compile 'com.github.alamkanak:android-week-view:1.1.7'
-
-    //compile 'com.github.johnkil.android-robototextview:robototextview:2.2.0'
 
     compile('de.psdev.licensesdialog:licensesdialog:1.6.0') {
         exclude module: 'support-v4'
