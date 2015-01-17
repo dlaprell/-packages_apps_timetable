@@ -1,5 +1,6 @@
 package eu.laprell.timetable.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -36,6 +37,13 @@ public class SettingsFragmentCompat extends PreferenceFragment implements Prefer
             prefs.findPreference("pref_enable_debug_notifications")
                     .setOnPreferenceChangeListener(this);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        getListView().setBackgroundColor(Color.WHITE);
     }
 
     @Override

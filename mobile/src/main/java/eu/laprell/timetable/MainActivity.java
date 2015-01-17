@@ -315,10 +315,16 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
         fragmentTransaction.replace(mContent.getId(), mFragment);
         fragmentTransaction.commit();
 
-        if(mFragment instanceof BaseFragment && Const.FW_SUPPORTS_DROP_SHADOWS) {
-            float elZ = MetricsUtils.convertDpToPixel(
-                    ((BaseFragment) mFragment).getToolbarElevationDp());
-            mToolbar.setElevation(elZ);
+        if(mFragment instanceof BaseFragment) {
+            BaseFragment base = ((BaseFragment) mFragment);
+
+            if(Const.FW_SUPPORTS_DROP_SHADOWS) {
+                float elZ = MetricsUtils.convertDpToPixel(
+                        base.getToolbarElevationDp());
+                mToolbar.setElevation(elZ);
+            }
+
+            mContent.setBackgroundColor(base.getBackgroundColor());
         }
     }
 

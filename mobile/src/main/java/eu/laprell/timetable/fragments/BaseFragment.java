@@ -1,5 +1,6 @@
 package eu.laprell.timetable.fragments;
 
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 
 import eu.laprell.timetable.MainApplication;
@@ -23,5 +24,9 @@ public class BaseFragment extends Fragment {
 
     public void onDrawerOverlaps(float overDrawWidth) {
 
+    }
+
+    public int getBackgroundColor() {
+        return 0xFFE3E3E3;
     }
 }

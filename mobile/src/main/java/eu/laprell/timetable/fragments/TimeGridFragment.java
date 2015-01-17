@@ -1,6 +1,7 @@
 package eu.laprell.timetable.fragments;
 
 import android.graphics.Color;
+import android.graphics.RectF;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ import eu.laprell.timetable.database.TimetableDatabase;
 import eu.laprell.timetable.utils.AnimUtils;
 import eu.laprell.timetable.utils.ArrayUtils;
 import eu.laprell.timetable.utils.MetricsUtils;
+import eu.laprell.timetable.widgets.PartialDrawFrameLayout;
 import eu.laprell.timetable.widgets.ShortLoadingDialog;
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 
@@ -75,7 +77,7 @@ public class TimeGridFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        ViewGroup v = (ViewGroup)inflater.inflate(
+        final ViewGroup v = (ViewGroup)inflater.inflate(
                 R.layout.fragment_timegrid, container, false);
 
         mTimeContainer = (LinearLayout)v.findViewById(R.id.time_container);
@@ -437,7 +439,7 @@ public class TimeGridFragment extends BaseFragment {
         private void showMoreMenu() {
             final ListPopupWindow popUp = new ListPopupWindow(getActivity());
             popUp.setAnchorView(mData.more);
-            popUp.setWidth((int) MetricsUtils.convertDpToPixel(180));
+            popUp.setWidth((int) MetricsUtils.convertDpToPixel(240));
             popUp.setVerticalOffset(-mData.more.getHeight());
             popUp.setModal(true);
             popUp.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -534,6 +536,11 @@ public class TimeGridFragment extends BaseFragment {
 
     public FragmentManager getSupportFragmentManager() {
         return getActivity().getSupportFragmentManager();
+    }
+
+    @Override
+    public int getBackgroundColor() {
+        return Color.TRANSPARENT;
     }
 
     public class SavingAsyncTask extends AsyncTask<Data, Void, Void> {

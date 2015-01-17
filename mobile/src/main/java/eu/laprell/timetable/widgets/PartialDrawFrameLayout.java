@@ -3,6 +3,8 @@ package eu.laprell.timetable.widgets;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.RectF;
+import android.graphics.Region;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
@@ -12,7 +14,10 @@ import android.widget.FrameLayout;
 public class PartialDrawFrameLayout extends FrameLayout {
 
     private boolean mPartialDraw;
-    private RectF mFrame;
+    private final RectF mFrame = new RectF();
+    private Region.Op mOp = Region.Op.XOR;
+
+    private int mSave;
 
     public PartialDrawFrameLayout(Context context) {
         super(context);
@@ -31,15 +36,24 @@ public class PartialDrawFrameLayout extends FrameLayout {
 
     private void init() {
         setWillNotDraw(false);
-        mFrame = new RectF();
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    public void draw(@NonNull Canvas canvas) {
         if(mPartialDraw) {
-            canvas.clipRect(mFrame.left, mFrame.top, mFrame.right, mFrame.bottom);
+            mSave = canvas.save();
+            canvas.clipRect(mFrame, mOp);
         }
+
         super.draw(canvas);
+    }
+
+    @Override
+    protected void dispatchDraw(@NonNull Canvas canvas) {
+        //Drawing children
+        if(mPartialDraw)
+            canvas.restoreToCount(mSave);
+        super.dispatchDraw(canvas);
     }
 
     public boolean isPartialDrawEnabled() {
@@ -62,5 +76,13 @@ public class PartialDrawFrameLayout extends FrameLayout {
             postInvalidate();
         }
         this.mFrame.set(mFrame);
+    }
+
+    public Region.Op getOp() {
+        return mOp;
+    }
+
+    public void setOp(Region.Op mOp) {
+        this.mOp = mOp;
     }
 }

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:paddingLeft="@dimen/keyline_left_space"
+    android:paddingRight="@dimen/keyline_left_space">
+
+    <com.github.adnansm.timelytextview.TimelyView
+        android:layout_width="48dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:padding="4dp"
+        android:gravity="center"
+        android:id="@+id/btn_num" />
+
+    <Button
+        android:layout_width="96dp"
+        android:layout_height="match_parent"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_marginLeft="72dp"
+        android:layout_marginStart="72dp"
+        android:id="@+id/btn_start_time" />
+
+    <Button
+        android:layout_width="96dp"
+        android:layout_height="match_parent"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_gravity="end"
+        android:layout_marginRight="72dp"
+        android:layout_marginEnd="72dp"
+        android:id="@+id/btn_end_time" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="-"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginLeft="72dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginRight="48dp"
+        android:layout_marginEnd="48dp"
+        android:layout_gravity="center_vertical|start"/>
+
+    <include
+        layout="@layout/times_list_item_more"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="center_vertical|end" />
+
+    <!--<View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#AAAAAA"
+        android:layout_marginLeft="56dp"
+        android:layout_marginStart="56dp" />-->
+
+</FrameLayout>

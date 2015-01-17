@@ -27,6 +27,7 @@ import android.widget.TextView;
 import eu.laprell.timetable.R;
 import eu.laprell.timetable.addon.Addons;
 import eu.laprell.timetable.background.MenuNavigation;
+import eu.laprell.timetable.utils.AnimUtils;
 import eu.laprell.timetable.utils.MetricsUtils;
 import eu.laprell.timetable.widgets.RippleFrameLayout2;
 import eu.laprell.timetable.widgets.RippleTouchImageView;
@@ -113,28 +114,35 @@ public class DrawerFragment extends Fragment {
         });
         mRecyclerView.setAdapter(mAdapter);
 
-        v.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+        AnimUtils.afterPreDraw(mRecyclerView, new Runnable() {
             @Override
-            public boolean onPreDraw() {
-                v.getViewTreeObserver().removeOnPreDrawListener(this);
-
+            public void run() {
                 Display display = getActivity().getWindowManager().getDefaultDisplay();
                 Point size = new Point();
                 display.getSize(size);
-                int width = size.x;
+                int screenWidth = size.x;
 
-                if(v.getWidth() > width - MetricsUtils.convertDpToPixel(56)) {
-                    ViewGroup.LayoutParams p = v.getLayoutParams();
-                    p.width = (int)(width - MetricsUtils.convertDpToPixel(56));
-                    v.setLayoutParams(p);
-                }
+                ViewGroup.LayoutParams p = mRecyclerView.getLayoutParams();
 
-                mTopImageHeight = (int) (mRecyclerView.getWidth() * (9f / 16f));
+                float drawerStWidth = screenWidth - MetricsUtils.convertDpToPixel(56); // 56dp toolbar height
+                float maxDesktopWidth = MetricsUtils.convertDpToPixel(360);
 
-                if(mDrawerTopContainer != null)
+                float drawerWidth = Math.min(drawerStWidth, maxDesktopWidth);
+
+                p.width = (int) drawerWidth;
+                mRecyclerView.setLayoutParams(p);
+
+                View parent = ((View) mRecyclerView.getParent());
+                ViewGroup.LayoutParams p2 = parent.getLayoutParams();
+                p2.width = p.width;
+                parent.setLayoutParams(p2);
+
+                mTopImageHeight = (int) (drawerWidth * (9f / 16f));
+
+                if (mDrawerTopContainer != null)
                     updateLPDrawerTop();
 
-                return true;
+                mRecyclerView.invalidate();
             }
         });
 
