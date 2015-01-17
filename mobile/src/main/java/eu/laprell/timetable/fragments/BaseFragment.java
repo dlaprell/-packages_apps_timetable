@@ -20,4 +20,8 @@ public class BaseFragment extends Fragment {
     public float getToolbarElevationDp() {
         return 4;
     }
+
+    public void onDrawerOverlaps(float overDrawWidth) {
+
+    }
 }

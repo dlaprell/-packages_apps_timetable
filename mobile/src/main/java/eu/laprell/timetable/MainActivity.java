@@ -76,6 +76,10 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
             mDrawerLayout.setColorFilter(Color.argb(c, 0, 0, 0), PorterDuff.Mode.SRC_ATOP);
 
             mDrawerToggle.onDrawerSlide(view, v);
+            mBackend.dispatchDrawerOpened(v, overDrawWidth);
+
+            if(mFragment instanceof BaseFragment)
+                ((BaseFragment) mFragment).onDrawerOverlaps(overDrawWidth);
         }
 
         @Override

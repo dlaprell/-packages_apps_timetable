@@ -75,6 +75,11 @@ public class DrawerFragment extends Fragment {
                 public int getDrawerContentWidth() {
                     return mRecyclerView.getWidth();
                 }
+
+                @Override
+                public void dispatchDrawerOpened(float cur, float hiddenW) {
+
+                }
             });
         }
     }
@@ -345,5 +350,6 @@ public class DrawerFragment extends Fragment {
         public void navigateMenu(int menu);
         public void reloadDrawer();
         public int getDrawerContentWidth();
+        public void dispatchDrawerOpened(float cur, float hW);
     }
 }
