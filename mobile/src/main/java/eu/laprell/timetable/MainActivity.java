@@ -109,6 +109,8 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        boolean noNav = true;
+
         SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
         if(!p.getBoolean("already_setup", false)) {
             startActivityForResult(new Intent(this, SetupActivity.class), 1);
@@ -137,6 +139,10 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
 
         if(p.getBoolean("is_first_start", true)) {
             mDrawerLayout.openDrawer(Gravity.START);
+
+            noNav = false;
+            mBackend.navigateMenu(MenuNavigation.Menu.MENU_TIME_GRID);
+
             p.edit().putBoolean("is_first_start", false).apply();
         }
 
@@ -153,8 +159,6 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
                 .build());
 
         startService(new Intent(this, BackgroundService.class));
-
-        boolean noNav = true;
 
         if(getIntent() != null && getIntent().getAction() != null) {
             String act = getIntent().getAction();
