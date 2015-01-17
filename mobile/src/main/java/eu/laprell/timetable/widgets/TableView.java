@@ -53,6 +53,7 @@ public class TableView extends View {
 
     private boolean mShowingTouchDown = false;
     private float mTouchX, mTouchY;
+    private int mTouchCellX, mTouchCellY;
 
     public TableView(Context context) {
         super(context);
@@ -321,19 +322,38 @@ public class TableView extends View {
             mTouchX = event.getX();
             mTouchY = event.getY();
 
-            saveCellLocation(mTouchCellRect, getCellXFromXLoc(mTouchX), getCellYFromYLoc(mTouchY));
+            mTouchCellX = getCellXFromXLoc(mTouchX);
+            mTouchCellY = getCellYFromYLoc(mTouchY);
+
+            saveCellLocation(mTouchCellRect, mTouchCellX, mTouchCellY);
 
             invalidate(mTouchCellRect);
         } else if (action == MotionEvent.ACTION_UP) {
             mShowingTouchDown = false;
             mTouchX = -1;
             mTouchY = -1;
+            mTouchCellX = -1;
+            mTouchCellY = -1;
             invalidate(mTouchCellRect);
         } else if(action == MotionEvent.ACTION_MOVE) {
             mTouchX = event.getX();
             mTouchY = event.getY();
-            saveCellLocation(mTouchCellRect, getCellXFromXLoc(mTouchX), getCellYFromYLoc(mTouchY));
-            invalidate(mTouchCellRect);
+
+            int cellX = getCellXFromXLoc(mTouchX);
+            int cellY = getCellYFromYLoc(mTouchY);
+
+            if(mTouchCellX != cellX || mTouchCellY != cellY) {
+                // Invalidate the "old" region
+                invalidate(mTouchCellRect);
+
+                saveCellLocation(mTouchCellRect, cellX, cellY);
+
+                mTouchCellX = cellX;
+                mTouchCellY = cellY;
+
+                // Now invalidate the new one
+                invalidate(mTouchCellRect);
+            }
         }
 
         return mDetector.onTouchEvent(event) || super.onTouchEvent(event);
