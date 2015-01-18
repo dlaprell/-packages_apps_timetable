@@ -341,8 +341,12 @@ public class TimeTableDayFragment2 extends BaseFragment {
                             ActivityTransitions.makeHeroTransitionFromLessonView(card, color, d.scale_config, i);
                             startActivityForResult(i, REQUEST_CODE_MAYBE_REFRESH);
 
-                            if(!Const.FW_SUPPORTS_HERO_TRANSITION)
-                                getActivity().overridePendingTransition(0, 0);
+                            if(isTabletLayout()) {
+
+                            } else {
+                                if (!Const.FW_SUPPORTS_HERO_TRANSITION)
+                                    getActivity().overridePendingTransition(0, 0);
+                            }
                         } else if (itemPosition == mList.size()) {
                             // Special case: Some time is missing!
                             if(mList.size() != 0

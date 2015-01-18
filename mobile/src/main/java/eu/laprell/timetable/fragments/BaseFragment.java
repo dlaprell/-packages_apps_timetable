@@ -1,9 +1,9 @@
 package eu.laprell.timetable.fragments;
 
-import android.graphics.Color;
 import android.support.v4.app.Fragment;
 
 import eu.laprell.timetable.MainApplication;
+import eu.laprell.timetable.R;
 import eu.laprell.timetable.background.LessonNotifier;
 
 /**
@@ -28,5 +28,9 @@ public class BaseFragment extends Fragment {
 
     public int getBackgroundColor() {
         return 0xFFE3E3E3;
+    }
+
+    public boolean isTabletLayout() {
+        return getResources().getBoolean(R.bool.is_tablet_720dp);
     }
 }
