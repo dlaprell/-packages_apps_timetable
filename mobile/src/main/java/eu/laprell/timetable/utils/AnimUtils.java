@@ -3,7 +3,6 @@ package eu.laprell.timetable.utils;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.annotation.SuppressLint;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.ListPopupWindow;
@@ -304,9 +303,11 @@ public class AnimUtils {
         }
     }
 
-    @SuppressLint("RtlHardcoded")
-    public static int[] getViewLoc(View v/*, int gravity*/) {
-        int[] loc = new int[2];
+    public static int[] getViewLoc(View v) {
+        return getViewLoc(v, new int[2]);
+    }
+
+    public static int[] getViewLoc(View v, int[]loc) {
         float pivX = v.getPivotX();
         float pivY = v.getPivotY();
 
@@ -317,18 +318,6 @@ public class AnimUtils {
 
         v.setPivotX(pivX);
         v.setPivotY(pivY);
-
-        /*if((gravity & Gravity.RIGHT) == Gravity.RIGHT) {
-            loc[0] += v.getWidth();
-        } else if((gravity & Gravity.CENTER_HORIZONTAL) == Gravity.CENTER_HORIZONTAL) {
-            loc[0] += v.getHeight() / 2;
-        }
-
-        if((gravity & Gravity.BOTTOM) == Gravity.BOTTOM) {
-            loc[0] += v.getWidth();
-        } else if((gravity & Gravity.CENTER_VERTICAL) == Gravity.CENTER_VERTICAL) {
-            loc[0] += v.getHeight() / 2;
-        }*/
 
         return loc;
     }
