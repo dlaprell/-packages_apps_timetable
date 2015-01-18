@@ -31,6 +31,7 @@ import java.util.ArrayList;
 
 import eu.laprell.timetable.R;
 import eu.laprell.timetable.animation.WaveAnimator;
+import eu.laprell.timetable.background.Logger;
 import eu.laprell.timetable.database.Day;
 import eu.laprell.timetable.database.DbAccess;
 import eu.laprell.timetable.database.TimeUnit;
@@ -105,15 +106,18 @@ public class TimeGridFragment extends BaseFragment {
         mList.add(d);
         updateAllNums(-3); // The newly created timeunit has an id of -1! So do not skip it
 
-        displayNewItem(mList.size() - 1, true);
+        int pos = mList.size() - 1;
+
+        prepareView(pos);
+        displayNewItem(d, pos, true);
 
         mTask.doExecute(d);
     }
 
     private void loadTable() {
-        new AsyncTask<Void, Void, Void>() {
+        new AsyncTask<Void, Void, WaveAnimator>() {
             @Override
-            protected Void doInBackground(Void... params) {
+            protected WaveAnimator doInBackground(Void... params) {
                 DbAccess access = new DbAccess(mProgress.getContext());
                 TimetableDatabase db = access.get();
 
@@ -136,49 +140,67 @@ public class TimeGridFragment extends BaseFragment {
                     access.close();
                 }
 
-                return null;
+                try {
+                    return buildWaveAnimator();
+                } catch (Exception ex) {
+                    Logger.log("TimeGridFragment", "Couldn't build WaveAnimator", ex);
+                    return null;
+                }
             }
 
             @Override
-            protected void onPostExecute(Void aVoid) {
+            protected void onPostExecute(WaveAnimator anim) {
                 AnimUtils.animateProgressExit(mProgress);
 
                 if(!isAdded()) {
                     return;
                 }
 
-                //final float distance = MetricsUtils.convertDpToPixel(64);
-                WaveAnimator anim = new WaveAnimator(new WaveAnimator.WaveAnimationApplier() {
-                    @Override
-                    public Animator makeAnimationForView(View v, Object data) {
-                        //ObjectAnimator move = ObjectAnimator.ofFloat(v, "translationY", distance, 0);
-                        ObjectAnimator alpha = ObjectAnimator.ofObject(v, MOVE_IN_PROPERTY,
-                                new MoveUpEvaluator(), 0f, 1f);
-
-                        //AnimatorSet set = new AnimatorSet();
-                        //set.playTogether(move, alpha);
-                        alpha.setDuration(150);
-                        alpha.setInterpolator(new DecelerateInterpolator());
-                        alpha.addListener(new AnimUtils.LayerAdapter(v));
-
-                        return alpha;
-                    }
-                });
-                anim.setSpeed(MetricsUtils.convertDpToPixel(72));
-                int[] loc = AnimUtils.getViewLoc(mTimeContainer);
-                loc[0] += mTimeContainer.getWidth() / 2;
-                anim.setStartPoint(loc);
-                anim.setComputeMoreExactly(true);
+                if(anim == null) // Fallback solution
+                    anim = buildWaveAnimator();
 
                 for (int i = 0;i < mList.size();i++) {
-                    View v = displayNewItem(i, false);
-                    v.setAlpha(0f);
-                    anim.addTarget(v);
+                    displayNewItem(mList.get(i), i, false);
                 }
 
                 anim.startOnPreDraw(mTimeContainer);
             }
         }.execute();
+    }
+
+    private WaveAnimator buildWaveAnimator() {
+        WaveAnimator anim = new WaveAnimator(new WaveAnimator.WaveAnimationApplier() {
+            @Override
+            public Animator makeAnimationForView(View v, Object data) {
+                ObjectAnimator moveIn = ObjectAnimator.ofObject(v, MOVE_IN_PROPERTY,
+                        new MoveUpEvaluator(), 0f, 1f);
+
+                moveIn.setDuration(150);
+                moveIn.setInterpolator(new DecelerateInterpolator());
+                moveIn.addListener(new AnimUtils.LayerAdapter(v));
+
+                return moveIn;
+            }
+        });
+        anim.setSpeed(MetricsUtils.convertDpToPixel(72));
+        int[] loc = AnimUtils.getViewLoc(mTimeContainer);
+        loc[0] += mTimeContainer.getWidth() / 2;
+        anim.setStartPoint(loc);
+        anim.setComputeMoreExactly(true);
+
+        for (int i = 0;i < mList.size();i++) {
+            View v = prepareView(i);
+            v.setAlpha(0f);
+
+            Data d = mList.get(i);
+            updateTime(d);
+            int num = getNumToShow(d);
+            if(num >= 0)d.numView.setNumber(num);
+
+            anim.addTarget(v);
+        }
+
+        return anim;
     }
 
     private static final float DISTANCE = MetricsUtils.convertDpToPixel(32);
@@ -203,28 +225,23 @@ public class TimeGridFragment extends BaseFragment {
         }
     }
 
-    private View displayNewItem(int pos, boolean withAnimation) {
+    private View prepareView(int pos) {
         Data d = mList.get(pos);
 
         d.view = LayoutInflater.from(mTimeContainer.getContext()).inflate(
                 R.layout.list_item_time_grid, mTimeContainer, false);
         d.lis = new ButtonClickListener(d);
 
+        return d.view;
+    }
+
+    private void displayNewItem(Data d, int pos, boolean withAnimation) {
         if(withAnimation) {
             updateView(d);
             AnimUtils.animateViewAddingInLayout(d.view, mTimeContainer, pos);
         } else {
-            updateTime(d);
-            //int num = getNumToShow(d);
-            //if(num >= 0)d.numView.setNumber(num);
-            ObjectAnimator a = animateNumView(d);
-            a.setDuration(0);
-            a.start();
-
             mTimeContainer.addView(d.view, pos);
         }
-
-        return d.view;
     }
 
     private void updateView(Data d) {

@@ -110,7 +110,12 @@ public class TimelyView extends View {
         int avW = w - (getPaddingLeft() + getPaddingRight());
         int avH = h - (getPaddingTop() + getPaddingBottom());
 
-        mMinDimens = Math.min(avW, avH);
+        float newMinDimen = Math.min(avW, avH);
+
+        if(newMinDimen != mMinDimens) {
+            mMinDimens = newMinDimen;
+            initControlPoints();
+        }
     }
 
     @Override
