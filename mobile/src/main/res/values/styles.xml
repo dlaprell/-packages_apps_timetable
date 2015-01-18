@@ -55,4 +55,8 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
+    <style name="NoEnterAnimationWindow">
+        <item name="android:windowEnterAnimation">@null</item>
+    </style>
+
 </resources>

@@ -1,7 +1,6 @@
 package eu.laprell.timetable.fragments;
 
 import android.graphics.Color;
-import android.graphics.RectF;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -39,7 +38,6 @@ import eu.laprell.timetable.database.TimetableDatabase;
 import eu.laprell.timetable.utils.AnimUtils;
 import eu.laprell.timetable.utils.ArrayUtils;
 import eu.laprell.timetable.utils.MetricsUtils;
-import eu.laprell.timetable.widgets.PartialDrawFrameLayout;
 import eu.laprell.timetable.widgets.ShortLoadingDialog;
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 
@@ -159,7 +157,7 @@ public class TimeGridFragment extends BaseFragment {
 
                         //AnimatorSet set = new AnimatorSet();
                         //set.playTogether(move, alpha);
-                        alpha.setDuration(200);
+                        alpha.setDuration(150);
                         alpha.setInterpolator(new DecelerateInterpolator());
                         alpha.addListener(new AnimUtils.LayerAdapter(v));
 
@@ -183,7 +181,7 @@ public class TimeGridFragment extends BaseFragment {
         }.execute();
     }
 
-    private static final float DISTANCE = MetricsUtils.convertDpToPixel(24);
+    private static final float DISTANCE = MetricsUtils.convertDpToPixel(32);
     private static final Property<View, Float> MOVE_IN_PROPERTY
             = new Property<View, Float>(Float.class, "moveIn") {
         @Override
@@ -438,6 +436,7 @@ public class TimeGridFragment extends BaseFragment {
 
         private void showMoreMenu() {
             final ListPopupWindow popUp = new ListPopupWindow(getActivity());
+            popUp.setAnimationStyle(R.style.NoEnterAnimationWindow);
             popUp.setAnchorView(mData.more);
             popUp.setWidth((int) MetricsUtils.convertDpToPixel(240));
             popUp.setVerticalOffset(-mData.more.getHeight());

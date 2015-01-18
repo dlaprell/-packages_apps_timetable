@@ -105,6 +105,7 @@ public class TimeTableDayFragment2 extends BaseFragment {
         mEditAdapter = new ArrayAdapter<>(getActivity(), R.layout.popup_window_text,
                 android.R.id.text1, options);
         mEditList = new ListPopupWindow(getActivity());
+        mEditList.setAnimationStyle(R.style.NoEnterAnimationWindow);
         mEditList.setAdapter(mEditAdapter);
         mEditList.setModal(true);
         mEditList.setOnItemClickListener(new AdapterView.OnItemClickListener() {

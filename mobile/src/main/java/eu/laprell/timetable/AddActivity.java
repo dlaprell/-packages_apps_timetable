@@ -102,6 +102,7 @@ public class AddActivity extends ActionBarActivity {
 
         mAdapter = new AddAdapter();
         mAddList = new ListPopupWindow(this);
+        mAddList.setAnimationStyle(R.style.NoEnterAnimationWindow);
         mAddList.setAnchorView(mAddButton);
 
         mAddList.setAdapter(mAdapter);
