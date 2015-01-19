@@ -188,6 +188,8 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
         }
 
         WidgetService.updateWidgets(this);
+
+        getWindow().setBackgroundDrawable(null);
     }
 
     private void checkForOpenDay() {
