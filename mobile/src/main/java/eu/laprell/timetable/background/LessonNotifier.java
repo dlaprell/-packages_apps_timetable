@@ -42,6 +42,8 @@ import eu.laprell.timetable.utils.Const;
 @SuppressLint("CommitPrefEdits")
 public class LessonNotifier {
 
+    // TODO: How do we handle changing years?
+
     private static final String TAG = "LessonNotifier";
     private static final int VERSION = 1;
 
@@ -218,13 +220,16 @@ public class LessonNotifier {
                 return;
             }
 
-            time = 0;
+            time = -1;
             skip = -1;
+            skipTime = -1;
         }
     }
 
     private long checkForDayAndFromTime(int d, long time, long skip, int skipAllBefore) {
         Day day = mDatabase.getDayForDayOfWeek(d);
+
+        final int dayOfYear = getDayOfYear() + calculateDayDelta(day);
 
         for(TimeUnit t : mTimes) {
             String txt = d + " at " + getDateM(t.getStartTime());
@@ -238,13 +243,13 @@ public class LessonNotifier {
                     continue;
                 }
 
-                if(!isAlarmAlreadySet(day.getDayOfWeek(), t)) {
+                if(!isAlarmAlreadySet(dayOfYear, t)) {
                     Calendar c = generateNotificationTime(day, t);
                     PendingIntent pIn = buildIntentForWakeup(day, t);
 
                     updateForNextWakeUp(pIn, c.getTimeInMillis());
 
-                    saveNotifAlarmSet(day.getDayOfWeek(), t);
+                    saveNotifAlarmSet(dayOfYear, t);
 
                     return t.getId();
                 } else {
@@ -419,6 +424,13 @@ public class LessonNotifier {
         return b;
     }
 
+    private int calculateDayDelta(Day d) {
+        if(getDayOfWeek() > d.getDayOfWeek())
+            return (d.getDayOfWeek() + 7) - getDayOfWeek();
+        else
+            return d.getDayOfWeek() - getDayOfWeek();
+    }
+
     /**
      *
      * @param d the day at which the notification will be triggered
@@ -428,12 +440,7 @@ public class LessonNotifier {
     private Calendar generateNotificationTime(Day d, TimeUnit t) {
         Calendar c = Calendar.getInstance();
 
-        int deltaDays;
-        if(getDayOfWeek() > d.getDayOfWeek())
-            deltaDays = (d.getDayOfWeek() + 7) - getDayOfWeek();
-        else
-            deltaDays = d.getDayOfWeek() - getDayOfWeek();
-        c.add(Calendar.DAY_OF_YEAR, deltaDays);
+        c.add(Calendar.DAY_OF_YEAR, calculateDayDelta(d));
 
         final int h = t.getStartTime() / 60;
         final int m = t.getStartTime() % 60;
@@ -451,7 +458,7 @@ public class LessonNotifier {
 
     /**
      * Will save the prop that the alarm was set
-     * @param day day of week
+     * @param day day of year
      * @param t time
      */
     private void saveNotifAlarmSet(int day, TimeUnit t) {
@@ -485,8 +492,8 @@ public class LessonNotifier {
         return (time / 60) + ":" + (time % 60);
     }
 
-    private boolean isAlarmAlreadySet(int d, TimeUnit t) {
-        return mNotifPref.getInt(getPrefFor(d, t.getId()), -1)
+    private boolean isAlarmAlreadySet(int dayOfYear, TimeUnit t) {
+        return mNotifPref.getInt(getPrefFor(dayOfYear, t.getId()), -1)
                 == t.getStartTime();
     }
 
@@ -495,8 +502,8 @@ public class LessonNotifier {
                 == getDayOfYear();
     }
 
-    private static String getPrefFor(int day, long tid) {
-        return "notif_chk_" + String.valueOf(day) + "-" + String.valueOf(tid);
+    private static String getPrefFor(int dayOfYear, long tid) {
+        return "notif_chk_" + String.valueOf(dayOfYear) + "-" + String.valueOf(tid);
     }
 
     private static String getNotiPrefFor(int day, long tid) {
