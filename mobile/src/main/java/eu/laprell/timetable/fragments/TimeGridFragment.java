@@ -39,6 +39,7 @@ import eu.laprell.timetable.database.TimetableDatabase;
 import eu.laprell.timetable.utils.AnimUtils;
 import eu.laprell.timetable.utils.ArrayUtils;
 import eu.laprell.timetable.utils.MetricsUtils;
+import eu.laprell.timetable.utils.misc.FlWrapper;
 import eu.laprell.timetable.widgets.ShortLoadingDialog;
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 
@@ -173,7 +174,7 @@ public class TimeGridFragment extends BaseFragment {
             @Override
             public Animator makeAnimationForView(View v, Object data) {
                 ObjectAnimator moveIn = ObjectAnimator.ofObject(v, MOVE_IN_PROPERTY,
-                        new MoveUpEvaluator(), 0f, 1f);
+                        new MoveUpEvaluator(), FlWrapper.of(0f), FlWrapper.of(1f));
 
                 moveIn.setDuration(150);
                 moveIn.setInterpolator(new DecelerateInterpolator());
@@ -204,24 +205,31 @@ public class TimeGridFragment extends BaseFragment {
     }
 
     private static final float DISTANCE = MetricsUtils.convertDpToPixel(32);
-    private static final Property<View, Float> MOVE_IN_PROPERTY
-            = new Property<View, Float>(Float.class, "moveIn") {
+    private static final Property<View, FlWrapper> MOVE_IN_PROPERTY
+            = new Property<View, FlWrapper>(FlWrapper.class, "moveIn") {
+
+        final FlWrapper mFloat = new FlWrapper();
+
         @Override
-        public Float get(View object) {
-            return object.getAlpha();
+        public FlWrapper get(View object) {
+            mFloat.mValue = object.getAlpha();
+            return mFloat;
         }
 
         @Override
-        public void set(View object, Float value) {
-            object.setAlpha(value);
-            object.setTranslationY(DISTANCE * (1f - value));
+        public void set(View object, FlWrapper value) {
+            object.setAlpha(value.mValue);
+            object.setTranslationY(DISTANCE * (1f - value.mValue));
         }
     };
 
-    private class MoveUpEvaluator implements TypeEvaluator<Float> {
+    private class MoveUpEvaluator implements TypeEvaluator<FlWrapper> {
+        private FlWrapper mFloat = new FlWrapper();
+
         @Override
-        public Float evaluate(float fraction, Float startValue, Float endValue) {
-            return startValue + ((endValue - startValue) * fraction);
+        public FlWrapper evaluate(float fraction, FlWrapper startValue, FlWrapper endValue) {
+            mFloat.mValue =  startValue.mValue + ((endValue.mValue - startValue.mValue) * fraction);
+            return mFloat;
         }
     }
 
