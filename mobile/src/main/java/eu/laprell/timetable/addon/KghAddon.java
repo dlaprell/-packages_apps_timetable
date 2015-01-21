@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import eu.laprell.timetable.R;
-import eu.laprell.timetable.database.Teacher;
 import eu.laprell.timetable.database.TimeUnit;
 import eu.laprell.timetable.database.TimetableDatabase;
 import eu.laprell.timetable.utils.PrefUtils;
@@ -65,21 +64,18 @@ public class KghAddon {
     }
 
     public static void initSchool(SharedPreferences pref) {
-        pref.edit().putInt("school_id", Addons.Ids.ID_KREISGYMNASIUM_HEINSBERG).apply();
+        pref.edit().putInt("school_id", Addons.Ids.ID_CORNELIUS_BURGH_GYMNASIUM_HEINSBERG).apply();
     }
 
     public static void addTeachers(Context c, TimetableDatabase db) {
         String[] teachersList = c.getResources().getStringArray(R.array.addon_array_kgh_teachers);
 
-        Teacher t = new Teacher(-1);
-        for (int i = 0;i < teachersList.length;i++) {
-            String[] data = teachersList[i].split("\\|");
+        int[] columnOrder = new int[] {
+                Addons.INDEX_PREFIX,
+                Addons.INDEX_FIRSTNAME,
+                Addons.INDEX_LASTNAME
+        };
 
-            t.setPrefix(data[0]); // Should be at least Herr
-            t.setFirstName(data[1].length() == 0 ? null : data[1]);
-            t.setSecondName(data[2]);
-
-            db.insertDatabaseEntryForId(t);
-        }
+        Addons.insertTeachers(teachersList, columnOrder, db);
     }
 }
