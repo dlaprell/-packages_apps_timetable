@@ -45,7 +45,7 @@ public class LessonNotifier {
     // TODO: How do we handle changing years?
 
     private static final String TAG = "LessonNotifier";
-    private static final int VERSION = 1;
+    private static final int VERSION = 2;
 
     private static final long RES_ALARM_ALREADY_SET = -1;
     private static final long RES_NOTHING_FOUND = -2;
@@ -55,6 +55,8 @@ public class LessonNotifier {
 
     private Handler mHandler, mUiHandler;
     private TimetableDatabase mDatabase;
+
+    @SuppressWarnings("FieldCanBeLocal")
     private Thread mThread = new Thread(new Runnable() {
         @Override
         public void run() {
@@ -210,15 +212,18 @@ public class LessonNotifier {
 
             long result = checkForDayAndFromTime(d, time, skip, skipTime);
 
-            Logger.log(TAG, "Got result=" + result);
-
+            String res = "";
             if(result == RES_ALARM_ALREADY_SET) {
-                return;
+                res = "RES_ALARM_ALREADY_SET";
             } else if (result == RES_NOTHING_FOUND) {
-                Logger.log(TAG, "We found nothing - go to next day");
+                res = "RES_NOTHING_FOUND; going to next day";
             } else {
-                return;
+                res = String.valueOf(result);
             }
+            Logger.log(TAG, "Got result=" + res);
+
+            if(result != RES_NOTHING_FOUND)
+                return;
 
             time = -1;
             skip = -1;
@@ -229,11 +234,11 @@ public class LessonNotifier {
     private long checkForDayAndFromTime(int d, long time, long skip, int skipAllBefore) {
         Day day = mDatabase.getDayForDayOfWeek(d);
 
-        final int dayOfYear = getDayOfYear() + calculateDayDelta(day);
-
         for(TimeUnit t : mTimes) {
-            String txt = d + " at " + getDateM(t.getStartTime());
-            Logger.log(TAG, txt);
+            //String txt = d + " at " + getDateM(t.getStartTime());
+            //Logger.log(TAG, txt);
+
+            final Calendar c = generateNotificationTime(day, t);
 
             if(t.isAfter(time) && t.getStartTime() > skipAllBefore) {
                 if(t.getId() == skip) {
@@ -243,13 +248,12 @@ public class LessonNotifier {
                     continue;
                 }
 
-                if(!isAlarmAlreadySet(dayOfYear, t)) {
-                    Calendar c = generateNotificationTime(day, t);
+                if(!isAlarmAlreadySet(c, t)) {
                     PendingIntent pIn = buildIntentForWakeup(day, t);
 
                     updateForNextWakeUp(pIn, c.getTimeInMillis());
 
-                    saveNotifAlarmSet(dayOfYear, t);
+                    saveNotifAlarmSet(c, t);
 
                     return t.getId();
                 } else {
@@ -258,7 +262,7 @@ public class LessonNotifier {
                     return -1;
                 }
             } else if(t.getStartTime() > time && t.getEndTime() < time) {
-                if(!isAlreadyNotifiedToday(day.getDayOfWeek(), t)) {
+                if(!isAlreadyNotifiedToday(c, t)) {
                     //makeNotification()
 
                     Logger.log(TAG, "Is in time with: " + getDateM(t.getStartTime()) + " " + t.getId());
@@ -285,11 +289,12 @@ public class LessonNotifier {
                 return false;
             }
 
-            mNotifPref.edit().putInt(getNotiPrefFor(day.getDayOfWeek(),
-                    time.getId()), getDayOfYear()).apply();
+            Calendar c = generateNotificationTime(day, time);
+
+            mNotifPref.edit().putInt(getNotiPrefFor(c, time.getId()), getDayOfYear()).apply();
         }
 
-        Place place = null;
+        Place place;
         if(test) {
             place = new Place(-1);
             place.setTitle("Test-Place");
@@ -298,7 +303,7 @@ public class LessonNotifier {
                     day.getPlaceIdAt(time));
         }
 
-        Teacher teacher = null;
+        Teacher teacher;
         if(test) {
             teacher = new Teacher(-1);
             teacher.setPrefix("Herr Prof.");
@@ -434,7 +439,7 @@ public class LessonNotifier {
     /**
      *
      * @param d the day at which the notification will be triggered
-     * @param t the timeunit desribing the time at which the notification will be triggered
+     * @param t the timeunit describing the time at which the notification will be triggered
      * @return the calendar that was generated
      */
     private Calendar generateNotificationTime(Day d, TimeUnit t) {
@@ -456,13 +461,8 @@ public class LessonNotifier {
         return c;
     }
 
-    /**
-     * Will save the prop that the alarm was set
-     * @param day day of year
-     * @param t time
-     */
-    private void saveNotifAlarmSet(int day, TimeUnit t) {
-        mNotifPref.edit().putInt(getPrefFor(day, t.getId()), t.getStartTime()).commit();
+    private void saveNotifAlarmSet(Calendar c, TimeUnit t) {
+        mNotifPref.edit().putInt(getPrefFor(c, t.getId()), t.getStartTime()).commit();
     }
 
     private PendingIntent buildIntentForWakeup(Day d, TimeUnit t) {
@@ -492,22 +492,27 @@ public class LessonNotifier {
         return (time / 60) + ":" + (time % 60);
     }
 
-    private boolean isAlarmAlreadySet(int dayOfYear, TimeUnit t) {
-        return mNotifPref.getInt(getPrefFor(dayOfYear, t.getId()), -1)
+    private boolean isAlarmAlreadySet(Calendar c, TimeUnit t) {
+        return mNotifPref.getInt(getPrefFor(c, t.getId()), -1)
                 == t.getStartTime();
     }
 
-    private boolean isAlreadyNotifiedToday(int day, TimeUnit t) {
-        return mNotifPref.getInt(getNotiPrefFor(day, t.getId()), -1)
+    private boolean isAlreadyNotifiedToday(Calendar c, TimeUnit t) {
+        return mNotifPref.getInt(getNotiPrefFor(c, t.getId()), -1)
                 == getDayOfYear();
     }
 
-    private static String getPrefFor(int dayOfYear, long tid) {
-        return "notif_chk_" + String.valueOf(dayOfYear) + "-" + String.valueOf(tid);
+    private static String getPrefFor(Calendar c, long tid) {
+        return "notif_chk_" + getBaseStringPrefFor(c, tid);
     }
 
-    private static String getNotiPrefFor(int day, long tid) {
-        return "notif_notified_" + String.valueOf(day) + "-" + String.valueOf(tid);
+    private static String getNotiPrefFor(Calendar c, long tid) {
+        return "notif_notified_" + getBaseStringPrefFor(c, tid);
+    }
+
+    private static String getBaseStringPrefFor(Calendar c, long tid) {
+        return String.valueOf(c.get(Calendar.YEAR))
+                + "-" + String.valueOf(c.get(Calendar.DAY_OF_YEAR)) + "-" + String.valueOf(tid);
     }
 
     /**
