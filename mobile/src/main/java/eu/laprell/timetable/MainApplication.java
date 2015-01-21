@@ -1,6 +1,7 @@
 package eu.laprell.timetable;
 
 import android.app.Application;
+import android.content.Context;
 
 import eu.laprell.timetable.animation.ActivityTransitions;
 import eu.laprell.timetable.background.LessonNotifier;
@@ -13,6 +14,8 @@ import eu.laprell.timetable.background.SpecialBitmapCache;
 public class MainApplication extends Application {
 
     public static boolean sLoggingEnabled = false;
+
+    private static MainApplication sApplication;
 
     private ActivityTransitions mTransitions;
     private LessonNotifier mNotifier;
@@ -28,6 +31,8 @@ public class MainApplication extends Application {
 
         mTransitions = ActivityTransitions.init(this);
         SpecialBitmapCache.init(this);
+
+        sApplication = this;
     }
 
     public LessonNotifier getLessonNotifier() {
@@ -50,5 +55,15 @@ public class MainApplication extends Application {
         saveLogSettings();
 
         super.onTerminate();
+
+        if (sApplication == this)
+            sApplication = null;
+    }
+
+    public static LessonNotifier getLessonNotifier(Context c) {
+        if (sApplication != null && c.getPackageName().equals(sApplication.getPackageName()))
+            return sApplication.getLessonNotifier();
+        else
+            return null;
     }
 }

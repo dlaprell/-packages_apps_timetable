@@ -22,12 +22,6 @@ public class TimeReceiver extends BroadcastReceiver {
     }
 
     public static LessonNotifier getLessonNotifier(Context c) {
-        if(c.getApplicationContext() instanceof MainApplication) {
-            return ((MainApplication) c.getApplicationContext()).getLessonNotifier();
-        } else {
-            Logger.log("TimeReceiver", "Couldn't get Application from ApplicationContext: "
-                    + c.getApplicationContext().toString());
-            return new LessonNotifier(c);
-        }
+        return MainApplication.getLessonNotifier(c);
     }
 }
