@@ -10,8 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import eu.laprell.timetable.R;
+import eu.laprell.timetable.addon.CorneliusBurghAddon;
 import eu.laprell.timetable.addon.KghAddon;
 import eu.laprell.timetable.fragments.interfaces.SetupResultInterface;
 import eu.laprell.timetable.widgets.ShortLoadingDialog;
@@ -60,19 +63,24 @@ public class SetupListFragment extends BaseFragment {
     public class ViewHolder extends RecyclerView.ViewHolder {
         @SuppressWarnings("unused")
         private View mRootView;
+        private ImageView mBackImage;
+        private TextView mText;
 
         public ViewHolder(View v) {
             super(v);
 
             mRootView = v;
             v.setOnClickListener(mListener);
+
+            mBackImage = (ImageView)v.findViewById(R.id.image);
+            mText = (TextView)v.findViewById(R.id.school_name);
         }
     }
 
     private View.OnClickListener mListener = new View.OnClickListener() {
         @Override
         public void onClick(final View v) {
-            int pos = mRecyclerView.getChildPosition(v);
+            final int pos = mRecyclerView.getChildPosition(v);
 
             if(pos == 0) {
                 mCallback.makeCustomSchool();
@@ -82,7 +90,11 @@ public class SetupListFragment extends BaseFragment {
                 new AsyncTask<Void, Void, Void>() {
                     @Override
                     protected Void doInBackground(Void... params) {
-                        KghAddon.runAddon(v.getContext());
+                        if(pos == 1) {
+                            KghAddon.runAddon(v.getContext());
+                        } else if(pos == 2) {
+                            CorneliusBurghAddon.runAddon(v.getContext());
+                        }
                         return null;
                     }
 
@@ -126,14 +138,34 @@ public class SetupListFragment extends BaseFragment {
             return vh;
         }
 
+        @SuppressWarnings("ConstantConditions")
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
+            if(position > 0) {
+                String schoolName = null;
+                int resId = -1;
 
+                switch (position) {
+                    case 1:
+                        schoolName = "Kreisgymnasium Heinsberg";
+                        resId = R.drawable.kgh;
+                        break;
+                    case 2:
+                        schoolName = "Cornelius-Burgh-Gymnasium Erkelenz";
+                        resId = R.drawable.conny;
+                        break;
+                }
+
+                if (schoolName != null && resId != -1) {
+                    holder.mBackImage.setImageResource(resId);
+                    holder.mText.setText(schoolName);
+                }
+            }
         }
 
         @Override
         public int getItemCount() {
-            return 2;
+            return 3;
         }
     }
 

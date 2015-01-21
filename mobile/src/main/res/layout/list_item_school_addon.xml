@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="180dp">
 
@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:id="@+id/image"
         android:scaleType="centerCrop"
-        android:src="@drawable/kgh" />
+        tools:src="@drawable/kgh" />
 
     <View
         android:layout_width="match_parent"
@@ -21,12 +21,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:id="@+id/school_name"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:paddingBottom="16dp"
         android:textColor="@android:color/white"
         android:textStyle="bold"
         android:textSize="24sp"
-        android:text="Kreisgymnasium Heinsberg" />
+        tools:text="Kreisgymnasium Heinsberg" />
 
 </FrameLayout>

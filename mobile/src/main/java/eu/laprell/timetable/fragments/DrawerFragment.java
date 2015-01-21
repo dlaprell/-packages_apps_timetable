@@ -19,7 +19,6 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -168,6 +167,9 @@ public class DrawerFragment extends Fragment {
                     if(schoolId == Addons.Ids.ID_KREISGYMNASIUM_HEINSBERG) {
                         mSchoolImageId = R.drawable.kgh;
                         mSchoolName = "Kreisgymnasium Heinsberg";
+                    } else if (schoolId == Addons.Ids.ID_CORNELIUS_BURGH_GYMNASIUM_HEINSBERG) {
+                        mSchoolImageId = R.drawable.conny;
+                        mSchoolName = "Cornelius-Burgh-Gymnasium";
                     }
                 } else {
                     mSchoolName = "";

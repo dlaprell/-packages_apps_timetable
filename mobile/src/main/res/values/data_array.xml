@@ -215,36 +215,36 @@
 
     <string-array name="addon_array_cbge_teachers" translatable="false">
         <item>Arbter|Frau|Nicole</item>
-        <item>Banerjee||Robin</item>
+        <item>Banerjee|Herr|Robin</item>
         <item>Barnard|Frau|Lisa</item>
-        <item>Berndsen||Guido</item>
-        <item>Boidol||Peter</item>
-        <item>Braken||Bernd</item>
-        <item>Bürger||Georg</item>
-        <item>Choné||Georg</item>
-        <item>Deckwirth||Dr.Emil</item>
-        <item>Eckhardt||Margitta</item>
+        <item>Berndsen|Herr|Guido</item>
+        <item>Boidol|Herr|Peter</item>
+        <item>Braken|Herr|Bernd</item>
+        <item>Bürger|Herr|Georg</item>
+        <item>Choné|Herr|Georg</item>
+        <item>Deckwirth|Herr Dr.|Emil</item>
+        <item>Eckhardt|Herr|Margitta</item>
         <item>Engel|Frau|Claudia</item>
         <item>Funke|Frau|Denise</item>
         <item>Geller-Lennartz|Frau|Ulrike</item>
-        <item>Hackbarth||Björn</item>
-        <item>Hartert||Anne</item>
-        <item>Heck||Richard</item>
+        <item>Hackbarth|Herr|Björn</item>
+        <item>Hartert|Frau|Anne</item>
+        <item>Heck|Herr|Richard</item>
         <item>Heimburg|Frau|Sylke</item>
         <item>Hewelt|Frau|Corine</item>
         <item>Hömke-Nagel|Frau|Petra</item>
         <item>Jannusch|Frau|Angela</item>
-        <item>Jütten||Hans-Peter</item>
+        <item>Jütten|Herr|Hans-Peter</item>
         <item>Klahm|Frau|Ingrid</item>
         <item>Kleinen|Frau|Birgit</item>
         <item>Klimke|Frau|Verena</item>
         <item>Knippertz|Frau|Nicola</item>
-        <item>Koch-Wittmann||Inge</item>
+        <item>Koch-Wittmann|Frau|Inge</item>
         <item>Kohlbau|Frau|Saskia</item>
         <item>Krügel|Frau|Kerstin</item>
-        <item>Krüger||Oliver</item>
+        <item>Krüger|Herr|Oliver</item>
         <item>Kuck|Frau|Daniela</item>
-        <item>Küper||Jan-Hendrik</item>
+        <item>Küper|Herr|Jan-Hendrik</item>
         <item>Küppers-Fiebig|Frau Dr.|Renate</item>
         <item>Lawson||Callum</item>
         <item>Lenz|Frau|Simone</item>
@@ -253,39 +253,39 @@
         <item>Lönne|Frau|Monika</item>
         <item>Lowis-Auth|Frau|Astrid</item>
         <item>Maahsen|Frau|Sandra</item>
-        <item>Moll||Axel</item>
+        <item>Moll|Herr|Axel</item>
         <item>Mork|Frau Dr.|Helga</item>
         <item>Moß|Frau|Irmgard</item>
         <item>Muyzers|Frau|Melanie</item>
         <item>Neunzig|Frau|Desirée</item>
         <item>Nonn|Frau|Stephanie</item>
-        <item>Nowak||Markus</item>
-        <item>Nübold||Thorsten</item>
-        <item>Otto||Klaus</item>
+        <item>Nowak|Herr|Markus</item>
+        <item>Nübold|Herr|Thorsten</item>
+        <item>Otto|Herr|Klaus</item>
         <item>Pape|Frau|Katharina</item>
         <item>Pippich||Katrin</item>
         <item>Rhyßen|Frau|Melanie</item>
         <item>Ricklefs|Frau|Mirjam</item>
         <item>Schneider|Frau|Ursula</item>
-        <item>Schorn||Nicolas</item>
+        <item>Schorn|Herr|Nicolas</item>
         <item>Schröder|Frau|Elke</item>
-        <item>Schröer||Willi</item>
+        <item>Schröer|Herr|Willi</item>
         <item>Settele-Mangels|Frau|Karin</item>
         <item>Stute|Frau|Barbara</item>
-        <item>Tamburrino||Sandro</item>
-        <item>Terbrüggen||Dirk</item>
-        <item>Trautwein||Jürgen</item>
+        <item>Tamburrino|Herr|Sandro</item>
+        <item>Terbrüggen|Herr|Dirk</item>
+        <item>Trautwein|Herr|Jürgen</item>
         <item>Tüffers|Frau|Julia</item>
         <item>von Lechberg|Frau|Gabriele</item>
-        <item>Voß||Michael</item>
-        <item>Weber||Johannau</item>
-        <item>Wiewer-Becker||Agnes</item>
-        <item>Zambanini||Saskia</item>
-        <item>Zimmermann||Tobias</item>
+        <item>Voß|Herr|Michael</item>
+        <item>Weber|Frau|Johanna</item>
+        <item>Wiewer-Becker|Frau|Agnes</item>
+        <item>Zambanini|Frau|Saskia</item>
+        <item>Zimmermann|Herr|Tobias</item>
         <item>Bruchmann|Frau|Madeleine</item>
         <item>Dauben|Frau|Miriam</item>
         <item>Heese||Janneck</item>
-        <item>Jansen||Andreas</item>
+        <item>Jansen|Herr|Andreas</item>
         <item>Krebbel|Frau|Birte</item>
     </string-array>
 
