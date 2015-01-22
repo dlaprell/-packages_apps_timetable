@@ -180,12 +180,17 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
             }
         }
 
-        if (savedInstanceState != null && noNav) {
-            mShouldDisplayDay = savedInstanceState.getInt("show_day",
-                    BackgroundService.getDayOfWeek());
-            mBackend.navigateMenu(MenuNavigation.Menu.MENU_DAY_OVERVIEW);
+        if (noNav && savedInstanceState != null) {
+            int menu = savedInstanceState.getInt("last_menu",
+                    MenuNavigation.Menu.MENU_DAY_OVERVIEW);
+            mBackend.navigateMenu(menu);
 
-            noNav = true;
+            if (menu == MenuNavigation.Menu.MENU_DAY_OVERVIEW) {
+                mShouldDisplayDay = savedInstanceState.getInt("cur_day",
+                        BackgroundService.getDayOfWeek());
+            }
+
+            noNav = false;
         }
 
         if (noNav) {
@@ -194,8 +199,9 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
             if (day <= Day.OF_WEEK.FRIDAY) {
                 mBackend.navigateMenu(MenuNavigation.Menu.MENU_DAY_OVERVIEW);
                 mShouldDisplayDay = day;
-            } else
+            } else {
                 mBackend.navigateMenu(MenuNavigation.Menu.MENU_WEEK_OVERVIEW);
+            }
         }
 
         WidgetService.updateWidgets(this);
@@ -221,7 +227,11 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putInt("show_day", mCurrentMenu);
+        outState.putInt("last_menu", mCurrentMenu);
+
+        if (mFragment instanceof DayOverviewFragment) {
+            outState.putInt("cur_day", ((DayOverviewFragment) mFragment).getOpenedDay());
+        }
     }
 
     @Override
@@ -323,7 +333,6 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
         } else if(menu == MenuNavigation.Menu.MENU_DEBUG) {
             mFragment = new DebugFragment();
         }
-
 
         if (aIn != 0 || aOut != 0) {
             fragmentTransaction.setCustomAnimations(aIn, aOut);

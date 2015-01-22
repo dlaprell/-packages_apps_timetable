@@ -75,6 +75,17 @@ public class TimeGridFragment extends BaseFragment implements TimeGridModel.Time
         mProgress = (CircularProgressBar)v.findViewById(R.id.circular_loading);
         v.findViewById(R.id.add).setOnClickListener(mClickListener);
 
+        final View tabletScroll = v.findViewById(R.id.tablet_scroll);
+        if(tabletScroll != null) {
+            AnimUtils.afterPreDraw(tabletScroll, new Runnable() {
+                @Override
+                public void run() {
+                    int height = tabletScroll.getHeight();
+                    mTimeContainer.setMinimumHeight(height);
+                }
+            });
+        }
+
         mModel.reloadTableAsync();
 
         return v;

@@ -368,7 +368,8 @@ public class LessonViewActivity extends ActionBarActivity implements LessonViewC
     private Runnable mShowOtherViewsRunnable = new Runnable() {
         @Override
         public void run() {
-            mContainer.setBackgroundColor(0xFFFFFFFF);
+            mContainer.setBackgroundColor(mImageFragment.isBackground()
+                    ? Color.TRANSPARENT : Color.WHITE);
 
             final float distance = MetricsUtils.convertDpToPixel(120);
             final Interpolator interpolator = new DecelerateInterpolator(2.0f);

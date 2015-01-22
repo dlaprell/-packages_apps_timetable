@@ -69,10 +69,6 @@
     <string name="new_lesson">Neuer Unterricht</string>
     <string name="insert_break">Pause einfügen</string>
     <string name="insert_break_dialog_text">Die nächste Zeiteinheit ist eine Pause. Soll auch eine Pause eingefügt werden?</string>
-    <string name="s_project_art">Projektkurs Kunst</string>
-    <string name="s_project_english">Projektkurs Englisch</string>
-    <string name="s_project_mathematics">Projektkurs Mathe</string>
-    <string name="s_project_social_sciences">Projektkurs Sozialwissenschaften</string>
     <string name="info_about_body">Copyright 2014 David Laprell</string>
     <string name="info_about_right">All Rights Reserved</string>
     <string name="info_open_source_projects">Open Source Projekte</string>

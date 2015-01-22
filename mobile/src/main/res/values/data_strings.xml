@@ -20,10 +20,6 @@
     <string name="s_art">Art</string>
     <string name="s_latin">Latin</string>
     <string name="s_french">French</string>
-    <string name="s_project_mathematics">Project course Mathematics</string>
-    <string name="s_project_art">Project course Art</string>
-    <string name="s_project_english">Project course English</string>
-    <string name="s_project_social_sciences">Project course Social Sciences</string>
 
     <string name="day_monday">Monday</string>
     <string name="day_tuesday">Tuesday</string>

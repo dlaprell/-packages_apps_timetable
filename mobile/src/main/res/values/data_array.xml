@@ -21,10 +21,6 @@
         <item>@string/s_latin</item>
         <item>@string/s_french</item>
         <item>@string/s_mathematics</item>
-        <item>@string/s_project_art</item>
-        <item>@string/s_project_mathematics</item>
-        <item>@string/s_project_english</item>
-        <item>@string/s_project_social_sciences</item>
     </string-array>
 
     <string-array name="array_subjects_images" translatable="false">
@@ -48,10 +44,6 @@
         <item>@drawable/latin_grey</item>
         <item>@drawable/paris_grey</item>
         <item>@drawable/math_grey</item>
-        <item>@drawable/art_grey</item>
-        <item>@drawable/math_grey</item>
-        <item>@drawable/writing_grey</item>
-        <item>@drawable/city_grey</item>
     </string-array>
 
     <string-array name="array_subjects_images_all" translatable="false">

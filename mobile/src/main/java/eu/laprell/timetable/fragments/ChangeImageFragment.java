@@ -71,7 +71,8 @@ public class ChangeImageFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_image_changing, container, false);
 
         mText = (TextView)v.findViewById(R.id.text_counter);
@@ -88,7 +89,7 @@ public class ChangeImageFragment extends Fragment {
         mPager = (ViewPager)v.findViewById(R.id.pager);
         mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            public void onPageScrolled(int position, float positionOffset, int posOffsetPixels) {
 
             }
 
@@ -123,7 +124,7 @@ public class ChangeImageFragment extends Fragment {
 
             @Override
             public float getPageWidth(int position) {
-                return 0.9f;
+                return 1f;
             }
         });
 

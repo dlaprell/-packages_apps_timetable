@@ -34,9 +34,7 @@ public class DayOverviewFragment extends BaseFragment {
 
         mWeekdays = getResources().getStringArray(R.array.array_days);
 
-        if(savedInstanceState != null) {
-            mOpenDay = savedInstanceState.getInt("opened_day", Day.OF_WEEK.MONDAY);
-        } else if(getArguments() != null) {
+        if(getArguments() != null) {
             mOpenDay = getArguments().getInt("show_day", Day.OF_WEEK.MONDAY);
         }
 
@@ -80,11 +78,8 @@ public class DayOverviewFragment extends BaseFragment {
         return root;
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        outState.putInt("opened_day", mOpenDay);
+    public int getOpenedDay() {
+        return mOpenDay;
     }
 
     public class TimetableCollectionPagerAdapter extends FragmentStatePagerAdapter {

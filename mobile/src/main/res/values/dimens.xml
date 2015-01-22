@@ -16,4 +16,6 @@
 
     <dimen name="task_list_width">240dp</dimen>
 
+    <dimen name="timegrid_side_margins">0dp</dimen>
+
 </resources>
