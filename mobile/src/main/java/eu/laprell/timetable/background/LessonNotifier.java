@@ -89,7 +89,7 @@ public class LessonNotifier {
     };
 
     public LessonNotifier(Context c) {
-        mContext = c;
+        mContext = c.getApplicationContext();
 
         mUiHandler = new Handler();
         mThread.start();
