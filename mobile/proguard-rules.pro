@@ -42,6 +42,17 @@
    public void *(android.view.MenuItem);
 }
 
+-keepclassmembers class eu.laprell.timetable.animation.CircleColorDrawable {
+    public float getAlphaF();
+    public void setAlphaF(float);
+    public float getCircleX();
+    public void setCircleX(float);
+    public float getCircleY();
+    public void setCircleY(float);
+    public float getRadius();
+    public void setRadius(float);
+}
+
 -keepclassmembers class * implements android.os.Parcelable {
     static ** CREATOR;
 }
