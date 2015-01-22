@@ -294,16 +294,18 @@ public class LessonViewActivity extends ActionBarActivity implements LessonViewC
 
         mAnimatingCircle.setAlphaF(1f);
 
+        final float baseDuration = finalRadius / MetricsUtils.convertDpToPixel(6);
+
         ObjectAnimator radius = ObjectAnimator.ofFloat(mAnimatingCircle, "radius", 0f, finalRadius);
-        radius.setDuration(250);
+        radius.setDuration((int) (baseDuration * 2.5f));
         radius.setInterpolator(new AccelerateInterpolator());
 
         ObjectAnimator moveDown = ObjectAnimator.ofFloat(mAnimatingCircle, "circleY", yStart, yEnd);
-        moveDown.setDuration(250);
+        moveDown.setDuration((int) (baseDuration * 2.5f));
         moveDown.setInterpolator(new AccelerateDecelerateInterpolator());
 
         ObjectAnimator fadeOut = ObjectAnimator.ofFloat(mAnimatingCircle, "alphaF", 1f, 0f);
-        fadeOut.setDuration(400);
+        fadeOut.setDuration((int) (baseDuration * 4));
         fadeOut.setInterpolator(new AccelerateInterpolator());
 
         radius.addListener(new AnimatorListenerAdapter() {
