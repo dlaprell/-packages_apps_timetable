@@ -139,15 +139,6 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
 
         mContent = findViewById(R.id.content);
 
-        if(p.getBoolean("is_first_start", true)) {
-            mDrawerLayout.openDrawer(Gravity.START);
-
-            noNav = false;
-            mBackend.navigateMenu(MenuNavigation.Menu.MENU_TIME_GRID);
-
-            p.edit().putBoolean("is_first_start", false).apply();
-        }
-
         mAdView = (AdView) findViewById(R.id.adView);
         if(BuildConfig.DEBUG)
             mAdView.setAdListener(new ToastAdListener(this));
@@ -221,6 +212,10 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
             finish();
         else if(requestCode == 1) {
             SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
+
+            mDrawerLayout.openDrawer(Gravity.START);
+            mBackend.navigateMenu(MenuNavigation.Menu.MENU_TIME_GRID);
+
             p.edit().putBoolean("already_setup", true).apply();
         }
     }

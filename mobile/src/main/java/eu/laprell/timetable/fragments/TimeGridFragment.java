@@ -102,6 +102,7 @@ public class TimeGridFragment extends BaseFragment {
             t.setStartTime(time);
             t.setEndTime(time + 1);
         }
+
         d.time = t;
 
         mList.add(d);
@@ -109,10 +110,15 @@ public class TimeGridFragment extends BaseFragment {
 
         int pos = mList.size() - 1;
 
-        prepareView(pos);
-        displayNewItem(d, pos, true);
+        if (d.num >= 10) {
+            Toast.makeText(getActivity(), R.string.timegrid_notmore_than_9_lessons,
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            prepareView(pos);
+            displayNewItem(d, pos, true);
 
-        mTask.doExecute(d);
+            mTask.doExecute(d);
+        }
     }
 
     private void loadTable() {

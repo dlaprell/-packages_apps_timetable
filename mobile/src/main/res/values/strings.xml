@@ -90,6 +90,8 @@
     <string name="action_settings">Settings</string>
     <string name="select_image">Select Image</string>
 
+    <string name="timegrid_notmore_than_9_lessons">Currently no more than 9 lessons are supported</string>
+
     <string name="dbg_show_test_notif" translatable="false">Show test notification</string>
     <string name="dbg_start_logging" translatable="false">Start Logging</string>
     <string name="dbg_stop_logging" translatable="false">Stop Logging</string>

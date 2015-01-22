@@ -108,4 +108,5 @@
     <string name="second_name">Nachname</string>
     <string name="dialog_new_teacher_failed">Mindestens der Nachname muss angegeben werden</string>
     <string name="pref_enable_notifications_summary">Benachrichtigungen werden die nächste Unterrichtseinheit anzeigen</string>
+    <string name="timegrid_notmore_than_9_lessons">Zur Zeit sich nur maximal 9 Stunden unterstützt</string>
 </resources>
