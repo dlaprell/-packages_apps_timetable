@@ -134,6 +134,7 @@ public class Logger {
         String line;
         while ((line = reader.readLine()) != null) {
             out.append(line);
+            out.append('\n');
         }
         reader.close();
 
