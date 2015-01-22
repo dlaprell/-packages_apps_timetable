@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import eu.laprell.timetable.BackgroundService;
 import eu.laprell.timetable.R;
 import eu.laprell.timetable.database.Day;
 
@@ -35,7 +36,12 @@ public class DayOverviewFragment extends BaseFragment {
         mWeekdays = getResources().getStringArray(R.array.array_days);
 
         if(getArguments() != null) {
-            mOpenDay = getArguments().getInt("show_day", Day.OF_WEEK.MONDAY);
+            int fallback = BackgroundService.getDayOfWeek();
+
+            if(fallback < Day.OF_WEEK.MONDAY || fallback > Day.OF_WEEK.FRIDAY)
+                fallback = Day.OF_WEEK.MONDAY;
+
+            mOpenDay = getArguments().getInt("show_day", fallback);
         }
 
         mColumnsCount = getResources().getInteger(R.integer.day_overview_columns);
