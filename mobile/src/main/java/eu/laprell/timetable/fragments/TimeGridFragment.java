@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.adnansm.timelytextview.TimelyView;
 import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.animation.TypeEvaluator;
 import com.nineoldandroids.util.Property;
@@ -110,15 +111,10 @@ public class TimeGridFragment extends BaseFragment {
 
         int pos = mList.size() - 1;
 
-        if (d.num >= 10) {
-            Toast.makeText(getActivity(), R.string.timegrid_notmore_than_9_lessons,
-                    Toast.LENGTH_SHORT).show();
-        } else {
-            prepareView(pos);
-            displayNewItem(d, pos, true);
+        prepareView(pos);
+        displayNewItem(d, pos, true);
 
-            mTask.doExecute(d);
-        }
+        mTask.doExecute(d);
     }
 
     private void loadTable() {
@@ -202,7 +198,16 @@ public class TimeGridFragment extends BaseFragment {
             Data d = mList.get(i);
             updateTime(d);
             int num = getNumToShow(d);
-            if(num >= 0)d.numView.setNumber(num);
+            if(num >= 0) {
+                int firstDigit = num / 10;
+                int secondDigit = num % 10;
+
+                if (firstDigit <= 0)
+                    firstDigit = -1;
+
+                d.firstDigit.setNumber(firstDigit);
+                d.secondDigit.setNumber(secondDigit);
+            }
 
             anim.addTarget(v);
         }
@@ -259,7 +264,7 @@ public class TimeGridFragment extends BaseFragment {
     }
 
     private void updateView(Data d) {
-        ObjectAnimator a = animateNumView(d);
+        Animator a = animateNumView(d);
         if(a != null)a.start();
 
         updateTime(d);
@@ -270,18 +275,34 @@ public class TimeGridFragment extends BaseFragment {
         d.endButton.setText(d.time.makeTimeString("e"));
     }
 
-    private ObjectAnimator animateNumView(Data d) {
-        ObjectAnimator a;
+    private Animator animateNumView(Data d) {
+        ObjectAnimator a1;
+        ObjectAnimator a2;
 
-        if(!d.time.isBreak()) {
-            a = d.numView.animate(getIntTag(d.numView), d.num).setDuration(200);
-            d.numView.setTag(d.num);
+        if(d.time.isBreak()) {
+            a1 = d.firstDigit.animate(getIntTag(d.firstDigit), -1);
+            d.firstDigit.setTag(-1);
+
+            a2 = d.secondDigit.animate(getIntTag(d.firstDigit), -1);
+            d.secondDigit.setTag(-1);
         } else {
-            a = d.numView.animate(getIntTag(d.numView), -1).setDuration(200);
-            d.numView.setTag(-1);
+            int firstnum = d.num / 10;
+            int lastnum = d.num % 10;
+
+            if(firstnum <= 0) firstnum = -1;
+
+            a1 = d.firstDigit.animate(getIntTag(d.firstDigit), firstnum);
+            d.firstDigit.setTag(firstnum);
+
+            a2 = d.secondDigit.animate(getIntTag(d.secondDigit), lastnum);
+            d.secondDigit.setTag(lastnum);
         }
 
-        return a;
+        AnimatorSet set = new AnimatorSet();
+        set.setDuration(200);
+        set.playTogether(a1, a2);
+
+        return set;
     }
 
     private int getNumToShow(Data d) {
@@ -405,7 +426,8 @@ public class TimeGridFragment extends BaseFragment {
         ButtonClickListener lis;
         View view;
         View more;
-        TimelyView numView;
+        TimelyView firstDigit;
+        TimelyView secondDigit;
         Button startButton, endButton;
     }
 
@@ -418,16 +440,19 @@ public class TimeGridFragment extends BaseFragment {
 
             d.startButton = (Button)d.view.findViewById(R.id.btn_start_time);
             d.endButton = (Button)d.view.findViewById(R.id.btn_end_time);
-            d.numView = (TimelyView)d.view.findViewById(R.id.btn_num);
+            d.firstDigit = (TimelyView)d.view.findViewById(R.id.btn_num);
+            d.secondDigit = (TimelyView)d.view.findViewById(R.id.btn_num_2);
             d.more = d.view.findViewById(R.id.more);
 
             d.startButton.setOnClickListener(this);
             d.endButton.setOnClickListener(this);
-            d.numView.setOnClickListener(this);
             d.more.setOnClickListener(this);
 
-            d.numView.setTextColor(d.numView.getResources().getColor(R.color.accent_));
-            d.numView.setTextStroke((int)MetricsUtils.convertDpToPixel(2));
+            d.firstDigit.setTextColor(d.firstDigit.getResources().getColor(R.color.accent_));
+            d.firstDigit.setTextStroke((int) MetricsUtils.convertDpToPixel(2));
+
+            d.secondDigit.setTextColor(d.secondDigit.getResources().getColor(R.color.accent_));
+            d.secondDigit.setTextStroke((int) MetricsUtils.convertDpToPixel(2));
         }
 
         @Override
@@ -551,14 +576,14 @@ public class TimeGridFragment extends BaseFragment {
             public Animator makeAnimationForView(View v, Data d) {
                 return animateNumView(d);
             }
-        }).setSpeed(MetricsUtils.convertDpToPixel(300)).setStartAnchorView(d.numView, true);
+        }).setSpeed(MetricsUtils.convertDpToPixel(300)).setStartAnchorView(d.firstDigit, true);
 
         for(i = pos + 1;i < mList.size();i++) {
             d = mList.get(i);
 
             d.num = d.time.isBreak() ? 0 : ++curNum;
 
-            waveAnimator.addTarget(d.numView, d);
+            waveAnimator.addTarget(d.firstDigit, d);
         }
 
         waveAnimator.start();
