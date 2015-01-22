@@ -262,7 +262,7 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
 
     @Override
     public void onBackPressed() {
-        if(mDrawerLayout.isDrawerOpen(Gravity.START | Gravity.LEFT)){
+        if(mDrawerLayout.isDrawerOpen(Gravity.START)){
             mDrawerLayout.closeDrawers();
             return;
         }
@@ -280,7 +280,7 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
 
     @SuppressLint("NewApi")
     private void changeFragment(int menu, int aIn, int aOut) {
-        mToolbar.setSubtitle(mNav.getTitleAtPos(mNav.getMenuPosition(menu)));
+        mToolbar.setTitle(mNav.getTitleAtPos(mNav.getMenuPosition(menu)));
 
         mCurrentMenu = menu;
 

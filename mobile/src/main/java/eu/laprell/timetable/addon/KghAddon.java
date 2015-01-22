@@ -64,7 +64,7 @@ public class KghAddon {
     }
 
     public static void initSchool(SharedPreferences pref) {
-        pref.edit().putInt("school_id", Addons.Ids.ID_CORNELIUS_BURGH_GYMNASIUM_HEINSBERG).apply();
+        pref.edit().putInt("school_id", Addons.Ids.ID_KREISGYMNASIUM_HEINSBERG).apply();
     }
 
     public static void addTeachers(Context c, TimetableDatabase db) {
