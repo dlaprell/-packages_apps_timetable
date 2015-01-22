@@ -2,17 +2,12 @@ package eu.laprell.timetable;
 
 import android.app.Service;
 import android.content.Intent;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
 
 import java.util.Calendar;
 
 import eu.laprell.timetable.background.LessonNotifier;
 import eu.laprell.timetable.database.Day;
-import eu.laprell.timetable.database.Lesson;
-import eu.laprell.timetable.database.Place;
-import eu.laprell.timetable.database.TimeUnit;
 import eu.laprell.timetable.database.TimetableDatabase;
 
 public class BackgroundService extends Service {
@@ -24,31 +19,6 @@ public class BackgroundService extends Service {
     private TimetableDatabase mDb;
     private LessonNotifier mNotifier;
 
-    private int mNotifyBeforeSec = 10 * 60;
-
-    private Thread mWorkerThread = new Thread(new Runnable() {
-        @Override
-        public void run() {
-            Looper.prepare();
-            mWorkerHandler = new Handler();
-
-            mWorkerHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    mNotifier.checkForNewNotifications();
-                }
-            });
-            Looper.loop();
-        }
-    });
-    private Handler mWorkerHandler, mUiHandler;
-
-    private class Data {
-        TimeUnit time;
-        Lesson lesson;
-        Place place;
-    }
-
     public BackgroundService() {
     }
 
@@ -58,14 +28,11 @@ public class BackgroundService extends Service {
         sService = this;
 
         mNotifier = new LessonNotifier(this);
-
-        mUiHandler = new Handler();
-        mWorkerThread.start();
     }
 
-    /*public LessonNotifier getLessonNotifier() {
+    public LessonNotifier getLessonNotifier() {
         return mNotifier;
-    }*/
+    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
