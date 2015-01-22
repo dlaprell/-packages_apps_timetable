@@ -57,29 +57,47 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
     private Toolbar mToolbar;
     private ColorFilterDrawerLayout mDrawerLayout;
     private DrawerLayout.DrawerListener mDrawerListener = new DrawerLayout.DrawerListener() {
+        private static final float STEP = 0.1f;
 
-        private RectF mRFrame = new RectF();
+        private float mLastPosition = 0f;
+        private final RectF mRFrame = new RectF();
+        private final RectF mCFrame = new RectF();
 
         @Override
         public void onDrawerSlide(View view, float v) {
             mFrame.setPartialDrawEnabled(true);
             mDrawerLayout.setColorDrawing(true);
 
-            final float overDrawWidth = mBackend.getDrawerContentWidth() * v;
-            mRFrame.set(overDrawWidth, 0, mDrawerLayout.getWidth(), mDrawerLayout.getHeight());
+            boolean update = false;
 
-            mFrame.setDrawingFrame(mRFrame);
-            mDrawerLayout.setColorDrawingFrame(mRFrame);
+            if(mLastPosition + STEP > v) {
+                update = true;
+                mLastPosition = Math.max(v - (STEP / 2), 0f);
+            } else if(mLastPosition - STEP < v) {
+                update = true;
+                mLastPosition = Math.max(v - (STEP / 2), 0f);
+            }
+
+            if(update) {
+                final float overDrawWidth = mBackend.getDrawerContentWidth() * mLastPosition;
+                mRFrame.set(overDrawWidth, 0, mDrawerLayout.getWidth(), mDrawerLayout.getHeight());
+                mFrame.setDrawingFrame(mRFrame);
+            }
+
+            final float absOverDrawWidth = mBackend.getDrawerContentWidth() * v;
+            mCFrame.set(absOverDrawWidth, 0, mDrawerLayout.getWidth(), mDrawerLayout.getHeight());
+            mDrawerLayout.setColorDrawingFrame(mCFrame);
 
             int c = (int) (100 * v);
 
             mDrawerLayout.setColorFilter(Color.argb(c, 0, 0, 0), PorterDuff.Mode.SRC_ATOP);
 
             mDrawerToggle.onDrawerSlide(view, v);
-            mBackend.dispatchDrawerOpened(v, overDrawWidth);
+
+            mBackend.dispatchDrawerOpened(v, absOverDrawWidth);
 
             if(mFragment instanceof BaseFragment)
-                ((BaseFragment) mFragment).onDrawerOverlaps(overDrawWidth);
+                ((BaseFragment) mFragment).onDrawerOverlaps(absOverDrawWidth);
         }
 
         @Override
