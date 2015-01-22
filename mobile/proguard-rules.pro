@@ -47,6 +47,10 @@
    public void *(android.view.MenuItem);
 }
 
+-keepclassmembers class * implements eu.laprell.animation.ActivityTransitions.HeroTransitionInterface {
+   public void setBackgroundColorAlpha(int);
+}
+
 -keepclassmembers class eu.laprell.timetable.animation.CircleColorDrawable {
     public float getAlphaF();
     public void setAlphaF(float);

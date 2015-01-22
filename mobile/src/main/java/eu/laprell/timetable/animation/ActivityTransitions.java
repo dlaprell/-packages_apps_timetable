@@ -308,7 +308,7 @@ public class ActivityTransitions {
         ObjectAnimator fadeInB = ObjectAnimator.ofInt(i, "backgroundColorAlpha", 0, 255);
 
         AnimatorSet set = new AnimatorSet();
-        set.play(moveX).with(moveY).with(scaleX).with(scaleY).with(fadeInB);
+        set.playTogether(moveX, moveY, scaleX, scaleY, fadeInB);
         set.setDuration(time);
         set.setInterpolator(new AccelerateDecelerateInterpolator());
 
