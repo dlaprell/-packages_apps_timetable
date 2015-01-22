@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="16dp"
+    android:layout_marginLeft="@dimen/keyline_left_space"
     android:layout_marginRight="8dp"
     android:layout_marginTop="16dp"
     android:layout_marginBottom="16dp">
@@ -13,22 +13,22 @@
         android:maxWidth="48dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:gravity="center"
-        tools:text="17:45\n8:53"
+        android:layout_gravity="center_vertical"
+        tools:text="7:45\n8:53"
         android:layout_marginRight="8dp"
         android:layout_marginEnd="8dp" />
 
     <TextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
-        android:layout_height="32dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:gravity="center_vertical|start"
-        android:layout_marginLeft="56dp"
-        android:layout_marginStart="56dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginStart="48dp"
         android:text="@string/break_"
-        android:textSize="24sp" />
+        android:textSize="22sp" />
 
     <include layout="@layout/times_list_item_more" />
 

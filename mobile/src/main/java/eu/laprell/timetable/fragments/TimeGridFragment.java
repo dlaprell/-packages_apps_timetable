@@ -205,8 +205,13 @@ public class TimeGridFragment extends BaseFragment {
                 if (firstDigit <= 0)
                     firstDigit = -1;
 
-                d.firstDigit.setNumber(firstDigit);
-                d.secondDigit.setNumber(secondDigit);
+                if (firstDigit > 0) {
+                    d.firstDigit.setNumber(firstDigit);
+                    d.secondDigit.setNumber(secondDigit);
+                } else {
+                    d.firstDigit.setNumber(secondDigit);
+                    d.secondDigit.setNumber(-1);
+                }
             }
 
             anim.addTarget(v);
@@ -291,11 +296,19 @@ public class TimeGridFragment extends BaseFragment {
 
             if(firstnum <= 0) firstnum = -1;
 
-            a1 = d.firstDigit.animate(getIntTag(d.firstDigit), firstnum);
-            d.firstDigit.setTag(firstnum);
+            if(firstnum > 0) {
+                a1 = d.firstDigit.animate(getIntTag(d.firstDigit), firstnum);
+                d.firstDigit.setTag(firstnum);
 
-            a2 = d.secondDigit.animate(getIntTag(d.secondDigit), lastnum);
-            d.secondDigit.setTag(lastnum);
+                a2 = d.secondDigit.animate(getIntTag(d.secondDigit), lastnum);
+                d.secondDigit.setTag(lastnum);
+            } else {
+                a1 = d.firstDigit.animate(getIntTag(d.firstDigit), lastnum);
+                d.firstDigit.setTag(lastnum);
+
+                a2 = d.secondDigit.animate(getIntTag(d.secondDigit), -1);
+                d.secondDigit.setTag(-1);
+            }
         }
 
         AnimatorSet set = new AnimatorSet();

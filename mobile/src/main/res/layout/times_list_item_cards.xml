@@ -6,17 +6,6 @@
     android:foreground="@drawable/base_ripple"
     android:padding="8dp">
 
-    <eu.laprell.timetable.widgets.LessonCardView
-        android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:id="@+id/lesson_card_view"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="4dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp" />
-
-    <include layout="@layout/times_list_item_more" />
+    <include layout="@layout/abs_times_list_item_cards" />
 
 </eu.laprell.timetable.widgets.VerticalDropShadowCard>

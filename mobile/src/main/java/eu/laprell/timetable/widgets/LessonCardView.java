@@ -99,7 +99,7 @@ public class LessonCardView extends View implements Drawable.Callback {
     private void init() {
         float nrTextSize = MetricsUtils.convertSpToPixel(40);
         float titleTextSize = MetricsUtils.convertSpToPixel(24);
-        float addInfoTextSize = MetricsUtils.convertSpToPixel(16);
+        float addInfoTextSize = MetricsUtils.convertSpToPixel(14);
 
         mInfoPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mInfoPaint.setColor(mLessonInfoColor | 0xFF000000);

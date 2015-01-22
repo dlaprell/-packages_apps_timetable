@@ -7,7 +7,7 @@
     android:paddingRight="@dimen/keyline_left_space">
 
     <com.github.adnansm.timelytextview.TimelyView
-        android:layout_width="28dp"
+        android:layout_width="24dp"
         android:layout_height="match_parent"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
@@ -17,7 +17,7 @@
         android:id="@+id/btn_num" />
 
     <com.github.adnansm.timelytextview.TimelyView
-        android:layout_width="28dp"
+        android:layout_width="24dp"
         android:layout_height="match_parent"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
