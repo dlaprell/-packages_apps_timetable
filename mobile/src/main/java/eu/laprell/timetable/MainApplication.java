@@ -2,6 +2,12 @@ package eu.laprell.timetable;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.v4.util.ArrayMap;
+
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
+
+import java.util.Map;
 
 import eu.laprell.timetable.animation.ActivityTransitions;
 import eu.laprell.timetable.background.LessonNotifier;
@@ -13,12 +19,21 @@ import eu.laprell.timetable.background.SpecialBitmapCache;
  */
 public class MainApplication extends Application {
 
+    public enum TrackerName {
+        APP_TRACKER, // Tracker used only in this app.
+        GLOBAL_TRACKER, // Tracker used by all the apps from a company. eg: roll-up tracking.
+        ECOMMERCE_TRACKER, // Tracker used by all ecommerce transactions from a company.
+    }
+
+
     public static boolean sLoggingEnabled = false;
 
     private static MainApplication sApplication;
 
     private ActivityTransitions mTransitions;
     private LessonNotifier mNotifier;
+
+    private final Map<TrackerName, Tracker> mTrackers = new ArrayMap<>();
 
     @Override
     public void onCreate() {
@@ -65,5 +80,21 @@ public class MainApplication extends Application {
             return sApplication.getLessonNotifier();
         else
             return null;
+    }
+
+    private static final String PROPERTY_ID = "UA-58004170-2";
+    private synchronized Tracker _getTracker(TrackerName trackerId) {
+        if (!mTrackers.containsKey(trackerId)) {
+
+            GoogleAnalytics analytics = GoogleAnalytics.getInstance(sApplication);
+            Tracker t = analytics.newTracker(PROPERTY_ID);
+            t.enableAutoActivityTracking(true);
+            mTrackers.put(trackerId, t);
+        }
+        return mTrackers.get(trackerId);
+    }
+
+    public static Tracker getTracker(TrackerName t) {
+        return sApplication._getTracker(t);
     }
 }
