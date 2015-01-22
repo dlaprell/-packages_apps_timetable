@@ -6,12 +6,8 @@
 
     <integer name="day_overview_columns">3</integer>
 
-
-    <dimen name="keyline_left_space">24dp</dimen>
-    <dimen name="keyline_sec_left_space">72dp</dimen>
-
     <dimen name="task_list_width">420dp</dimen>
 
-    <dimen name="timegrid_side_margins">180dp</dimen>
+    <dimen name="timegrid_side_margins">184dp</dimen>
 
 </resources>

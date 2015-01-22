@@ -33,7 +33,7 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp">
+                android:padding="@dimen/keyline_left_space">
 
                 <TextView
                     android:layout_width="wrap_content"

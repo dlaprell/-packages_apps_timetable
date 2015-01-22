@@ -3,6 +3,9 @@
 
     <integer name="day_overview_columns">2</integer>
 
-    <dimen name="timegrid_side_margins">100dp</dimen>
+    <dimen name="keyline_left_space">24dp</dimen>
+    <dimen name="keyline_sec_left_space">80dp</dimen>
+
+    <dimen name="timegrid_side_margins">96dp</dimen>
 
 </resources>

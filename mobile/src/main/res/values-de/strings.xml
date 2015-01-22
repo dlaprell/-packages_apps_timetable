@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Stundenplan</string>
+    <string name="app_name">Stundenplan Now</string>
     <string name="day_friday">Freitag</string>
     <string name="day_monday">Montag</string>
     <string name="day_saturday">Samstag</string>

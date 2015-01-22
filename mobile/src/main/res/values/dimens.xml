@@ -12,6 +12,8 @@
     <dimen name="fab_normal_dimen">62dp</dimen>
     <dimen name="fab_mini_dimen">46dp</dimen>
 
+    <dimen name="more_icon_width">48dp</dimen>
+
     <integer name="day_overview_columns">1</integer>
 
     <dimen name="task_list_width">240dp</dimen>
