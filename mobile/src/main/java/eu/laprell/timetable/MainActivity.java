@@ -140,18 +140,19 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
         mContent = findViewById(R.id.content);
 
         mAdView = (AdView) findViewById(R.id.adView);
-        if(BuildConfig.DEBUG)
+        if (BuildConfig.DEBUG) {
             mAdView.setAdListener(new ToastAdListener(this));
+        }
         mAdView.loadAd(new AdRequest.Builder()
-                /*.addKeyword("school")
+                .addKeyword("school")
                 .addKeyword("student")
                 .addKeyword("time")
-                .addKeyword("book")*/
+                .addKeyword("book")
                 .build());
 
         startService(new Intent(this, BackgroundService.class));
 
-        if(getIntent() != null && getIntent().getAction() != null) {
+        if (getIntent() != null && getIntent().getAction() != null) {
             String act = getIntent().getAction();
             if(Const.ACTION_VIEW_IN_TIMETABLE.equals(act)) {
                 mShouldDisplayDay = getIntent().getIntExtra(Const.EXTRA_DAY_OF_WEEK_BY_NUM, 1);
@@ -161,17 +162,18 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
             }
         }
 
-        if(savedInstanceState != null && noNav) {
-            mShouldDisplayDay = savedInstanceState.getInt("show_day", BackgroundService.getDayOfWeek());
+        if (savedInstanceState != null && noNav) {
+            mShouldDisplayDay = savedInstanceState.getInt("show_day",
+                    BackgroundService.getDayOfWeek());
             mBackend.navigateMenu(MenuNavigation.Menu.MENU_DAY_OVERVIEW);
 
             noNav = true;
         }
 
-        if(noNav) {
+        if (noNav) {
             int day = BackgroundService.getDayOfWeek();
 
-            if(day <= Day.OF_WEEK.FRIDAY) {
+            if (day <= Day.OF_WEEK.FRIDAY) {
                 mBackend.navigateMenu(MenuNavigation.Menu.MENU_DAY_OVERVIEW);
                 mShouldDisplayDay = day;
             } else
@@ -184,7 +186,7 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
     }
 
     private void checkForOpenDay() {
-        if(mShouldDisplayDay > 0 && mShouldDisplayDay < 8) {
+        if (mShouldDisplayDay > 0 && mShouldDisplayDay < 8) {
             if (mFragment != null && mFragment instanceof DayOverviewFragment) {
                 DayOverviewFragment f = (DayOverviewFragment) mFragment;
 
@@ -208,9 +210,9 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == 1 && resultCode != Activity.RESULT_OK)
+        if (requestCode == 1 && resultCode != Activity.RESULT_OK) {
             finish();
-        else if(requestCode == 1) {
+        } else if (requestCode == 1) {
             SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
 
             mDrawerLayout.openDrawer(Gravity.START);
@@ -262,7 +264,7 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
 
     @Override
     public void onBackPressed() {
-        if(mDrawerLayout.isDrawerOpen(Gravity.START)){
+        if (mDrawerLayout.isDrawerOpen(Gravity.START)){
             mDrawerLayout.closeDrawers();
             return;
         }
@@ -287,15 +289,15 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        if(menu == MenuNavigation.Menu.MENU_WEEK_OVERVIEW)
+        if (menu == MenuNavigation.Menu.MENU_WEEK_OVERVIEW) {
             mFragment = new WeekOverviewFragment();
-        else if(menu == MenuNavigation.Menu.MENU_INFO)
+        } else if (menu == MenuNavigation.Menu.MENU_INFO) {
             mFragment = new InfoFragment();
-        else if(menu == MenuNavigation.Menu.MENU_SETTINGS) {
+        } else if (menu == MenuNavigation.Menu.MENU_SETTINGS) {
             mFragment = new SettingsFragmentCompat();
-        } else if (menu == MenuNavigation.Menu.MENU_TIME_GRID)
+        } else if (menu == MenuNavigation.Menu.MENU_TIME_GRID) {
             mFragment = new TimeGridFragment();
-        else if (menu == MenuNavigation.Menu.MENU_DAY_OVERVIEW) {
+        } else if (menu == MenuNavigation.Menu.MENU_DAY_OVERVIEW) {
             mFragment = new DayOverviewFragment();
             checkForOpenDay();
         } else if(menu == MenuNavigation.Menu.MENU_TASKS) {
@@ -305,7 +307,7 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
         }
 
 
-        if(aIn != 0 || aOut != 0) {
+        if (aIn != 0 || aOut != 0) {
             fragmentTransaction.setCustomAnimations(aIn, aOut);
         }
 
@@ -315,7 +317,7 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
         if(mFragment instanceof BaseFragment) {
             BaseFragment base = ((BaseFragment) mFragment);
 
-            if(Const.FW_SUPPORTS_DROP_SHADOWS) {
+            if (Const.FW_SUPPORTS_DROP_SHADOWS) {
                 float elZ = MetricsUtils.convertDpToPixel(
                         base.getToolbarElevationDp());
                 mToolbar.setElevation(elZ);
@@ -331,7 +333,7 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
     }
 
     public void reloadDrawer() {
-        if(mBackend != null) {
+        if (mBackend != null) {
             mNav.forceReloading();
             mBackend.reloadDrawer();
         }

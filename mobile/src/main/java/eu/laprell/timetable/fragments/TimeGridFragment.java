@@ -1,8 +1,7 @@
 package eu.laprell.timetable.fragments;
 
+import android.app.Activity;
 import android.graphics.Color;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -28,32 +27,27 @@ import com.nineoldandroids.util.Property;
 import com.sleepbot.datetimepicker.time.RadialPickerLayout;
 import com.sleepbot.datetimepicker.time.TimePickerDialog;
 
-import java.util.ArrayList;
-
 import eu.laprell.timetable.R;
 import eu.laprell.timetable.animation.WaveAnimator;
-import eu.laprell.timetable.background.Logger;
-import eu.laprell.timetable.database.Day;
-import eu.laprell.timetable.database.DbAccess;
 import eu.laprell.timetable.database.TimeUnit;
-import eu.laprell.timetable.database.TimetableDatabase;
+import eu.laprell.timetable.fragments.model.TimeGridModel;
+import eu.laprell.timetable.fragments.model.TimeGridModel.Data;
 import eu.laprell.timetable.utils.AnimUtils;
-import eu.laprell.timetable.utils.ArrayUtils;
 import eu.laprell.timetable.utils.MetricsUtils;
 import eu.laprell.timetable.utils.misc.FlWrapper;
 import eu.laprell.timetable.widgets.ShortLoadingDialog;
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 
 /**
- * Created by david on 07.11.14.
+ * Created by david on 07.11.14
  */
-public class TimeGridFragment extends BaseFragment {
+public class TimeGridFragment extends BaseFragment implements TimeGridModel.TimeGridVisualizer {
 
     private LinearLayout mTimeContainer;
-
-    private ArrayList<Data> mList;
     private CircularProgressBar mProgress;
-    private SavingAsyncTask mTask;
+    private TimeGridModel mModel;
+
+    private ShortLoadingDialog mDialog;
 
     private View.OnClickListener mClickListener = new View.OnClickListener() {
         @Override
@@ -64,15 +58,11 @@ public class TimeGridFragment extends BaseFragment {
         }
     };
 
-    public TimeGridFragment() {
-        mList = new ArrayList<Data>();
-    }
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
 
-        mTask = new SavingAsyncTask();
+        mModel = new TimeGridModel(this);
     }
 
     @Override
@@ -85,93 +75,31 @@ public class TimeGridFragment extends BaseFragment {
         mProgress = (CircularProgressBar)v.findViewById(R.id.circular_loading);
         v.findViewById(R.id.add).setOnClickListener(mClickListener);
 
-        loadTable();
+        mModel.reloadTableAsync();
 
         return v;
     }
 
     private void addNewTime() {
-        Data d = new Data();
-        Data pre = mList.get(mList.size() - 1);
-
-        TimeUnit t = new TimeUnit(-1);
-
-        if(pre != null) {
-            int time = pre.time.getStartTime() < pre.time.getEndTime()
-                    ? pre.time.getEndTime() : pre.time.getStartTime();
-
-            t.setStartTime(time);
-            t.setEndTime(time + 1);
-        }
-
-        d.time = t;
-
-        mList.add(d);
-        updateAllNums(-3); // The newly created timeunit has an id of -1! So do not skip it
-
-        int pos = mList.size() - 1;
-
-        prepareView(pos);
-        displayNewItem(d, pos, true);
-
-        mTask.doExecute(d);
+        mModel.addNewTime();
     }
 
-    private void loadTable() {
-        new AsyncTask<Void, Void, WaveAnimator>() {
-            @Override
-            protected WaveAnimator doInBackground(Void... params) {
-                DbAccess access = new DbAccess(mProgress.getContext());
-                TimetableDatabase db = access.get();
+    @Override
+    public View prepareViewFromData(Data d) {
+        d.view = LayoutInflater.from(mTimeContainer.getContext()).inflate(
+                R.layout.list_item_time_grid, mTimeContainer, false);
+        d.lis = new ButtonClickListener(d);
 
-                long[] tids = db.getDatabaseEntries(TimetableDatabase.TYPE_TIMEUNIT);
-
-                int num = 1;
-                for (int i = 0;i < tids.length;i++) {
-                    long tid = tids[i];
-
-                    Data d = new Data();
-                    d.time = (TimeUnit) db.getDatabaseEntryById(TimetableDatabase.TYPE_TIMEUNIT, tid);
-
-                    if(!d.time.isBreak()) {
-                        d.num = num;
-                        num++;
-                    }
-
-                    mList.add(d);
-
-                    access.close();
-                }
-
-                try {
-                    return buildWaveAnimator();
-                } catch (Exception ex) {
-                    Logger.log("TimeGridFragment", "Couldn't build WaveAnimator", ex);
-                    return null;
-                }
-            }
-
-            @Override
-            protected void onPostExecute(WaveAnimator anim) {
-                AnimUtils.animateProgressExit(mProgress);
-
-                if(!isAdded()) {
-                    return;
-                }
-
-                if(anim == null) // Fallback solution
-                    anim = buildWaveAnimator();
-
-                for (int i = 0;i < mList.size();i++) {
-                    displayNewItem(mList.get(i), i, false);
-                }
-
-                anim.startOnPreDraw(mTimeContainer);
-            }
-        }.execute();
+        return d.view;
     }
 
-    private WaveAnimator buildWaveAnimator() {
+    @Override
+    public void animateNewViewIn(Data d, int pos) {
+        updateCompleteView(d);
+        AnimUtils.animateViewAddingInLayout(d.view, mTimeContainer, pos);
+    }
+
+    public WaveAnimator buildWaveAnimator() {
         WaveAnimator anim = new WaveAnimator(new WaveAnimator.WaveAnimationApplier() {
             @Override
             public Animator makeAnimationForView(View v, Object data) {
@@ -191,11 +119,12 @@ public class TimeGridFragment extends BaseFragment {
         anim.setStartPoint(loc);
         anim.setComputeMoreExactly(true);
 
-        for (int i = 0;i < mList.size();i++) {
-            View v = prepareView(i);
+        for (int i = 0;i < mModel.getDataSize();i++) {
+            Data d = mModel.getDataAtPos(i);
+
+            View v = prepareViewFromData(d);
             v.setAlpha(0f);
 
-            Data d = mList.get(i);
             updateTime(d);
             int num = getNumToShow(d);
             if(num >= 0) {
@@ -218,6 +147,64 @@ public class TimeGridFragment extends BaseFragment {
         }
 
         return anim;
+    }
+
+    @Override
+    public void reloadedTable(@Nullable WaveAnimator anim) {
+        AnimUtils.animateProgressExit(mProgress);
+
+        if(!isAdded()) {
+            return;
+        }
+
+        if(anim == null) // Fallback solution
+            anim = buildWaveAnimator();
+
+        for (int i = 0;i < mModel.getDataSize();i++) {
+            mTimeContainer.addView(mModel.getDataAtPos(i).view, i);
+        }
+
+        anim.startOnPreDraw(mTimeContainer);
+    }
+
+    private void deleteTimeUnit(TimeUnit t) {
+        mDialog = new ShortLoadingDialog(getActivity());
+        mDialog.show();
+
+        mModel.removeTimeUnitInDb(t);
+    }
+
+    @Override
+    public void finishedDeletingTimeUnit(int pos) {
+        final int[] loc = new int[2];
+
+        TimeGridModel.Data d = mModel.removeDataAtPos(pos);
+        d.view.getLocationOnScreen(loc);
+        loc[0] += d.view.getWidth() / 2;
+        loc[1] += d.view.getHeight() / 2;
+
+        mDialog.finish(null);
+        mDialog = null;
+        AnimUtils.animateViewDeletingInLayout(d.view, mTimeContainer, new Runnable() {
+            @Override
+            public void run() {
+                WaveAnimator animator = new WaveAnimator(new WaveAnimator.WaveAnimationApplier<Data>() {
+                    @Override
+                    public Animator makeAnimationForView(View v, Data data) {
+                        return animateNumView(data);
+                    }
+                })
+                .setSpeed(MetricsUtils.convertDpToPixel(300))
+                .setStartPoint(loc);
+
+                for (int i = 0;i < mModel.getDataSize();i++) {
+                    Data d = mModel.getDataAtPos(i);
+                    animator.addTarget(d.view, d);
+                }
+
+                animator.start();
+            }
+        });
     }
 
     private static final float DISTANCE = MetricsUtils.convertDpToPixel(32);
@@ -249,26 +236,7 @@ public class TimeGridFragment extends BaseFragment {
         }
     }
 
-    private View prepareView(int pos) {
-        Data d = mList.get(pos);
-
-        d.view = LayoutInflater.from(mTimeContainer.getContext()).inflate(
-                R.layout.list_item_time_grid, mTimeContainer, false);
-        d.lis = new ButtonClickListener(d);
-
-        return d.view;
-    }
-
-    private void displayNewItem(Data d, int pos, boolean withAnimation) {
-        if(withAnimation) {
-            updateView(d);
-            AnimUtils.animateViewAddingInLayout(d.view, mTimeContainer, pos);
-        } else {
-            mTimeContainer.addView(d.view, pos);
-        }
-    }
-
-    private void updateView(Data d) {
+    private void updateCompleteView(Data d) {
         Animator a = animateNumView(d);
         if(a != null)a.start();
 
@@ -326,103 +294,6 @@ public class TimeGridFragment extends BaseFragment {
         }
     }
 
-    private void removeTimeUnit(final TimeUnit t) {
-        final ShortLoadingDialog dialog = new ShortLoadingDialog(getActivity());
-        dialog.show();
-        new AsyncTask<Void, Void, Integer>() {
-            @Override
-            protected Integer doInBackground(Void... params) {
-                DbAccess access = new DbAccess(getActivity());
-                TimetableDatabase db = access.get();
-
-                for (int d = Day.OF_WEEK.MONDAY;d <= Day.OF_WEEK.SUNDAY;d++) {
-                    Day day = db.getDayForDayOfWeek(d);
-                    long[] tids = day.getTimeUnits();
-
-                    int x = -1;
-                    for (int i = 0;i < tids.length;i++) {
-                        if(tids[i] == t.getId())
-                            x = i;
-                    }
-
-                    if(x != -1) {
-                        tids = ArrayUtils.removeIndexFromLongArray(x, tids);
-                        long[]lids = ArrayUtils.removeIndexFromLongArray(x, day.getLessons());
-                        long[]pids = ArrayUtils.removeIndexFromLongArray(x, day.getPlaces());
-
-                        day.setTimeUnits(tids);
-                        day.setLessons(lids);
-                        day.setPlaces(pids);
-
-                        db.updateDatabaseEntry(day);
-                    }
-                }
-
-                int pos = -1;
-                for (int i = 0;i < mList.size();i++) {
-                    if (mList.get(i).time.getId() == t.getId())
-                        pos = i;
-                }
-
-                updateAllNums(t.getId());
-
-                db.removeDatabaseEntry(t);
-                access.close();
-                return pos;
-            }
-
-            @Override
-            protected void onPostExecute(Integer integer) {
-                super.onPostExecute(integer);
-
-                final int[] loc = new int[2];
-
-                Data d = mList.remove(integer.intValue());
-                d.view.getLocationOnScreen(loc);
-                loc[0] += d.view.getWidth() / 2;
-                loc[1] += d.view.getHeight() / 2;
-
-                dialog.finish(null);
-                AnimUtils.animateViewDeletingInLayout(d.view, mTimeContainer, new Runnable() {
-                    @Override
-                    public void run() {
-                        WaveAnimator animator = new WaveAnimator(new WaveAnimator.WaveAnimationApplier<Data>() {
-                            @Override
-                            public Animator makeAnimationForView(View v, Data data) {
-                                return animateNumView(data);
-                            }
-                        })
-                        .setSpeed(MetricsUtils.convertDpToPixel(300))
-                        .setStartPoint(loc);
-
-                        for (int i = 0;i < mList.size();i++) {
-                            animator.addTarget(mList.get(i).view, mList.get(i));
-                        }
-
-                        animator.start();
-                    }
-                });
-
-
-            }
-        }.execute();
-    }
-
-    private void updateAllNums(long skipId) {
-        int num = 1;
-
-        for(int i = 0;i < mList.size();i++) {
-            if(skipId != mList.get(i).time.getId()) {
-                if(mList.get(i).time.isBreak()) {
-                    mList.get(i).num = -1;
-                } else {
-                    mList.get(i).num = num;
-                    num++;
-                }
-            }
-        }
-    }
-
     /**
      * Gets the tag of a {@link android.view.View} through the getTag() method and
      * converts it to an int
@@ -433,22 +304,11 @@ public class TimeGridFragment extends BaseFragment {
         return v.getTag() == null ? -1 : ((Integer)v.getTag());
     }
 
-    public class Data {
-        TimeUnit time;
-        int num;
-        ButtonClickListener lis;
-        View view;
-        View more;
-        TimelyView firstDigit;
-        TimelyView secondDigit;
-        Button startButton, endButton;
-    }
-
     private class ButtonClickListener implements View.OnClickListener {
 
-        private Data mData;
+        private TimeGridModel.Data mData;
 
-        public ButtonClickListener(Data d) {
+        public ButtonClickListener(TimeGridModel.Data d) {
             mData = d;
 
             d.startButton = (Button)d.view.findViewById(R.id.btn_start_time);
@@ -477,9 +337,9 @@ public class TimeGridFragment extends BaseFragment {
                             public void onTimeSet(RadialPickerLayout radialPickerLayout, int i, int i2) {
                                 mData.time.setStartTime((i * 60) + i2);
 
-                                mTask.doExecute(mData);
+                                mModel.saveDataToDb(mData);
 
-                                updateView(mData);
+                                updateCompleteView(mData);
                             }
                         }, mData.time.getStartTime() / 60 , mData.time.getStartTime() % 60, false, false);
 
@@ -491,9 +351,9 @@ public class TimeGridFragment extends BaseFragment {
                             public void onTimeSet(RadialPickerLayout radialPickerLayout, int i, int i2) {
                                 mData.time.setEndTime((i * 60) + i2);
 
-                                mTask.doExecute(mData);
+                                mModel.saveDataToDb(mData);
 
-                                updateView(mData);
+                                updateCompleteView(mData);
                             }
                         }, mData.time.getEndTime() / 60 , mData.time.getEndTime() % 60, false, false);
 
@@ -515,14 +375,14 @@ public class TimeGridFragment extends BaseFragment {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     if (position == 0) {
                         if (mData.time.isBreak()) {
-                            updateNumForAllAfter(mList.indexOf(mData), true);
+                            updateNumForAllAfter(mModel.indexOf(mData), true);
                         }
                     } else if (position == 1) {
                         if (!mData.time.isBreak()) {
-                            updateNumForAllAfter(mList.indexOf(mData), false);
+                            updateNumForAllAfter(mModel.indexOf(mData), false);
                         }
                     } else {
-                        if (mList.size() <= 1) {
+                        if (mModel.getDataSize() <= 1) {
                             Toast.makeText(getActivity(), R.string.cannot_remove_timeunit_toast,
                                     Toast.LENGTH_SHORT).show();
                         } else {
@@ -535,7 +395,7 @@ public class TimeGridFragment extends BaseFragment {
                                     .callback(new MaterialDialog.ButtonCallback() {
                                         @Override
                                         public void onPositive(MaterialDialog dialog) {
-                                            removeTimeUnit(mData.time);
+                                            deleteTimeUnit(mData.time);
                                         }
                                     })
                                     .build();
@@ -554,7 +414,7 @@ public class TimeGridFragment extends BaseFragment {
                     mData.view.setBackgroundColor(Color.TRANSPARENT);
                 }
             });
-            popUp.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.adapter_list_popup_item,
+            popUp.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.adapter_list_popup_item,
                     android.R.id.text1, getResources().getStringArray(R.array.array_list_popup_time_more)));
             popUp.show();
 
@@ -570,19 +430,20 @@ public class TimeGridFragment extends BaseFragment {
 
         if(pos > 0) {
             do {
-                if(!mList.get(i).time.isBreak())
-                    curNum = mList.get(i).num;
+                Data d = mModel.getDataAtPos(pos);
+                if(!d.time.isBreak())
+                    curNum = d.num;
                 i--;
             } while (i >= 0 && curNum == 0);
         }
 
-        Data d = mList.get(pos);
-        d.num = newLesson ? ++curNum : 0;
+        Data d = mModel.getDataAtPos(pos);
+        d.num = newLesson ? ++curNum : -1;
         d.time.setBreak(!newLesson);
 
-        mTask.doExecute(d);
+        mModel.saveDataToDb(d);
 
-        updateView(d);
+        updateCompleteView(d);
 
         WaveAnimator waveAnimator = new WaveAnimator(new WaveAnimator.WaveAnimationApplier<Data>() {
             @Override
@@ -591,8 +452,8 @@ public class TimeGridFragment extends BaseFragment {
             }
         }).setSpeed(MetricsUtils.convertDpToPixel(300)).setStartAnchorView(d.firstDigit, true);
 
-        for(i = pos + 1;i < mList.size();i++) {
-            d = mList.get(i);
+        for(i = pos + 1;i < mModel.getDataSize();i++) {
+            d = mModel.getDataAtPos(i);
 
             d.num = d.time.isBreak() ? 0 : ++curNum;
 
@@ -609,37 +470,5 @@ public class TimeGridFragment extends BaseFragment {
     @Override
     public int getBackgroundColor() {
         return Color.TRANSPARENT;
-    }
-
-    public class SavingAsyncTask extends AsyncTask<Data, Void, Void> {
-        @Override
-        protected Void doInBackground(Data... params) {
-            DbAccess access = new DbAccess(getActivity());
-            TimetableDatabase db = access.get();
-
-            Data d = params[0];
-
-            if(d.time.getId() != -1) {
-                db.updateDatabaseEntry(d.time);
-            } else {
-                d.time = (TimeUnit) db.insertDatabaseEntryForId(d.time);
-            }
-
-            getLessonNotifier().checkForNewNotifications();
-
-            access.close();
-
-            return null;
-        }
-
-        public void doExecute(Data d) {
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                executeOnExecutor(THREAD_POOL_EXECUTOR, d);
-            } else {
-                execute(d);
-            }
-
-            mTask = new SavingAsyncTask();
-        }
     }
 }
