@@ -5,9 +5,9 @@
     android:layout_height="@dimen/fab_normal_dimen"
     android:layout_gravity="bottom|end"
     android:background="@color/material_green"
-    android:layout_marginRight="@dimen/keyline_left_space"
-    android:layout_marginEnd="@dimen/keyline_left_space"
-    android:layout_marginBottom="@dimen/keyline_left_space"
+    android:layout_marginRight="@dimen/keyline_first_line"
+    android:layout_marginEnd="@dimen/keyline_first_line"
+    android:layout_marginBottom="@dimen/keyline_first_line"
     android:src="@drawable/ic_done_white_36dp"
     android:id="@+id/fab_edit"
     android:scaleType="centerInside" />

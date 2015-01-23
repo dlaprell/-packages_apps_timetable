@@ -1,5 +1,6 @@
 package eu.laprell.timetable.widgets;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -7,8 +8,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import eu.laprell.timetable.R;
@@ -17,7 +19,10 @@ import eu.laprell.timetable.utils.MetricsUtils;
 /**
  * Created by david on 14.11.14.
  */
+@SuppressWarnings("UnusedDeclaration")
 public class LessonCardView extends View implements Drawable.Callback {
+
+    private static final float DIMEN_8DP = MetricsUtils.convertDpToPixel(8);
 
     private static final int DP_NR_BOX = 48;
 
@@ -39,11 +44,13 @@ public class LessonCardView extends View implements Drawable.Callback {
     private Rect mImageRect = new Rect();
 
     private float mNrBoxWidth;
-    private float mTextPosNr, mTextPosSTime, mTextPosETime;
-    private float mTextStartNr, mTextStartSTime, mTextStartETime;
+    private float mTextYPosNr, mTextYPosSTime, mTextYPosETime;
+    private float mTextXPosNr, mTextXPosSTime, mTextXPosETime;
     private float mColumnLeftStart, mColumnRightStart, mColumnRightEnd;
-    private float mTextSizeNr, mTextSizeAdd, mTextSizeTi;
+    private float mTextHeightNr, mTextHeightAdd, mTextHeightTi;
     private float mTextPosTitle, mTextPosInfo, mTextStartInfo;
+
+    private float mWidestLeftColumnWidth;
 
     public LessonCardView(Context context) {
         super(context);
@@ -131,15 +138,21 @@ public class LessonCardView extends View implements Drawable.Callback {
     public void calculateSizes(int w, int h) {
         calculateTextSizes();
 
-        mColumnLeftStart = getPaddingLeft();
-        mColumnRightStart = mColumnLeftStart + MetricsUtils.convertDpToPixel(8) + mNrBoxWidth;
-        mColumnRightEnd = w - getPaddingRight();
+        mColumnLeftStart = getPaddingStart();
+        mColumnRightStart = mColumnLeftStart + DIMEN_8DP + mNrBoxWidth; // 8dp + mNrBoxWidth = 56dp
+        mColumnRightEnd = w - getPaddingEnd();
 
-        mTextPosNr = getPaddingTop() + mTextSizeNr;
-        mTextStartNr = mColumnLeftStart + (mNrBoxWidth / 2) - (mNrPaint.measureText(mLessonNr) / 2);
+        // Calculate widest first column text to align to left side
+        float startTimeWidth = mInfoPaint.measureText(mStartTime);
+        float endTimeWidth = mInfoPaint.measureText(mEndTime);
+        float numWidth = mInfoPaint.measureText(mLessonNr);
 
+        mWidestLeftColumnWidth = Math.max(startTimeWidth, Math.max(endTimeWidth, numWidth));
+
+        // Do not switch the sequence of the measurement
+        // --> end <depends on> start <depends on> nr
+        measureNrBox();
         measureStartTimeBox();
-
         measureEndTimeBox();
 
         final float bottom = h - getPaddingBottom();
@@ -148,38 +161,53 @@ public class LessonCardView extends View implements Drawable.Callback {
         // text start of title is mColumnRightStart
 
         mTextPosInfo = mColumnRightEnd - mInfoPaint.measureText(mAdditionalInfo);
-        mTextStartInfo = bottom - (mTextSizeTi / 2) + (mTextSizeAdd / 2);
+        mTextStartInfo = bottom - (mTextHeightTi / 2) + (mTextHeightAdd / 2);
 
-        int imageBottom = (int)(bottom - (mTextSizeTi + MetricsUtils.convertDpToPixel(8)));
+        int imageBottom = (int)(bottom - (mTextHeightTi + DIMEN_8DP));
         mImageRect.set((int)mColumnRightStart, getPaddingTop(), (int)mColumnRightEnd, imageBottom);
+    }
+
+    @SuppressLint("NewApi")
+    public int getPaddingStart() {
+        return (Build.VERSION.SDK_INT >= 15) ? super.getPaddingStart() : getPaddingLeft();
+    }
+
+    @SuppressLint("NewApi")
+    public int getPaddingEnd() {
+        return (Build.VERSION.SDK_INT >= 15) ? super.getPaddingEnd() : getPaddingRight();
     }
 
     private void calculateTextSizes() {
         // This are the absolute text heights of the different paints
-        mTextSizeNr = -1 * mNrPaint.ascent() + mNrPaint.descent();
-        mTextSizeAdd = -1 * mInfoPaint.ascent() + mInfoPaint.descent();
-        mTextSizeTi = -1 * mTitlePaint.ascent() + mTitlePaint.descent();
+        mTextHeightNr = -1 * mNrPaint.ascent() + mNrPaint.descent();
+        mTextHeightAdd = -1 * mInfoPaint.ascent() + mInfoPaint.descent();
+        mTextHeightTi = -1 * mTitlePaint.ascent() + mTitlePaint.descent();
     }
 
     private void measureEndTimeBox() {
-        mTextPosETime = mTextPosSTime + mTextSizeAdd + MetricsUtils.convertDpToPixel(2);
-        mTextStartETime = mColumnLeftStart + (mNrBoxWidth / 2) - (mInfoPaint.measureText(mEndTime) / 2);
+        mTextYPosETime = mTextYPosSTime + mTextHeightAdd + MetricsUtils.convertDpToPixel(2);
+        mTextXPosETime = mColumnLeftStart + (mWidestLeftColumnWidth / 2) - (mInfoPaint.measureText(mEndTime) / 2);
     }
 
     private void measureStartTimeBox() {
-        mTextPosSTime = mTextPosNr + mTextSizeAdd + MetricsUtils.convertDpToPixel(4);
-        mTextStartSTime = mColumnLeftStart + (mNrBoxWidth / 2) - (mInfoPaint.measureText(mStartTime) / 2);
+        mTextYPosSTime = mTextYPosNr + mTextHeightAdd + MetricsUtils.convertDpToPixel(4);
+        mTextXPosSTime = mColumnLeftStart + (mWidestLeftColumnWidth / 2) - (mInfoPaint.measureText(mStartTime) / 2);
+    }
+
+    private void measureNrBox() {
+        mTextYPosNr = getPaddingTop() + mTextHeightNr;
+        mTextXPosNr = mColumnLeftStart + (mWidestLeftColumnWidth / 2) - (mNrPaint.measureText(mLessonNr) / 2);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         final int s = canvas.save();
 
-        canvas.drawText(mLessonNr, mTextStartNr, mTextPosNr, mNrPaint);
+        canvas.drawText(mLessonNr, mTextXPosNr, mTextYPosNr, mNrPaint);
 
-        canvas.drawText(mStartTime, mTextStartSTime, mTextPosSTime, mInfoPaint);
+        canvas.drawText(mStartTime, mTextXPosSTime, mTextYPosSTime, mInfoPaint);
 
-        canvas.drawText(mEndTime, mTextStartETime, mTextPosETime, mInfoPaint);
+        canvas.drawText(mEndTime, mTextXPosETime, mTextYPosETime, mInfoPaint);
 
         canvas.drawText(mTitle, mColumnRightStart, mTextPosTitle, mTitlePaint);
 
@@ -195,7 +223,7 @@ public class LessonCardView extends View implements Drawable.Callback {
     }
 
     @Override
-    public void invalidateDrawable(Drawable who) {
+    public void invalidateDrawable(@NonNull Drawable who) {
         if(who == mImage) {
             invalidate(mImageRect);
         }
@@ -298,9 +326,6 @@ public class LessonCardView extends View implements Drawable.Callback {
         r.top = loc[1] + mImageRect.top;
         r.right = loc[0] + mImageRect.right;
         r.bottom = loc[1] + mImageRect.bottom;
-
-        Log.d("Timetable", "getImageLocationOnScreen: r=" + r.toString() + " mImageRect="
-                + mImageRect.toString() + " loc[0]=" + loc[0] + " loc[1]=" + loc[1]);
 
         return r;
     }

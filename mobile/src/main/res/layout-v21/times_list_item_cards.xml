@@ -8,9 +8,9 @@
     android:background="@android:color/white"
     android:paddingTop="8dp"
     android:paddingBottom="8dp"
-    android:paddingLeft="@dimen/keyline_left_space"
+    android:paddingLeft="@dimen/keyline_first_line"
     android:paddingRight="0dp"
-    android:paddingStart="@dimen/keyline_left_space"
+    android:paddingStart="@dimen/keyline_first_line"
     android:paddingEnd="0dp">
 
     <include layout="@layout/abs_times_list_item_cards" />

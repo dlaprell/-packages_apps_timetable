@@ -22,8 +22,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="Mathematik"
-            android:layout_marginLeft="@dimen/keyline_left_space"
-            android:layout_marginStart="@dimen/keyline_left_space"
+            android:layout_marginLeft="@dimen/keyline_first_line"
+            android:layout_marginStart="@dimen/keyline_first_line"
             android:id="@+id/text"
             android:textColor="@android:color/white"
             android:layout_gravity="center"
@@ -37,8 +37,8 @@
         android:layout_marginTop="176dp"
         android:elevation="3dp"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/keyline_left_space"
-        android:paddingRight="@dimen/keyline_left_space">
+        android:paddingLeft="@dimen/keyline_first_line"
+        android:paddingRight="@dimen/keyline_first_line">
 
         <include layout="@layout/list_item_space" />
 

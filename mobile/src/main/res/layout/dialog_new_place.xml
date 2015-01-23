@@ -4,5 +4,5 @@
     android:id="@+id/place"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="@dimen/keyline_left_space"
-    android:paddingRight="@dimen/keyline_left_space" />
+    android:paddingLeft="@dimen/keyline_first_line"
+    android:paddingRight="@dimen/keyline_first_line" />

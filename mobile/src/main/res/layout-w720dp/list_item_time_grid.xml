@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="72dp"
-    android:paddingLeft="@dimen/keyline_left_space"
-    android:paddingRight="@dimen/keyline_left_space">
+    android:paddingLeft="@dimen/keyline_first_line"
+    android:paddingRight="@dimen/keyline_first_line">
 
     <com.github.adnansm.timelytextview.TimelyView
         android:layout_width="24dp"

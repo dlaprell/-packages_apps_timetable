@@ -20,7 +20,7 @@
             android:layout_height="120dp"
             android:id="@+id/add_rel_container"
             android:elevation="5dp"
-            android:padding="@dimen/keyline_left_space">
+            android:padding="@dimen/keyline_first_line">
 
             <ImageView
                 android:src="@drawable/mic_start"

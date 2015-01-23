@@ -4,7 +4,7 @@
     <dimen name="drawer_width">320dp</dimen> <!-- 320dp - 56dp -->
     <dimen name="drawer_item_height">48dp</dimen>
     <dimen name="drawer_item_space_height">8dp</dimen>
-    <dimen name="keyline_left_space">16dp</dimen>
+    <dimen name="keyline_first_line">16dp</dimen>
     <dimen name="keyline_sec_left_space">72dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>

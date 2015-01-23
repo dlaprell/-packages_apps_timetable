@@ -6,8 +6,8 @@
     android:minHeight="72dp"
     android:foreground="@drawable/base_ripple"
     android:clickable="false"
-    android:layout_marginLeft="@dimen/keyline_left_space"
-    android:layout_marginRight="@dimen/keyline_left_space"
+    android:layout_marginLeft="@dimen/keyline_first_line"
+    android:layout_marginRight="@dimen/keyline_first_line"
     android:paddingTop="8dp"
     android:paddingBottom="8dp">
 
