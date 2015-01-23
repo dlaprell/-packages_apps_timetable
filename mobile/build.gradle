@@ -45,6 +45,7 @@ dependencies {
 
     compile 'com.github.castorflex.smoothprogressbar:library:1.0.0'
     compile 'com.github.castorflex.smoothprogressbar:library-circular:1.0.0'
+    compile 'com.github.castorflex.verticalviewpager:library:19.0.1'
 
     compile 'com.github.flavienlaurent.datetimepicker:library:0.0.2'
 

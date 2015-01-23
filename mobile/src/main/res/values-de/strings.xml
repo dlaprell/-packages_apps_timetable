@@ -57,9 +57,7 @@
     <string name="add_new_task">Neue Aufgabe</string>
     <string name="pref_enable_debug_notif_summary">Debug Benachrichtigungen werden alle 2 Minuten angezeigt</string>
     <string name="pref_enable_debug_notif_title">Debug Benachrichtigungen</string>
-    <string name="pref_enable_notifications_title">Aktiviere Benachrichtigungen</string>
-    <string name="pref_enable_wear_notifications_summary">Die nächste Stunde wird auf Android Wear angezeigt, falls verbunden</string>
-    <string name="pref_enable_wear_notifications_title">Auf Android Wear anzeigen</string>
+    <string name="pref_enable_notifications_title">Benachrichtigungen</string>
     <string name="prefc_debug">Debug</string>
     <string name="prefc_main_settings">Generell</string>
     <string name="prefc_notifications">Benachrichtigungen</string>
@@ -105,4 +103,6 @@
     <string name="dialog_new_teacher_failed">Mindestens der Nachname muss angegeben werden</string>
     <string name="pref_enable_notifications_summary">Benachrichtigungen werden die nächste Unterrichtseinheit anzeigen</string>
     <string name="timegrid_notmore_than_9_lessons">Zur Zeit sich nur maximal 9 Stunden unterstützt</string>
+    <string name="pref_hide_notifications_on_end_summary">Nach Ende der Unterrichtsstunde wird die Benachrichtigung automatisch entfernt</string>
+    <string name="pref_hide_notifications_on_end_title">Entferne Benachrichtigung automatisch</string>
 </resources>

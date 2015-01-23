@@ -49,6 +49,7 @@ public class LessonNotifier {
 
     private static final long RES_ALARM_ALREADY_SET = -1;
     private static final long RES_NOTHING_FOUND = -2;
+    private static final long RES_SETTING_TO_END = -3;
 
     private Context mContext;
     private TimeUnit[] mTimes;
@@ -159,32 +160,40 @@ public class LessonNotifier {
         TimeUnit time = intent.getParcelableExtra("timeunit");
         Day day = intent.getParcelableExtra("day");
 
-        time = (TimeUnit) mDatabase.getDatabaseEntryById(TimetableDatabase.TYPE_TIMEUNIT,
-                time.getId());
+        int startTime = -1;
+
+        if (time != null) {
+            time = (TimeUnit) mDatabase.getDatabaseEntryById(TimetableDatabase.TYPE_TIMEUNIT,
+                    time.getId());
+            startTime = time.getStartTime();
+        }
         day = mDatabase.getDayForDayOfWeek(day.getDayOfWeek());
 
         Logger.log(TAG, "We have the day=" + day.getDayOfWeek() + " time=" +
-                getDateM(time.getStartTime()));
+                getDateM(startTime));
 
         executeNewPendingTimeUnit(day, time);
     }
 
     private void executeNewPendingTimeUnit(Day day, TimeUnit time) {
-        long lid = day.getLessonIdAt(time);
-        boolean maybeOldShown;
+        boolean maybeOldShown = true;
 
-        if(!TimetableDatabase.isNoId(lid)) {
-            Lesson les = (Lesson)mDatabase.getDatabaseEntryById(
-                    TimetableDatabase.TYPE_LESSON, lid);
+        if (time != null) {
+            long lid = day.getLessonIdAt(time);
 
-            Logger.log(TAG, "Making Notification for=" + les.getTitle());
+            if (!TimetableDatabase.isNoId(lid)) {
+                Lesson les = (Lesson) mDatabase.getDatabaseEntryById(
+                        TimetableDatabase.TYPE_LESSON, lid);
 
-            // makeNotification returns true when showing a new notification
-            // this should be kept and will replace the (maybe current one)
-            maybeOldShown = !_makeNotification(les, time, day, false);
-        } else {
-            Logger.log(TAG, "What no valid id here?");
-            maybeOldShown = true;
+                Logger.log(TAG, "Making Notification for=" + les.getTitle());
+
+                // makeNotification returns true when showing a new notification
+                // this should be kept and will replace the (maybe current one)
+                maybeOldShown = !_makeNotification(les, time, day, false);
+            } else {
+                Logger.log(TAG, "What no valid id here?");
+                maybeOldShown = true;
+            }
         }
 
         if(maybeOldShown && PreferenceManager.getDefaultSharedPreferences(mContext)
@@ -192,7 +201,7 @@ public class LessonNotifier {
             cancelCurrentNotification();
         }
 
-        _check(time.getId());
+        _check(time == null ? -1 : time.getId());
     }
 
     private void _check(long skip) {
@@ -213,7 +222,9 @@ public class LessonNotifier {
             long result = checkForDayAndFromTime(d, time, skip, skipTime);
 
             String res = "";
-            if(result == RES_ALARM_ALREADY_SET) {
+            if (result == RES_SETTING_TO_END) {
+                res = "RES_SETTING_TO_END";
+            } else if (result == RES_ALARM_ALREADY_SET) {
                 res = "RES_ALARM_ALREADY_SET";
             } else if (result == RES_NOTHING_FOUND) {
                 res = "RES_NOTHING_FOUND; going to next day";
@@ -259,7 +270,7 @@ public class LessonNotifier {
                 } else {
                     Logger.log(TAG, "We already set the alarm for the next lesson: "
                             + t.getId() + " at=" + getDateM(t.getStartTime()));
-                    return -1;
+                    return RES_ALARM_ALREADY_SET;
                 }
             } else if(t.getStartTime() > time && t.getEndTime() < time) {
                 if(!isAlreadyNotifiedToday(c, t)) {
@@ -270,7 +281,29 @@ public class LessonNotifier {
             }
         }
 
-        return -2;
+        if (mTimes.length > 0) {
+            // If we looped through the whole day without any time to notify, we have to notify at
+            // the end of the last lesson
+
+            TimeUnit last = mTimes[mTimes.length - 1];
+            final Calendar c = generateNotificationTime(day, last);
+
+            // The generateNotificationTime method returns the time of the beginning of the lessons
+            // minus the mNotifyInSBefore time
+            c.add(Calendar.SECOND, mNotifyInSBefore + (last.getDuration() * 60));
+
+            String prefName = getEndNotiPrefFor(c, last.getId());
+            if (mNotifPref.getLong(prefName, -1) != c.getTimeInMillis()) {
+                PendingIntent pendingIntent = buildIntentForWakeup(day, null);
+                updateForNextWakeUp(pendingIntent, c.getTimeInMillis());
+
+                mNotifPref.edit().putLong(prefName, c.getTimeInMillis()).apply();
+
+                return RES_SETTING_TO_END;
+            }
+        }
+
+        return RES_NOTHING_FOUND;
     }
 
     public boolean makeTestNotification(Lesson lesson, TimeUnit time, Day day) {
@@ -508,6 +541,10 @@ public class LessonNotifier {
 
     private static String getNotiPrefFor(Calendar c, long tid) {
         return "notif_notified_" + getBaseStringPrefFor(c, tid);
+    }
+
+    private static String getEndNotiPrefFor(Calendar c, long tid) {
+        return "notif_end_set_" + getBaseStringPrefFor(c, tid);
     }
 
     private static String getBaseStringPrefFor(Calendar c, long tid) {

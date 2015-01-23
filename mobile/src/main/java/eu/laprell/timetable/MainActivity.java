@@ -31,6 +31,7 @@ import eu.laprell.timetable.fragments.DayOverviewFragment;
 import eu.laprell.timetable.fragments.DebugFragment;
 import eu.laprell.timetable.fragments.DrawerFragment;
 import eu.laprell.timetable.fragments.InfoFragment;
+import eu.laprell.timetable.fragments.SettingsFragment;
 import eu.laprell.timetable.fragments.SettingsFragmentCompat;
 import eu.laprell.timetable.fragments.TaskFragment;
 import eu.laprell.timetable.fragments.TimeGridFragment;
@@ -174,8 +175,8 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
             String act = getIntent().getAction();
             if(Const.ACTION_VIEW_IN_TIMETABLE.equals(act)) {
                 mShouldDisplayDay = getIntent().getIntExtra(Const.EXTRA_DAY_OF_WEEK_BY_NUM, 1);
-                mBackend.navigateMenu(MenuNavigation.Menu.MENU_DAY_OVERVIEW);
 
+                mBackend.navigateMenu(MenuNavigation.Menu.MENU_DAY_OVERVIEW);
                 noNav = false;
             }
         }
@@ -183,13 +184,13 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
         if (noNav && savedInstanceState != null) {
             int menu = savedInstanceState.getInt("last_menu",
                     MenuNavigation.Menu.MENU_DAY_OVERVIEW);
-            mBackend.navigateMenu(menu);
 
             if (menu == MenuNavigation.Menu.MENU_DAY_OVERVIEW) {
                 mShouldDisplayDay = savedInstanceState.getInt("cur_day",
                         BackgroundService.getDayOfWeek());
             }
 
+            mBackend.navigateMenu(menu);
             noNav = false;
         }
 
@@ -197,8 +198,8 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
             int day = BackgroundService.getDayOfWeek();
 
             if (day <= Day.OF_WEEK.FRIDAY) {
-                mBackend.navigateMenu(MenuNavigation.Menu.MENU_DAY_OVERVIEW);
                 mShouldDisplayDay = day;
+                mBackend.navigateMenu(MenuNavigation.Menu.MENU_DAY_OVERVIEW);
             } else {
                 mBackend.navigateMenu(MenuNavigation.Menu.MENU_WEEK_OVERVIEW);
             }
@@ -322,7 +323,7 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
         } else if (menu == MenuNavigation.Menu.MENU_INFO) {
             mFragment = new InfoFragment();
         } else if (menu == MenuNavigation.Menu.MENU_SETTINGS) {
-            mFragment = new SettingsFragmentCompat();
+            mFragment = BuildConfig.DEBUG ? new SettingsFragment() : new SettingsFragmentCompat();
         } else if (menu == MenuNavigation.Menu.MENU_TIME_GRID) {
             mFragment = new TimeGridFragment();
         } else if (menu == MenuNavigation.Menu.MENU_DAY_OVERVIEW) {
