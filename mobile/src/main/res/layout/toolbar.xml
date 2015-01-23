@@ -6,5 +6,6 @@
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:contentInsetStart="@dimen/keyline_2"
     android:minHeight="?attr/actionBarSize"
     android:background="?attr/colorPrimary" />
