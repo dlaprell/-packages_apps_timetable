@@ -37,15 +37,11 @@ public class Dialogs {
                 .positiveText(android.R.string.ok)
                 .negativeText(android.R.string.cancel)
                 .autoDismiss(true)
-                .callback(new MaterialDialog.Callback() {
+                .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         EditText e = (EditText) dialog.findViewById(R.id.place);
                         cb.newRoom(e.getEditableText().toString());
-                    }
-
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
                     }
                 }).build().show();
     }
@@ -61,15 +57,11 @@ public class Dialogs {
                 .positiveText(android.R.string.ok)
                 .negativeText(android.R.string.cancel)
                 .autoDismiss(true)
-                .callback(new MaterialDialog.Callback() {
+                .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         EditText e = (EditText) dialog.findViewById(R.id.place);
                         cb.newSubject(e.getEditableText().toString());
-                    }
-
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
                     }
                 }).build().show();
     }
@@ -86,7 +78,7 @@ public class Dialogs {
                 .positiveText(android.R.string.ok)
                 .negativeText(android.R.string.cancel)
                 .autoDismiss(false)
-                .callback(new MaterialDialog.Callback() {
+                .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         EditText p = (EditText) dialog.findViewById(R.id.prefix);
@@ -321,9 +313,7 @@ public class Dialogs {
                                 cb.selectedRoom(placeEntries[which], text.toString());
                             }
                         })
-                        .callback(new MaterialDialog.FullCallback() {
-                            @Override public void onPositive(MaterialDialog dialog) {}
-                            @Override public void onNegative(MaterialDialog dialog) {}
+                        .callback(new MaterialDialog.ButtonCallback() {
                             @Override
                             public void onNeutral(MaterialDialog dialog) {
                                 showNewRoomDialog(c, new CustomRoomDialogCallback() {
@@ -374,7 +364,7 @@ public class Dialogs {
                     .positiveText(R.string.done)
                     .negativeText(android.R.string.cancel)
                     .autoDismiss(false)
-                    .callback(new MaterialDialog.Callback() {
+                    .callback(new MaterialDialog.ButtonCallback() {
                         @Override
                         public void onPositive(MaterialDialog dialog) {
                             if (mFreetimeBox.isChecked()) {
