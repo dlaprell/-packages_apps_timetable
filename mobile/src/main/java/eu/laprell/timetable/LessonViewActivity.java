@@ -231,13 +231,14 @@ public class LessonViewActivity extends ActionBarActivity implements LessonViewC
                     mFab.setLayoutParams(pa);
 
                     hasCustomTrans = ActivityTransitions.animateHeroTransition(
-                            getIntent().getExtras(), mImageFragment.getImageView(),
-                            new ActivityTransitions.HeroTransitionInterface() {
-                                @Override
-                                public void setBackgroundColorAlpha(int alpha) {
-                                    mContainer.setBackgroundColor(Color.argb(alpha, 0xFF, 0xFF, 0xFF));
-                                }
-                            }, ANIM_TIME, mShowOtherViewsRunnable, mImageFragment.getImageView().getWidth(), height);
+                            getIntent().getExtras(), // the bundle to animate from
+                            mImageFragment.getImageView(), // the view where the pic is located
+                            new ActivityTransitions.SimpleWhiteBackgroundInterface(mContainer),
+                            ANIM_TIME, // time per 100dp
+                            mShowOtherViewsRunnable, // end action
+                            mImageFragment.getImageView().getWidth(), // target width
+                            height // target height
+                    );
                 } else {
                     mShowOtherViewsRunnable.run();
                 }

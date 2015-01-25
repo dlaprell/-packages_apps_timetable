@@ -336,4 +336,18 @@ public class ActivityTransitions {
     public static class CircularRevealAnimationData {
         public int viewWidth, viewHeight, locationX, locationY;
     }
+
+    public static class SimpleWhiteBackgroundInterface implements HeroTransitionInterface {
+
+        private final View mTarget;
+
+        public SimpleWhiteBackgroundInterface(View target) {
+            mTarget = target;
+        }
+
+        @Override
+        public void setBackgroundColorAlpha(int alpha) {
+            mTarget.setBackgroundColor(Color.argb(alpha, 0xFF, 0xFF, 0xFF));
+        }
+    }
 }
