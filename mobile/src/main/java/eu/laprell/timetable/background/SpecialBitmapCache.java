@@ -1,9 +1,13 @@
 package eu.laprell.timetable.background;
 
 import android.app.Application;
+import android.content.ComponentCallbacks2;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.util.LruCache;
+import android.widget.Toast;
+
+import eu.laprell.timetable.BuildConfig;
 
 /**
  * Created by david on 18.12.14.
@@ -34,10 +38,27 @@ public class SpecialBitmapCache {
         // int in its constructor.
         final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
 
-        // Use 1/8th of the available memory for this memory cache.
-        final int cacheSize = maxMemory / 8;
+        int factor;
+        if(maxMemory >= 256 * 1024) {
+            factor = 3;
+        } else if(maxMemory >= 172 * 1024) {
+            factor = 4;
+        } else if(maxMemory >= 128 * 1024) {
+            factor = 5;
+        } else if(maxMemory >= 96 * 1024) {
+            factor = 6;
+        } else {
+            factor = 8;
+        }
+
+        // Use 1/'factor'th of the available memory for this memory cache.
+        final int cacheSize = maxMemory / factor;
 
         mBitmaps = new CustomLruCache(cacheSize);
+
+        if(BuildConfig.DEBUG) {
+            Toast.makeText(mApp, "Cache size is: " + cacheSize, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private class CustomLruCache extends LruCache<Integer, Bitmap>{
@@ -56,10 +77,17 @@ public class SpecialBitmapCache {
         }
     }
 
+    public boolean isInCache(int resId) {
+        return mBitmaps.get(resId) != null;
+    }
+
     public Bitmap loadBitmap(int resId, int minSizeW, int minSizeH) {
         Bitmap b = mBitmaps.get(resId);
 
-        if(b == null) {
+        if(b == null
+                || ((b.getWidth() * 1.2f) < minSizeW)
+                || ((b.getHeight() * 1.2f) < minSizeH)) {
+
             BitmapFactory.Options opt = loadBitmapOptions(resId);
 
             int scale = getMinScaleFactor(opt.outWidth, opt.outHeight, minSizeW, minSizeH);
@@ -70,14 +98,14 @@ public class SpecialBitmapCache {
 
             mBitmaps.put(resId, b);
 
-            Logger.log(TAG, "Created a new Bitmap in cache: " + resId + " cache is now: " + mBitmaps.size() + "kB");
+            //Logger.log(TAG, "Created a new Bitmap in cache: " + resId + " cache is now: " + mBitmaps.size() + "kB");
         }
 
         return b;
     }
 
     private int getMinScaleFactor(int bW, int bH, int tW, int tH) {
-        if(tW == 0 || tH == 0)
+        if(tW <= 0 || tH <= 0)
             return 1;
 
         int scale = Math.min(bW / tW, bH / tH);
@@ -99,5 +127,13 @@ public class SpecialBitmapCache {
         BitmapFactory.decodeResource(mApp.getResources(), resId, opt);
 
         return opt;
+    }
+
+    public void onTrimMemory(int t) {
+        if(t == ComponentCallbacks2.TRIM_MEMORY_MODERATE) {
+            mBitmaps.evictAll();
+        } else if (t == ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL) {
+            mBitmaps.trimToSize(mBitmaps.maxSize() / 4);
+        }
     }
 }

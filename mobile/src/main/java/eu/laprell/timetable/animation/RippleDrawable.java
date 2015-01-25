@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.RadialGradient;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
@@ -25,6 +26,8 @@ public class RippleDrawable extends Drawable {
 
     private static final int ANIM_TIME = 600;
 
+    private static final DecelerateInterpolator sInterpolator = new DecelerateInterpolator(2);
+
     private RadialGradient mRadial;
     private ObjectAnimator mObjectAnimator;
 
@@ -36,6 +39,8 @@ public class RippleDrawable extends Drawable {
     private float mTouchX, mTouchY;
 
     private boolean mInAnimation;
+    private boolean mTouched;
+
     private Animator.AnimatorListener mListener = new AnimatorListenerAdapter() {
         @Override
         public void onAnimationEnd(Animator animation) {
@@ -65,7 +70,7 @@ public class RippleDrawable extends Drawable {
     }
 
     private void updateRadial() {
-        mCircleRadius = Math.max(getBounds().width(), getBounds().height()) * 0.6f;
+        mCircleRadius = Math.max(getBounds().width(), getBounds().height()) * 0.9f;
 
         mRadial = new RadialGradient(mCircleRadius, mCircleRadius, mCircleRadius,
                 new int[] {
@@ -78,6 +83,7 @@ public class RippleDrawable extends Drawable {
         mPaint.setShader(mRadial);
     }
 
+    private static final float DP_1 = MetricsUtils.convertPixelsToDp(1);
     public boolean onTouchEvent(MotionEvent ev) {
         int action = MotionEventCompat.getActionMasked(ev);
 
@@ -86,10 +92,12 @@ public class RippleDrawable extends Drawable {
             mTouchY = ev.getY();
 
             mObjectAnimator = ObjectAnimator.ofFloat(this, "animationStep", 0.01f, 1f);
-            mObjectAnimator.setDuration(ANIM_TIME);
+            mObjectAnimator.setDuration((long) ((mCircleRadius / DP_1) * 1.3f));
             mObjectAnimator.setInterpolator(new DecelerateInterpolator());
             mObjectAnimator.addListener(mListener);
             mObjectAnimator.start();
+
+            mTouched = true;
 
             return true;
         } else if(action == MotionEvent.ACTION_MOVE) {
@@ -101,6 +109,13 @@ public class RippleDrawable extends Drawable {
 
                 return true;
             }
+        } else if(action == MotionEvent.ACTION_UP
+                || action == MotionEvent.ACTION_OUTSIDE
+                || action == MotionEvent.ACTION_CANCEL) {
+            mTouched = false;
+            invalidateSelf();
+
+            return true;
         }
 
         return false;
@@ -110,7 +125,7 @@ public class RippleDrawable extends Drawable {
         mAnimationStep = f;
         float fi = (1f - f);
 
-        mPaint.setAlpha((int)(fi * 255));
+        mPaint.setAlpha((int)(sInterpolator.getInterpolation(fi) * 255));
 
         float scale = 0.1f + (0.9f * f);
 
@@ -145,6 +160,10 @@ public class RippleDrawable extends Drawable {
             canvas.drawRect(0, 0, mCircleRadius * 2, mCircleRadius * 2, mPaint);
 
             canvas.restoreToCount(saveState);
+        }
+
+        if(mTouched) {
+            canvas.drawColor(0x33AAAAAA, PorterDuff.Mode.SRC_OVER);
         }
     }
 

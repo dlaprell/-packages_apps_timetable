@@ -62,6 +62,11 @@
     public void setRadius(float);
 }
 
+-keepclassmembers class eu.laprell.timetable.animation.RippleDrawable {
+    public void setAnimationStep(float f);
+}
+
+
 -keepclassmembers class * implements android.os.Parcelable {
     static ** CREATOR;
 }

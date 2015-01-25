@@ -17,4 +17,7 @@ gradlew.bat
 # pocketsphinx/
 settings.gradle
 wear/
+mobile/proguard.jar
+mobile/retrace.jar
+mobile/proguard.trace
 

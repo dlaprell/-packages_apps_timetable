@@ -25,7 +25,6 @@ public class MainApplication extends Application {
         ECOMMERCE_TRACKER, // Tracker used by all ecommerce transactions from a company.
     }
 
-
     public static boolean sLoggingEnabled = false;
 
     private static MainApplication sApplication;
@@ -59,6 +58,7 @@ public class MainApplication extends Application {
         super.onTrimMemory(level);
 
         mTransitions.onTrimMemory(level);
+        SpecialBitmapCache.getInstance().onTrimMemory(level);
     }
 
     public void saveLogSettings() {

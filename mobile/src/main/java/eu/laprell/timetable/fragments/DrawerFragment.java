@@ -2,7 +2,6 @@ package eu.laprell.timetable.fragments;
 
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
@@ -27,6 +26,7 @@ import eu.laprell.timetable.R;
 import eu.laprell.timetable.addon.Addons;
 import eu.laprell.timetable.background.Logger;
 import eu.laprell.timetable.background.MenuNavigation;
+import eu.laprell.timetable.background.SpecialBitmapCache;
 import eu.laprell.timetable.utils.AnimUtils;
 import eu.laprell.timetable.utils.MetricsUtils;
 import eu.laprell.timetable.widgets.RippleFrameLayout2;
@@ -157,6 +157,15 @@ public class DrawerFragment extends Fragment {
         mDrawerTopContainer.setLayoutParams(p);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(mDrawerTopContainer != null && mBitmapLoadingTask == null) {
+            loadTopBarInfo();
+        }
+    }
+
     private void loadTopBarInfo() {
         mBitmapLoadingTask = new AsyncTask<Void, Void, Boolean>() {
             @Override
@@ -185,7 +194,8 @@ public class DrawerFragment extends Fragment {
                     return false;
 
                 try {
-                    mSchoolImage = BitmapFactory.decodeResource(getResources(), mSchoolImageId);
+                    mSchoolImage = SpecialBitmapCache.getInstance().loadBitmap(mSchoolImageId,
+                            -1, -1);
                 } catch (RuntimeException ex) {
                     Logger.log("DrawerFragment", "Failed to decode Resource", ex);
                     ex.printStackTrace();

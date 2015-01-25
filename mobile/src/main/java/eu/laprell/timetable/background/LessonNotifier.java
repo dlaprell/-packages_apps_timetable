@@ -21,6 +21,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.text.format.DateFormat;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -72,6 +73,7 @@ public class LessonNotifier {
     private PowerManager.WakeLock mNotificationWakeLock;
 
     private int mNotifyInSBefore = 10 * 60;
+    private final ArrayList<Runnable> mQueue = new ArrayList<>();
 
     private Runnable mInitRunnable = new Runnable() {
         @Override
@@ -102,25 +104,74 @@ public class LessonNotifier {
      * background
      */
     public void checkForNewNotifications() {
-        if(mHandler != null)
-            mHandler.post(mDoCheck);
-        else if(mUiHandler != null) {
-            mUiHandler.removeCallbacks(mDelayCheck);
-            mUiHandler.postDelayed(mDelayCheck, 1000);
-        }
+        postSafe(mDoCheck);
     }
+
     private Runnable mDoCheck = new Runnable() {
         @Override
         public void run() {
             _check(-1);
         }
     };
-    private Runnable mDelayCheck = new Runnable() {
+
+    private Runnable mRunQueueCheck = new Runnable() {
+        private final ArrayList<Runnable> mCopy = new ArrayList<>();
         @Override
         public void run() {
-            checkForNewNotifications();
+            // Just for safety reasons
+            synchronized (mCopy) {
+                // Make sure nothing is left in the old list
+                mCopy.clear();
+
+                // Now we have to copy everything
+                for (Runnable r : mQueue)
+                    mCopy.add(r);
+
+                // Clear the original queue
+                mQueue.clear();
+
+                // Now we run all run methods in the background thread
+                for (int i = 0; i < mCopy.size(); i++) {
+                    mCopy.get(i).run();
+                }
+
+                // Clear all runnables
+                mCopy.clear();
+            }
         }
     };
+
+    private Runnable mCheckQueue = new Runnable() {
+        @Override
+        public void run() {
+            if(mHandler != null) {
+                // Handler is up, go ahead and go through the list
+                mHandler.removeCallbacks(mRunQueueCheck);
+                mHandler.post(mRunQueueCheck);
+            } else if(mUiHandler != null) {
+                // Remove yourself and post yourself delayed
+                // -> checking later
+                mUiHandler.removeCallbacks(mCheckQueue);
+                mUiHandler.postDelayed(mCheckQueue, 1000);
+            }
+        }
+    };
+
+    private void postSafe(Runnable r) {
+        // If the handler is up, just post it directly
+        if(mHandler != null)
+            mHandler.post(r);
+        else if(mUiHandler != null) {
+            // Now comes the tricky part
+            // first we add the runnable to the queue
+            mQueue.add(r);
+
+            // Now we post a delayed callback that will check
+            // if the handler is up later
+            mUiHandler.removeCallbacks(mCheckQueue);
+            mUiHandler.postDelayed(mCheckQueue, 1000);
+        }
+    }
 
     /**
      * Will initialize a check for the given Intent witch the action
@@ -132,12 +183,15 @@ public class LessonNotifier {
             mNotificationWakeLock.release();
         }
 
+        // We want to keep the phone up till we have posted the notification
         PowerManager power = (PowerManager)mContext.getSystemService(Context.POWER_SERVICE);
         mNotificationWakeLock = power.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
                 "Timetable_Notification");
+
+        // 10 secs should be enough for most cases, if needed adjust later
         mNotificationWakeLock.acquire(10 * 1000);
 
-        mHandler.post(new Runnable() {
+        postSafe(new Runnable() {
             @Override
             public void run() {
                 _pendingTimeUnit(i);
@@ -162,6 +216,7 @@ public class LessonNotifier {
 
         int startTime = -1;
 
+        // Time can be null, if we are at the end of the last time
         if (time != null) {
             time = (TimeUnit) mDatabase.getDatabaseEntryById(TimetableDatabase.TYPE_TIMEUNIT,
                     time.getId());

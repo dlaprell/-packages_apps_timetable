@@ -100,6 +100,12 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
 
             if(mFragment instanceof BaseFragment)
                 ((BaseFragment) mFragment).onDrawerOverlaps(absOverDrawWidth);
+
+            final View root = mFragment.getView();
+            if(root != null) {
+                root.setTranslationX(mBackend.getDrawerContentWidth() * (v / 8));
+                mToolbar.setTranslationX(mBackend.getDrawerContentWidth() * (v / 8));
+            }
         }
 
         @Override
