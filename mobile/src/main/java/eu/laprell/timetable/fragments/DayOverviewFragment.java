@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,10 +18,6 @@ import eu.laprell.timetable.database.Day;
  * Created by david on 12.12.14.
  */
 public class DayOverviewFragment extends BaseFragment {
-
-    private ViewPager mPager;
-    private PagerTabStrip mStrip;
-    private TimetableCollectionPagerAdapter mAdapter;
 
     private String[] mWeekdays;
 
@@ -57,15 +52,12 @@ public class DayOverviewFragment extends BaseFragment {
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_day_overview, container, false);
 
-        mPager = ((ViewPager) root.findViewById(R.id.pager));
-        mStrip = ((PagerTabStrip) root.findViewById(R.id.pager_tab_strip));
+        ViewPager pager = ((ViewPager) root.findViewById(R.id.pager));
 
-        mAdapter = new TimetableCollectionPagerAdapter(getFragmentManager());
+        pager.setAdapter(new TimetableCollectionPagerAdapter(getFragmentManager()));
+        pager.setCurrentItem(mOpenDay - 1, false);
 
-        mPager.setAdapter(mAdapter);
-        mPager.setCurrentItem(mOpenDay - 1, false);
-
-        mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
