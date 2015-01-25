@@ -10,7 +10,9 @@
     <dimen name="keyline_1">16dp</dimen>
     <dimen name="keyline_1_minus_8dp">8dp</dimen>
     <dimen name="keyline_2">72dp</dimen>
+    <dimen name="keyline_2_minus_8dp">64dp</dimen>
     <dimen name="keyline_2_minus_16dp">56dp</dimen>
+    <dimen name="keyline_2_minus_keyline_1">@dimen/keyline_2_minus_16dp</dimen>
 
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>

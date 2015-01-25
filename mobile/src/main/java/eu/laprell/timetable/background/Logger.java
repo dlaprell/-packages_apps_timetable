@@ -5,20 +5,17 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import eu.laprell.timetable.BuildConfig;
 import eu.laprell.timetable.MainApplication;
+import eu.laprell.timetable.utils.FileUtils;
 
 /**
  * Created by david on 08.01.15.
@@ -127,18 +124,7 @@ public class Logger {
     }
 
     private String getLog() throws IOException {
-        InputStream in = new FileInputStream(mLogFile);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-        StringBuilder out = new StringBuilder();
-
-        String line;
-        while ((line = reader.readLine()) != null) {
-            out.append(line);
-            out.append('\n');
-        }
-        reader.close();
-
-        return out.toString();
+        return FileUtils.readFromfile(mLogFile);
     }
 
     public static String getCurrentLog() throws IOException {

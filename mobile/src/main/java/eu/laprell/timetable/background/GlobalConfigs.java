@@ -3,6 +3,8 @@ package eu.laprell.timetable.background;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import eu.laprell.timetable.utils.PrefUtils;
+
 /**
  * Class for providing a global configuration
  */
@@ -32,6 +34,13 @@ public class GlobalConfigs {
             mMaster.mContext = c.getApplicationContext();
             mMaster.loadConfig();
         }
+    }
+
+    public int getSchoolId() {
+        if (mMaster != null)
+            return mMaster.getSchoolId();
+        else
+            return PrefUtils.getSchoolPref(mContext).getInt("school_id", -1);
     }
 
     public boolean isDebugMenuEnabled() {

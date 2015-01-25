@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="32dp">
+
+        <android.support.v4.view.PagerTabStrip
+            android:id="@+id/pager_tab_strip"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_gravity="top"
+            android:background="?attr/colorPrimary"
+            android:textColor="#FFF"
+            android:gravity="center_vertical"
+            android:elevation="4dp" />
+
+    </android.support.v4.view.ViewPager>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_gravity="bottom"
+        android:background="@color/accent"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        android:gravity="center"
+        android:text="@string/disclaimer_data"
+        android:paddingLeft="@dimen/keyline_1"
+        android:paddingRight="@dimen/keyline_1" />
+
+    <include
+        layout="@layout/single_circular_progress_animation" />
+
+</FrameLayout>

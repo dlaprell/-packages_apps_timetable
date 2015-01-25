@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import eu.laprell.timetable.R;
 import eu.laprell.timetable.addon.Addons;
+import eu.laprell.timetable.background.Logger;
 import eu.laprell.timetable.background.MenuNavigation;
 import eu.laprell.timetable.utils.AnimUtils;
 import eu.laprell.timetable.utils.MetricsUtils;
@@ -46,6 +47,8 @@ public class DrawerFragment extends Fragment {
     private TextView mTopTitle;
 
     private DrawerNavigationCallback mCallback;
+
+    private AsyncTask mBitmapLoadingTask;
 
     private int mSchoolImageId;
     private Bitmap mSchoolImage;
@@ -155,10 +158,12 @@ public class DrawerFragment extends Fragment {
     }
 
     private void loadTopBarInfo() {
-        new AsyncTask<Void, Void, Void>() {
-
+        mBitmapLoadingTask = new AsyncTask<Void, Void, Boolean>() {
             @Override
-            protected Void doInBackground(Void... params) {
+            protected Boolean doInBackground(Void... params) {
+                if(isCancelled())
+                    return false;
+
                 SharedPreferences pref = mDrawerTopContainer.getContext().getSharedPreferences("school", 0);
 
                 int schoolId = pref.getInt("school_id", 0);
@@ -176,7 +181,16 @@ public class DrawerFragment extends Fragment {
                     mSchoolImageId = R.drawable.room_hightech;
                 }
 
-                mSchoolImage = BitmapFactory.decodeResource(getResources(), mSchoolImageId);
+                if(isCancelled())
+                    return false;
+
+                try {
+                    mSchoolImage = BitmapFactory.decodeResource(getResources(), mSchoolImageId);
+                } catch (RuntimeException ex) {
+                    Logger.log("DrawerFragment", "Failed to decode Resource", ex);
+                    ex.printStackTrace();
+                    return false;
+                }
 
                 mTopTitle = (TextView)mDrawerTopContainer.findViewById(
                         R.id.top_text_view);
@@ -185,12 +199,15 @@ public class DrawerFragment extends Fragment {
                 mExpandView = (RippleTouchImageView)mDrawerTopContainer.findViewById(
                         R.id.top_image_expand);
 
-                return null;
+                return !isCancelled();
             }
 
             @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
+            protected void onPostExecute(Boolean b) {
+                super.onPostExecute(b);
+                mBitmapLoadingTask = null;
+
+                if(!b) return;
 
                 mTopTitle.setText(mSchoolName);
 
@@ -200,6 +217,16 @@ public class DrawerFragment extends Fragment {
                 mDrawerTopContainer.setBackgroundColor(0);
             }
         }.execute();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        if(mBitmapLoadingTask != null) {
+            mBitmapLoadingTask.cancel(true);
+            mBitmapLoadingTask = null;
+        }
     }
 
     private void _navigate(int itemPosition) {

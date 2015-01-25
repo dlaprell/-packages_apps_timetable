@@ -5,7 +5,7 @@
     android:id="@+id/circular_loading"
     android:layout_width="36dp"
     android:layout_height="36dp"
-    android:layout_marginTop="24dp"
+    android:layout_marginTop="72dp"
     android:layout_gravity="top|center_horizontal"
     android:indeterminate="true"
     app:cpb_color="#FFee44"

@@ -105,4 +105,15 @@
     <string name="timegrid_notmore_than_9_lessons">Zur Zeit sich nur maximal 9 Stunden unterstützt</string>
     <string name="pref_hide_notifications_on_end_summary">Nach Ende der Unterrichtsstunde wird die Benachrichtigung automatisch entfernt</string>
     <string name="pref_hide_notifications_on_end_title">Entferne Benachrichtigung automatisch</string>
+    <string name="representation_plan">Vertretungsplan</string>
+    <string name="disclaimer_data">Alle Angaben ohne Gewähr</string>
+    <string name="toast_repre_plan_no_internet">Für diese Funktion wird eine Internetverbindung benötigt. Versuche es später erneut</string>
+    <string name="kgh_login">KGH Login</string>
+    <string name="login">Einloggen</string>
+    <string name="login_name">Login Name</string>
+    <string name="password">Passwort</string>
+    <string name="kgh_login_notice">Dein Passwort wird vollständigt verschlüsselt auf deinem Gerät gespeichert. Dies dient dazu, dass du dich nicht jedes mal erneut einloggen musst. Um die Daten vom Schulserver zu empfangen werden deine Login-Daten an unsere Server verschlüsst übermittelt. Die Login-Daten werden nicht auf dem Server gespeichert</string>
+    <string name="kgh_login_info">Benutze den Login, den du auch im SLZ benutzt</string>
+    <string name="toast_failed_to_login">Login fehlgeschlagen. Bitte überprüfe deine Login-Informationen</string>
+    <string name="toast_repre_plan_no_internet_showing_cache">Neue Daten konnten nicht geladen werden. Veraltete Informationen werden angezeigt, die nicht aktuell sind</string>
 </resources>

@@ -36,6 +36,7 @@ import eu.laprell.timetable.fragments.SettingsFragmentCompat;
 import eu.laprell.timetable.fragments.TaskFragment;
 import eu.laprell.timetable.fragments.TimeGridFragment;
 import eu.laprell.timetable.fragments.WeekOverviewFragment;
+import eu.laprell.timetable.fragments.addons.AddonsFragments;
 import eu.laprell.timetable.utils.Const;
 import eu.laprell.timetable.utils.MetricsUtils;
 import eu.laprell.timetable.utils.ToastAdListener;
@@ -244,6 +245,8 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
         } else if (requestCode == 1) {
             SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
 
+            //mBackend.reloadDrawer();
+
             mDrawerLayout.openDrawer(Gravity.START);
             mBackend.navigateMenu(MenuNavigation.Menu.MENU_TIME_GRID);
 
@@ -333,6 +336,8 @@ public class MainActivity extends ActionBarActivity implements DrawerFragment.Dr
             mFragment = new TaskFragment();
         } else if(menu == MenuNavigation.Menu.MENU_DEBUG) {
             mFragment = new DebugFragment();
+        } else {
+            mFragment = AddonsFragments.getAddonFragmentForMenu(menu);
         }
 
         if (aIn != 0 || aOut != 0) {

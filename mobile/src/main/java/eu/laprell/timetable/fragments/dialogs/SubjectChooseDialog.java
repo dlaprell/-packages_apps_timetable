@@ -57,7 +57,7 @@ public class SubjectChooseDialog {
                 .autoDismiss(false)
                 .title(R.string.select_subject)
                 .neutralText(R.string.new_subject)
-                .callback(new MaterialDialog.FullCallback() {
+                .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onNeutral(MaterialDialog materialDialog) {
                         Dialogs.showNewSubjectDialog(mContext, new Dialogs.CustomSubjectDialogCallback() {

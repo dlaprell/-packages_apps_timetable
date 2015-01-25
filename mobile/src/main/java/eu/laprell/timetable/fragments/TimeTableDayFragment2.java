@@ -188,7 +188,7 @@ public class TimeTableDayFragment2 extends BaseFragment {
                 .content(R.string.insert_break_dialog_text)
                 .positiveText(R.string.break_)
                 .negativeText(R.string.lesson)
-                .callback(new MaterialDialog.Callback() {
+                .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onNegative(MaterialDialog materialDialog) {
                         makeNewLesson(null, true);

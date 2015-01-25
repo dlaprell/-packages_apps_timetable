@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import eu.laprell.timetable.BuildConfig;
 import eu.laprell.timetable.R;
+import eu.laprell.timetable.addon.Addons;
 
 /**
  * Created by david on 20.11.14.
@@ -28,12 +29,16 @@ public class MenuNavigation {
         public static final int MENU_DEBUG = 99;
     }
 
+    public final class AddonsMenu {
+        private static final int BASE = 100;
+        public static final int MENU_KGH_REPRESENTATION_PLAN = BASE + 1;
+    }
+
     private Context mContext;
     private ArrayList<String> mTitleStrings;
     private ArrayList<Integer> mImages;
     private ArrayList<Integer> mMenus;
     private ArrayList<Integer> mMenuExtended;
-
 
     public MenuNavigation(Context c) {
         mContext = c;
@@ -49,7 +54,7 @@ public class MenuNavigation {
     private void reloadFromConfiguration() {
         int curPos = -1;
 
-        GlobalConfigs c = new GlobalConfigs(mContext);
+        final GlobalConfigs c = new GlobalConfigs(mContext);
 
         mMenuExtended.add(Menu.MENU_TOP);
 
@@ -72,6 +77,15 @@ public class MenuNavigation {
             mTitleStrings.add(getString(R.string.tasks));
             mMenus.add(Menu.MENU_TASKS);
             mImages.add(-1);
+            mMenuExtended.add(++curPos);
+        }
+
+        if (c.getSchoolId() == Addons.Ids.ID_KREISGYMNASIUM_HEINSBERG) {
+            mMenuExtended.add(Menu.MENU_SPACE);
+
+            mTitleStrings.add(getString(R.string.representation_plan));
+            mMenus.add(AddonsMenu.MENU_KGH_REPRESENTATION_PLAN);
+            mImages.add(R.drawable.ic_assignment_ind_grey600_24dp);
             mMenuExtended.add(++curPos);
         }
 
