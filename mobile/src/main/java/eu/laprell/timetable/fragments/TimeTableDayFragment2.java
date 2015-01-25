@@ -73,6 +73,8 @@ public class TimeTableDayFragment2 extends BaseFragment {
     private RecyclerView mRecyclerView;
     private TimeTableDayDatabaseAdapter mAdapter;
 
+    private AsyncTask mLoadingTask;
+
     private Day mDay;
 
     private ArrayList<Data> mList;
@@ -80,11 +82,8 @@ public class TimeTableDayFragment2 extends BaseFragment {
 
     private TimeUnit[] mTimes;
 
-    private ListAdapter mEditAdapter;
     private int mCurrentEdit;
     private ListPopupWindow mEditList;
-
-    private Button mDayText;
 
     public TimeTableDayFragment2() {
         mList = new ArrayList<Data>();
@@ -102,11 +101,11 @@ public class TimeTableDayFragment2 extends BaseFragment {
         }
 
         String[] options = getResources().getStringArray(R.array.array_list_popup_edit_entry);
-        mEditAdapter = new ArrayAdapter<>(getActivity(), R.layout.popup_window_text,
+        ListAdapter editAdapter = new ArrayAdapter<>(getActivity(), R.layout.popup_window_text,
                 android.R.id.text1, options);
         mEditList = new ListPopupWindow(getActivity());
         mEditList.setAnimationStyle(R.style.NoEnterAnimationWindow);
-        mEditList.setAdapter(mEditAdapter);
+        mEditList.setAdapter(editAdapter);
         mEditList.setModal(true);
         mEditList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -128,6 +127,16 @@ public class TimeTableDayFragment2 extends BaseFragment {
         });
 
         mTimes = new TimeUnit[0];
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        if(mLoadingTask != null && !mLoadingTask.isCancelled()) {
+            mLoadingTask.cancel(true);
+            mLoadingTask = null;
+        }
     }
 
     @Override
@@ -301,9 +310,10 @@ public class TimeTableDayFragment2 extends BaseFragment {
         mRecyclerView = (RecyclerView)mContainer.findViewById(
                 R.id.timetable_dayview_recycler_view);
 
-        mDayText = (Button)mContainer.findViewById(R.id.day_text);
-        if(mDayText != null) {
-            mDayText.setText(mDayText.getResources().getStringArray(R.array.array_days)[mDayToDisplay - 1]);
+        Button dayText = (Button) mContainer.findViewById(R.id.day_text);
+        if(dayText != null) {
+            dayText.setText(dayText.getResources().getStringArray(R.array.array_days)
+                    [mDayToDisplay - 1]);
         }
 
         // use the true setting to improve performance if you know that changes
@@ -536,7 +546,7 @@ public class TimeTableDayFragment2 extends BaseFragment {
     }
 
     private void loadTable() {
-        new AsyncTask<Void, Void, Void>() {
+        mLoadingTask = new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
                 fetchData();
@@ -546,6 +556,8 @@ public class TimeTableDayFragment2 extends BaseFragment {
             @Override
             protected void onPostExecute(Void aVoid) {
                 AnimUtils.animateProgressExit(mProgress);
+
+                mLoadingTask = null;
 
                 if(mAdapter != null)
                     mAdapter.notifyDataSetChanged();
