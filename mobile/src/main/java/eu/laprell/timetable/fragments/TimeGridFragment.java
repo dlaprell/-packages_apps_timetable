@@ -441,7 +441,7 @@ public class TimeGridFragment extends BaseFragment implements TimeGridModel.Time
 
         if(pos > 0) {
             do {
-                Data d = mModel.getDataAtPos(pos);
+                Data d = mModel.getDataAtPos(i);
                 if(!d.time.isBreak())
                     curNum = d.num;
                 i--;
