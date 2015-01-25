@@ -221,7 +221,7 @@ public class LessonNotifier {
 
             long result = checkForDayAndFromTime(d, time, skip, skipTime);
 
-            String res = "";
+            String res;
             if (result == RES_SETTING_TO_END) {
                 res = "RES_SETTING_TO_END";
             } else if (result == RES_ALARM_ALREADY_SET) {
@@ -233,8 +233,10 @@ public class LessonNotifier {
             }
             Logger.log(TAG, "Got result=" + res);
 
-            if(result != RES_NOTHING_FOUND)
+            if(result != RES_NOTHING_FOUND) {
+                Logger.log(TAG, "Exiting _check");
                 return;
+            }
 
             time = -1;
             skip = -1;
@@ -292,12 +294,17 @@ public class LessonNotifier {
             // minus the mNotifyInSBefore time
             c.add(Calendar.SECOND, mNotifyInSBefore + (last.getDuration() * 60));
 
+            long roundedTime = c.getTimeInMillis() / (1000 * 60);
+
             String prefName = getEndNotiPrefFor(c, last.getId());
-            if (mNotifPref.getLong(prefName, -1) != c.getTimeInMillis()) {
+            if (mNotifPref.getLong(prefName, -1) != roundedTime) {
                 PendingIntent pendingIntent = buildIntentForWakeup(day, null);
                 updateForNextWakeUp(pendingIntent, c.getTimeInMillis());
 
-                mNotifPref.edit().putLong(prefName, c.getTimeInMillis()).apply();
+                mNotifPref.edit().putLong(prefName, roundedTime).commit();
+
+                Logger.log(TAG, "Will wake up: " + prefName + " at " + c.toString()
+                        + " pref set to" + roundedTime);
 
                 return RES_SETTING_TO_END;
             }
@@ -487,6 +494,7 @@ public class LessonNotifier {
         c.set(Calendar.HOUR_OF_DAY, h);
         c.set(Calendar.MINUTE, m);
         c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND, 0);
 
         // Now go to the notification time
         c.add(Calendar.SECOND, -mNotifyInSBefore);
