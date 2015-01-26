@@ -112,7 +112,7 @@
     <string name="login">Einloggen</string>
     <string name="login_name">Login Name</string>
     <string name="password">Passwort</string>
-    <string name="kgh_login_notice">Dein Passwort wird vollständigt verschlüsselt auf deinem Gerät gespeichert. Dies dient dazu, dass du dich nicht jedes mal erneut einloggen musst. Um die Daten vom Schulserver zu empfangen werden deine Login-Daten an unsere Server verschlüsst übermittelt. Die Login-Daten werden nicht auf dem Server gespeichert</string>
+    <string name="kgh_login_notice">Dein Passwort wird vollständigt verschlüsselt auf deinem Gerät gespeichert. Dies dient dazu, dass du dich nicht jedes mal erneut einloggen musst. Um die Daten vom Schulserver zu empfangen werden deine Login-Daten an unsere Server verschlüsst übermittelt. Die Login-Daten werden nicht auf dem Server gespeichert. Für die Sicherheit der Verbindung zwischen unseren Servern und denen der Schule wird nicht garantiert</string>
     <string name="kgh_login_info">Benutze den Login, den du auch im SLZ benutzt</string>
     <string name="toast_failed_to_login">Login fehlgeschlagen. Bitte überprüfe deine Login-Informationen</string>
     <string name="toast_repre_plan_no_internet_showing_cache">Neue Daten konnten nicht geladen werden. Veraltete Informationen werden angezeigt, die nicht aktuell sind</string>

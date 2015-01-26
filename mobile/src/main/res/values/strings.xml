@@ -85,7 +85,7 @@
     <string name="login_name">Login name</string>
     <string name="password">Password</string>
     <string name="kgh_login_info">Use your SLZ login</string>
-    <string name="kgh_login_notice">Your password will be stored fully encrypted locally, so that you don\'t have to enter it each time. To retrieve the data from the school server the login credentials will be used. Your credentials will be passed to our servers through an encrypted channel, Our servers wont save your information</string>
+    <string name="kgh_login_notice">Your password will be stored fully encrypted locally, so that you don\'t have to enter it each time. To retrieve the data from the school server the login credentials will be used. Your credentials will be passed to our servers through an encrypted channel, Our servers wont save your information. We cannot guarantee for the security of the connection between our servers and the ones from your school</string>
 
     <string name="prefc_main_settings">General</string>
     <string name="prefc_notifications">Notifications</string>
@@ -112,5 +112,7 @@
     <string name="dbg_share_last_log" translatable="false">Share last log</string>
     <string name="dbg_clear_log" translatable="false">Clear log</string>
     <string name="dbg_deactivate_debug_menu" translatable="false">Deactivate debug menu</string>
+    <string name="dbg_fake_pending_time_unit" translatable="false">Fake pending TimeUnit</string>
+    <string name="dbg_reset_notification_pref" translatable="false">Reset Notification state</string>
 
 </resources>
