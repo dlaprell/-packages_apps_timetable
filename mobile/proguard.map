@@ -1370,7 +1370,8 @@ android.support.v4.util.LruCache -> android.support.v4.f.f:
     245:245:java.lang.Object create(java.lang.Object) -> b
     249:253:int safeSizeOf(java.lang.Object,java.lang.Object) -> c
     264:264:int sizeOf(java.lang.Object,java.lang.Object) -> b
-    280:280:int size() -> a
+    271:272:void evictAll() -> a
+    289:289:int maxSize() -> b
     338:340:java.lang.String toString() -> toString
 android.support.v4.util.MapCollections -> android.support.v4.f.g:
     android.support.v4.util.MapCollections$EntrySet mEntrySet -> b
@@ -1865,6 +1866,7 @@ android.support.v4.view.PagerAdapter -> android.support.v4.view.ba:
     239:239:android.os.Parcelable saveState() -> a
     250:250:void restoreState(android.os.Parcelable,java.lang.ClassLoader) -> a
     268:268:int getItemPosition(java.lang.Object) -> a
+    276:277:void notifyDataSetChanged() -> c
     285:286:void registerDataSetObserver(android.database.DataSetObserver) -> a
     294:295:void unregisterDataSetObserver(android.database.DataSetObserver) -> b
     307:307:java.lang.CharSequence getPageTitle(int) -> c
@@ -9589,48 +9591,49 @@ com.afollestad.materialdialogs.MaterialDialog -> com.a.a.c:
     int defaultItemColor -> l
     com.afollestad.materialdialogs.MaterialDialog$ListType listType -> m
     java.util.List selectedIndicesList -> n
-    78:88:android.view.ContextThemeWrapper getTheme(com.afollestad.materialdialogs.MaterialDialog$Builder) -> a
-    284:290:int gravityIntToGravity(com.afollestad.materialdialogs.GravityEnum) -> a
-    296:302:int gravityToAlignment(com.afollestad.materialdialogs.GravityEnum) -> b
-    308:311:void onShow(android.content.DialogInterface) -> onShow
-    319:342:void updateFramePadding() -> e
-    348:385:void invalidateCustomViewAssociations() -> f
-    395:438:void setDividerVisibility(boolean,boolean) -> a
-    444:486:void invalidateList() -> g
-    497:505:android.view.View getBottomView(android.view.ViewGroup) -> a
-    510:518:android.view.View getTopView(android.view.ViewGroup) -> b
-    522:542:boolean canViewOrChildScroll(android.view.View,boolean) -> a
-    548:557:boolean isRecyclerView(android.view.View) -> b
-    561:561:boolean canWebViewScroll(android.webkit.WebView) -> a
-    566:583:boolean canAdapterViewScroll(android.widget.AdapterView) -> a
-    587:587:boolean canListViewScroll() -> h
-    601:603:boolean canContentScroll() -> i
-    610:631:void checkIfStackingNeeded() -> j
-    634:638:android.graphics.drawable.Drawable getListSelector() -> k
-    642:669:android.graphics.drawable.Drawable getButtonSelector(com.afollestad.materialdialogs.DialogAction) -> a
-    680:760:boolean invalidateActions() -> l
-    764:769:void sendSingleChoiceCallback(android.view.View) -> c
-    772:779:void sendMultichoiceCallback() -> m
-    783:834:void onClick(android.view.View) -> onClick
-    1376:1379:void show() -> show
-    1382:1392:android.content.res.ColorStateList getActionTextStateList(int) -> a
-    1435:1440:android.widget.Button getButton(int) -> getButton
-    1457:1457:android.view.View getCustomView() -> a
-    1497:1497:boolean hasActionButtons() -> b
-    1506:1510:int numberOfActionButtons() -> c
-    1517:1518:void setTitle(java.lang.CharSequence) -> setTitle
-    1522:1524:void setIcon(int) -> setIcon
-    1528:1530:void setIcon(android.graphics.drawable.Drawable) -> setIcon
-    1534:1537:void setIconAttribute(int) -> setIconAttribute
-    1565:1565:android.widget.ListView getListView() -> getListView
-    59:59:void access$000(com.afollestad.materialdialogs.MaterialDialog) -> a
-    59:59:void access$100(com.afollestad.materialdialogs.MaterialDialog,android.widget.TextView,android.graphics.Typeface) -> a
+    79:89:android.view.ContextThemeWrapper getTheme(com.afollestad.materialdialogs.MaterialDialog$Builder) -> a
+    283:289:int gravityIntToGravity(com.afollestad.materialdialogs.GravityEnum) -> a
+    295:301:int gravityToAlignment(com.afollestad.materialdialogs.GravityEnum) -> b
+    307:310:void onShow(android.content.DialogInterface) -> onShow
+    318:341:void updateFramePadding() -> e
+    347:384:void invalidateCustomViewAssociations() -> f
+    394:437:void setDividerVisibility(boolean,boolean) -> a
+    443:485:void invalidateList() -> g
+    496:504:android.view.View getBottomView(android.view.ViewGroup) -> a
+    509:517:android.view.View getTopView(android.view.ViewGroup) -> b
+    521:541:boolean canViewOrChildScroll(android.view.View,boolean) -> a
+    547:556:boolean isRecyclerView(android.view.View) -> b
+    560:560:boolean canWebViewScroll(android.webkit.WebView) -> a
+    565:582:boolean canAdapterViewScroll(android.widget.AdapterView) -> a
+    586:586:boolean canListViewScroll() -> h
+    600:602:boolean canContentScroll() -> i
+    609:630:void checkIfStackingNeeded() -> j
+    633:637:android.graphics.drawable.Drawable getListSelector() -> k
+    641:668:android.graphics.drawable.Drawable getButtonSelector(com.afollestad.materialdialogs.DialogAction) -> b
+    679:759:boolean invalidateActions() -> l
+    763:768:void sendSingleChoiceCallback(android.view.View) -> c
+    771:778:void sendMultichoiceCallback() -> m
+    782:833:void onClick(android.view.View) -> onClick
+    1394:1397:void show() -> show
+    1400:1410:android.content.res.ColorStateList getActionTextStateList(int) -> a
+    1422:1438:android.view.View getActionButton(com.afollestad.materialdialogs.DialogAction) -> a
+    1453:1459:android.widget.Button getButton(int) -> getButton
+    1476:1476:android.view.View getCustomView() -> a
+    1516:1516:boolean hasActionButtons() -> b
+    1525:1529:int numberOfActionButtons() -> c
+    1536:1537:void setTitle(java.lang.CharSequence) -> setTitle
+    1541:1543:void setIcon(int) -> setIcon
+    1547:1549:void setIcon(android.graphics.drawable.Drawable) -> setIcon
+    1553:1556:void setIconAttribute(int) -> setIconAttribute
+    1584:1584:android.widget.ListView getListView() -> getListView
+    60:60:void access$000(com.afollestad.materialdialogs.MaterialDialog) -> a
+    60:60:void access$100(com.afollestad.materialdialogs.MaterialDialog,android.widget.TextView,android.graphics.Typeface) -> a
 com.afollestad.materialdialogs.MaterialDialog$1 -> com.a.a.d:
     com.afollestad.materialdialogs.MaterialDialog this$0 -> a
-    270:273:void onGlobalLayout() -> onGlobalLayout
+    269:272:void onGlobalLayout() -> onGlobalLayout
 com.afollestad.materialdialogs.MaterialDialog$2 -> com.a.a.e:
     com.afollestad.materialdialogs.MaterialDialog this$0 -> a
-    462:482:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+    461:481:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
 com.afollestad.materialdialogs.MaterialDialog$3 -> com.a.a.f:
     int[] $SwitchMap$com$afollestad$materialdialogs$GravityEnum -> a
     int[] $SwitchMap$com$afollestad$materialdialogs$DialogAction -> b
@@ -9681,63 +9684,60 @@ com.afollestad.materialdialogs.MaterialDialog$Builder -> com.a.a.g:
     int btnSelectorPositive -> Q
     int btnSelectorNeutral -> R
     int btnSelectorNegative -> S
-    927:958:void checkSingleton() -> b
-    961:962:com.afollestad.materialdialogs.MaterialDialog$Builder title(int) -> a
-    966:967:com.afollestad.materialdialogs.MaterialDialog$Builder title(java.lang.CharSequence) -> a
-    1034:1035:com.afollestad.materialdialogs.MaterialDialog$Builder content(int) -> b
-    1039:1040:com.afollestad.materialdialogs.MaterialDialog$Builder content(java.lang.CharSequence) -> b
-    1044:1045:com.afollestad.materialdialogs.MaterialDialog$Builder content(int,java.lang.Object[]) -> a
-    1064:1065:com.afollestad.materialdialogs.MaterialDialog$Builder items(java.lang.CharSequence[]) -> a
-    1069:1072:com.afollestad.materialdialogs.MaterialDialog$Builder itemsCallback(com.afollestad.materialdialogs.MaterialDialog$ListCallback) -> a
-    1084:1088:com.afollestad.materialdialogs.MaterialDialog$Builder itemsCallbackSingleChoice(int,com.afollestad.materialdialogs.MaterialDialog$ListCallback) -> a
-    1132:1133:com.afollestad.materialdialogs.MaterialDialog$Builder positiveText(int) -> c
-    1137:1138:com.afollestad.materialdialogs.MaterialDialog$Builder positiveText(java.lang.CharSequence) -> c
-    1142:1142:com.afollestad.materialdialogs.MaterialDialog$Builder neutralText(int) -> d
-    1146:1147:com.afollestad.materialdialogs.MaterialDialog$Builder neutralText(java.lang.CharSequence) -> d
-    1151:1151:com.afollestad.materialdialogs.MaterialDialog$Builder negativeText(int) -> e
-    1155:1156:com.afollestad.materialdialogs.MaterialDialog$Builder negativeText(java.lang.CharSequence) -> e
-    1200:1201:com.afollestad.materialdialogs.MaterialDialog$Builder customView(int,boolean) -> a
-    1213:1215:com.afollestad.materialdialogs.MaterialDialog$Builder customView(android.view.View,boolean) -> a
-    1219:1220:com.afollestad.materialdialogs.MaterialDialog$Builder positiveColor(int) -> f
-    1224:1225:com.afollestad.materialdialogs.MaterialDialog$Builder positiveColorRes(int) -> g
-    1301:1302:com.afollestad.materialdialogs.MaterialDialog$Builder callback(com.afollestad.materialdialogs.MaterialDialog$ButtonCallback) -> a
-    1306:1307:com.afollestad.materialdialogs.MaterialDialog$Builder theme(com.afollestad.materialdialogs.Theme) -> a
-    1324:1325:com.afollestad.materialdialogs.MaterialDialog$Builder autoDismiss(boolean) -> a
-    1334:1335:com.afollestad.materialdialogs.MaterialDialog$Builder adapter(android.widget.ListAdapter) -> a
-    1364:1364:com.afollestad.materialdialogs.MaterialDialog build() -> a
+    926:957:void checkSingleton() -> b
+    960:961:com.afollestad.materialdialogs.MaterialDialog$Builder title(int) -> a
+    965:966:com.afollestad.materialdialogs.MaterialDialog$Builder title(java.lang.CharSequence) -> a
+    1052:1053:com.afollestad.materialdialogs.MaterialDialog$Builder content(int) -> b
+    1057:1058:com.afollestad.materialdialogs.MaterialDialog$Builder content(java.lang.CharSequence) -> b
+    1062:1063:com.afollestad.materialdialogs.MaterialDialog$Builder content(int,java.lang.Object[]) -> a
+    1082:1083:com.afollestad.materialdialogs.MaterialDialog$Builder items(java.lang.CharSequence[]) -> a
+    1087:1090:com.afollestad.materialdialogs.MaterialDialog$Builder itemsCallback(com.afollestad.materialdialogs.MaterialDialog$ListCallback) -> a
+    1102:1106:com.afollestad.materialdialogs.MaterialDialog$Builder itemsCallbackSingleChoice(int,com.afollestad.materialdialogs.MaterialDialog$ListCallback) -> a
+    1150:1151:com.afollestad.materialdialogs.MaterialDialog$Builder positiveText(int) -> c
+    1155:1156:com.afollestad.materialdialogs.MaterialDialog$Builder positiveText(java.lang.CharSequence) -> c
+    1160:1160:com.afollestad.materialdialogs.MaterialDialog$Builder neutralText(int) -> d
+    1164:1165:com.afollestad.materialdialogs.MaterialDialog$Builder neutralText(java.lang.CharSequence) -> d
+    1169:1169:com.afollestad.materialdialogs.MaterialDialog$Builder negativeText(int) -> e
+    1173:1174:com.afollestad.materialdialogs.MaterialDialog$Builder negativeText(java.lang.CharSequence) -> e
+    1218:1219:com.afollestad.materialdialogs.MaterialDialog$Builder customView(int,boolean) -> a
+    1231:1233:com.afollestad.materialdialogs.MaterialDialog$Builder customView(android.view.View,boolean) -> a
+    1237:1238:com.afollestad.materialdialogs.MaterialDialog$Builder positiveColor(int) -> f
+    1242:1243:com.afollestad.materialdialogs.MaterialDialog$Builder positiveColorRes(int) -> g
+    1319:1320:com.afollestad.materialdialogs.MaterialDialog$Builder callback(com.afollestad.materialdialogs.MaterialDialog$ButtonCallback) -> a
+    1324:1325:com.afollestad.materialdialogs.MaterialDialog$Builder theme(com.afollestad.materialdialogs.Theme) -> a
+    1342:1343:com.afollestad.materialdialogs.MaterialDialog$Builder autoDismiss(boolean) -> a
+    1352:1353:com.afollestad.materialdialogs.MaterialDialog$Builder adapter(android.widget.ListAdapter) -> a
+    1382:1382:com.afollestad.materialdialogs.MaterialDialog build() -> a
 com.afollestad.materialdialogs.MaterialDialog$ButtonCallback -> com.a.a.h:
-    1733:1733:void onPositive(com.afollestad.materialdialogs.MaterialDialog) -> a
-    1736:1736:void onNegative(com.afollestad.materialdialogs.MaterialDialog) -> b
-    1739:1739:void onNeutral(com.afollestad.materialdialogs.MaterialDialog) -> c
-    1747:1747:java.lang.Object clone() -> clone
-    1752:1752:boolean equals(java.lang.Object) -> equals
-    1757:1758:void finalize() -> finalize
-    1762:1762:int hashCode() -> hashCode
-    1767:1767:java.lang.String toString() -> toString
-com.afollestad.materialdialogs.MaterialDialog$Callback -> com.a.a.i:
-com.afollestad.materialdialogs.MaterialDialog$FullCallback -> com.a.a.j:
-com.afollestad.materialdialogs.MaterialDialog$ListCallback -> com.a.a.k:
+    1725:1725:void onPositive(com.afollestad.materialdialogs.MaterialDialog) -> a
+    1728:1728:void onNegative(com.afollestad.materialdialogs.MaterialDialog) -> b
+    1731:1731:void onNeutral(com.afollestad.materialdialogs.MaterialDialog) -> c
+    1739:1739:java.lang.Object clone() -> clone
+    1744:1744:boolean equals(java.lang.Object) -> equals
+    1749:1750:void finalize() -> finalize
+    1754:1754:int hashCode() -> hashCode
+    1759:1759:java.lang.String toString() -> toString
+com.afollestad.materialdialogs.MaterialDialog$ListCallback -> com.a.a.i:
     void onSelection(com.afollestad.materialdialogs.MaterialDialog,android.view.View,int,java.lang.CharSequence) -> a
-com.afollestad.materialdialogs.MaterialDialog$ListCallbackMulti -> com.a.a.l:
+com.afollestad.materialdialogs.MaterialDialog$ListCallbackMulti -> com.a.a.j:
     void onSelection(com.afollestad.materialdialogs.MaterialDialog,java.lang.Integer[],java.lang.CharSequence[]) -> a
-com.afollestad.materialdialogs.MaterialDialog$ListType -> com.a.a.m:
+com.afollestad.materialdialogs.MaterialDialog$ListType -> com.a.a.k:
     com.afollestad.materialdialogs.MaterialDialog$ListType REGULAR -> a
     com.afollestad.materialdialogs.MaterialDialog$ListType SINGLE -> b
     com.afollestad.materialdialogs.MaterialDialog$ListType MULTI -> c
     com.afollestad.materialdialogs.MaterialDialog$ListType[] $VALUES -> d
-    1674:1674:com.afollestad.materialdialogs.MaterialDialog$ListType[] values() -> values
-    1674:1674:com.afollestad.materialdialogs.MaterialDialog$ListType valueOf(java.lang.String) -> valueOf
-    1678:1687:int getLayoutForType(com.afollestad.materialdialogs.MaterialDialog$ListType) -> a
-com.afollestad.materialdialogs.MaterialDialog$MaterialDialogAdapter -> com.a.a.n:
+    1693:1693:com.afollestad.materialdialogs.MaterialDialog$ListType[] values() -> values
+    1693:1693:com.afollestad.materialdialogs.MaterialDialog$ListType valueOf(java.lang.String) -> valueOf
+    1697:1706:int getLayoutForType(com.afollestad.materialdialogs.MaterialDialog$ListType) -> a
+com.afollestad.materialdialogs.MaterialDialog$MaterialDialogAdapter -> com.a.a.l:
     int itemColor -> a
     com.afollestad.materialdialogs.MaterialDialog this$0 -> b
-    1639:1639:boolean hasStableIds() -> hasStableIds
-    1644:1644:long getItemId(int) -> getItemId
-    1650:1670:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-com.afollestad.materialdialogs.MaterialDialog$NotImplementedException -> com.a.a.o:
-com.afollestad.materialdialogs.MaterialDialog$SimpleCallback -> com.a.a.p:
-com.afollestad.materialdialogs.R -> com.a.a.q:
-com.afollestad.materialdialogs.R$attr -> com.a.a.r:
+    1658:1658:boolean hasStableIds() -> hasStableIds
+    1663:1663:long getItemId(int) -> getItemId
+    1669:1689:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+com.afollestad.materialdialogs.MaterialDialog$NotImplementedException -> com.a.a.m:
+com.afollestad.materialdialogs.R -> com.a.a.n:
+com.afollestad.materialdialogs.R$attr -> com.a.a.o:
     int actionBarDivider -> actionBarDivider
     int actionBarItemBackground -> actionBarItemBackground
     int actionBarPopupTheme -> actionBarPopupTheme
@@ -9923,7 +9923,7 @@ com.afollestad.materialdialogs.R$attr -> com.a.a.r:
     int windowFixedHeightMinor -> windowFixedHeightMinor
     int windowFixedWidthMajor -> windowFixedWidthMajor
     int windowFixedWidthMinor -> windowFixedWidthMinor
-com.afollestad.materialdialogs.R$color -> com.a.a.s:
+com.afollestad.materialdialogs.R$color -> com.a.a.p:
     int abc_background_cache_hint_selector_material_dark -> abc_background_cache_hint_selector_material_dark
     int abc_background_cache_hint_selector_material_light -> abc_background_cache_hint_selector_material_light
     int abc_input_method_navigation_guard -> abc_input_method_navigation_guard
@@ -9986,7 +9986,7 @@ com.afollestad.materialdialogs.R$color -> com.a.a.s:
     int secondary_text_disabled_material_light -> secondary_text_disabled_material_light
     int switch_thumb_normal_material_dark -> switch_thumb_normal_material_dark
     int switch_thumb_normal_material_light -> switch_thumb_normal_material_light
-com.afollestad.materialdialogs.R$dimen -> com.a.a.t:
+com.afollestad.materialdialogs.R$dimen -> com.a.a.q:
     int abc_action_bar_default_height_material -> abc_action_bar_default_height_material
     int abc_action_bar_default_padding_material -> abc_action_bar_default_padding_material
     int abc_action_bar_icon_vertical_padding_material -> abc_action_bar_icon_vertical_padding_material
@@ -10054,7 +10054,7 @@ com.afollestad.materialdialogs.R$dimen -> com.a.a.t:
     int md_title_frame_margin_bottom -> md_title_frame_margin_bottom
     int md_title_frame_margin_bottom_list -> md_title_frame_margin_bottom_list
     int md_title_textsize -> md_title_textsize
-com.afollestad.materialdialogs.R$id -> com.a.a.u:
+com.afollestad.materialdialogs.R$id -> com.a.a.r:
     int action_bar -> action_bar
     int action_bar_activity_content -> action_bar_activity_content
     int action_bar_container -> action_bar_container
@@ -10136,7 +10136,7 @@ com.afollestad.materialdialogs.R$id -> com.a.a.u:
     int useLogo -> useLogo
     int withText -> withText
     int wrap_content -> wrap_content
-com.afollestad.materialdialogs.R$layout -> com.a.a.v:
+com.afollestad.materialdialogs.R$layout -> com.a.a.s:
     int abc_action_bar_title_item -> abc_action_bar_title_item
     int abc_action_bar_up_container -> abc_action_bar_up_container
     int abc_action_bar_view_list_nav_layout -> abc_action_bar_view_list_nav_layout
@@ -10165,7 +10165,7 @@ com.afollestad.materialdialogs.R$layout -> com.a.a.v:
     int md_listitem_multichoice -> md_listitem_multichoice
     int md_listitem_singlechoice -> md_listitem_singlechoice
     int support_simple_spinner_dropdown_item -> support_simple_spinner_dropdown_item
-com.afollestad.materialdialogs.R$style -> com.a.a.w:
+com.afollestad.materialdialogs.R$style -> com.a.a.t:
     int Base_TextAppearance_AppCompat -> Base_TextAppearance_AppCompat
     int Base_TextAppearance_AppCompat_Body1 -> Base_TextAppearance_AppCompat_Body1
     int Base_TextAppearance_AppCompat_Body2 -> Base_TextAppearance_AppCompat_Body2
@@ -10407,13 +10407,13 @@ com.afollestad.materialdialogs.R$style -> com.a.a.w:
     int Widget_AppCompat_Spinner_DropDown_ActionBar -> Widget_AppCompat_Spinner_DropDown_ActionBar
     int Widget_AppCompat_Toolbar -> Widget_AppCompat_Toolbar
     int Widget_AppCompat_Toolbar_Button_Navigation -> Widget_AppCompat_Toolbar_Button_Navigation
-com.afollestad.materialdialogs.Theme -> com.a.a.x:
+com.afollestad.materialdialogs.Theme -> com.a.a.u:
     com.afollestad.materialdialogs.Theme LIGHT -> a
     com.afollestad.materialdialogs.Theme DARK -> b
     com.afollestad.materialdialogs.Theme[] $VALUES -> c
     6:6:com.afollestad.materialdialogs.Theme[] values() -> values
     6:6:com.afollestad.materialdialogs.Theme valueOf(java.lang.String) -> valueOf
-com.afollestad.materialdialogs.ThemeSingleton -> com.a.a.y:
+com.afollestad.materialdialogs.ThemeSingleton -> com.a.a.v:
     com.afollestad.materialdialogs.ThemeSingleton singleton -> p
     boolean darkTheme -> a
     int titleColor -> b
@@ -10446,7 +10446,7 @@ com.afollestad.materialdialogs.base.DialogBase -> com.a.a.a.a:
     108:109:void setOnShowListenerInternal() -> d
     113:115:void onShow(android.content.DialogInterface) -> onShow
     118:124:void setBackgroundCompat(android.view.View,android.graphics.drawable.Drawable) -> a
-    127:130:void setTypeface(android.widget.TextView,android.graphics.Typeface) -> a
+    127:131:void setTypeface(android.widget.TextView,android.graphics.Typeface) -> a
 com.afollestad.materialdialogs.util.DialogUtils -> com.a.a.b.a:
     15:19:int adjustAlpha(int,float) -> a
     23:23:int resolveColor(android.content.Context,int) -> a
@@ -10456,9 +10456,6 @@ com.afollestad.materialdialogs.util.DialogUtils -> com.a.a.b.a:
 com.afollestad.materialdialogs.util.RecyclerUtil -> com.a.a.b.b:
     14:34:boolean canRecyclerViewScroll(android.view.View) -> a
     38:38:boolean isRecyclerView(android.view.View) -> b
-com.afollestad.materialdialogs.util.TypefaceHelper -> com.a.a.b.c:
-    android.support.v4.util.SimpleArrayMap cache -> a
-    32:40:android.graphics.Typeface get(android.content.Context,java.lang.String) -> a
 com.fourmob.datetimepicker.R -> com.fourmob.datetimepicker.a:
 com.fourmob.datetimepicker.R$color -> com.fourmob.datetimepicker.b:
     int ampm_text_color -> ampm_text_color
@@ -17846,30 +17843,30 @@ eu.laprell.timetable.LessonViewActivity -> eu.laprell.timetable.LessonViewActivi
     java.lang.Runnable mShowOtherViewsRunnable -> L
     102:173:void onCreate(android.os.Bundle) -> onCreate
     177:180:void onDestroy() -> onDestroy
-    253:260:void updateColor(boolean) -> b
-    263:347:void exitEditMode() -> s
-    350:368:void animateFab(boolean) -> c
-    420:424:void goInEditMode() -> t
-    427:477:void save() -> u
-    481:485:boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
-    493:507:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
-    512:515:void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
-    518:528:void changeColor() -> v
-    531:560:void saveLessonImage(int) -> a
-    563:574:void saveInDb() -> w
-    577:577:android.support.v4.app.Fragment getOptionsFragment() -> x
-    581:608:void changeImage() -> y
-    611:685:void animateImageChanger(boolean,java.lang.Runnable) -> a
-    689:689:eu.laprell.timetable.database.Lesson getLesson() -> k
-    694:695:void makeLessonDirty() -> l
-    699:699:int getDay() -> m
-    704:704:eu.laprell.timetable.database.Place getPlace() -> n
-    709:710:void setPlace(eu.laprell.timetable.database.Place) -> a
-    714:715:void makePlaceDirty() -> o
-    719:719:eu.laprell.timetable.database.TimeUnit getTimeUnit() -> p
-    724:724:eu.laprell.timetable.database.Teacher getTeacher() -> q
-    729:730:void setTeacher(eu.laprell.timetable.database.Teacher) -> a
-    734:735:void makeTeacherDirty() -> r
+    254:261:void updateColor(boolean) -> b
+    264:348:void exitEditMode() -> s
+    351:369:void animateFab(boolean) -> c
+    421:425:void goInEditMode() -> t
+    428:478:void save() -> u
+    482:486:boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
+    494:508:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    513:516:void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
+    519:529:void changeColor() -> v
+    532:561:void saveLessonImage(int) -> a
+    564:575:void saveInDb() -> w
+    578:578:android.support.v4.app.Fragment getOptionsFragment() -> x
+    582:609:void changeImage() -> y
+    612:686:void animateImageChanger(boolean,java.lang.Runnable) -> a
+    690:690:eu.laprell.timetable.database.Lesson getLesson() -> k
+    695:696:void makeLessonDirty() -> l
+    700:700:int getDay() -> m
+    705:705:eu.laprell.timetable.database.Place getPlace() -> n
+    710:711:void setPlace(eu.laprell.timetable.database.Place) -> a
+    715:716:void makePlaceDirty() -> o
+    720:720:eu.laprell.timetable.database.TimeUnit getTimeUnit() -> p
+    725:725:eu.laprell.timetable.database.Teacher getTeacher() -> q
+    730:731:void setTeacher(eu.laprell.timetable.database.Teacher) -> a
+    735:736:void makeTeacherDirty() -> r
     63:63:boolean access$000(eu.laprell.timetable.LessonViewActivity) -> a
     63:63:void access$100(eu.laprell.timetable.LessonViewActivity) -> b
     63:63:void access$200(eu.laprell.timetable.LessonViewActivity) -> c
@@ -17909,55 +17906,52 @@ eu.laprell.timetable.LessonViewActivity$1 -> eu.laprell.timetable.v:
     140:141:void onClick(android.view.View) -> onClick
 eu.laprell.timetable.LessonViewActivity$10 -> eu.laprell.timetable.w:
     eu.laprell.timetable.LessonViewActivity this$0 -> a
-    566:569:java.lang.Void doInBackground(java.lang.Void[]) -> a
-    563:563:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    567:570:java.lang.Void doInBackground(java.lang.Void[]) -> a
+    564:564:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 eu.laprell.timetable.LessonViewActivity$11 -> eu.laprell.timetable.x:
     eu.laprell.timetable.LessonViewActivity this$0 -> a
-    587:595:void selectedImage(int) -> a
+    588:596:void selectedImage(int) -> a
 eu.laprell.timetable.LessonViewActivity$12 -> eu.laprell.timetable.y:
     boolean val$rev -> a
     java.lang.Runnable val$endAction -> b
     eu.laprell.timetable.LessonViewActivity this$0 -> c
-    623:683:void run() -> run
+    624:684:void run() -> run
 eu.laprell.timetable.LessonViewActivity$12$1 -> eu.laprell.timetable.z:
     eu.laprell.timetable.LessonViewActivity$12 this$1 -> a
-    665:666:void onAnimationEnd(com.nineoldandroids.animation.Animator) -> b
+    666:667:void onAnimationEnd(com.nineoldandroids.animation.Animator) -> b
 eu.laprell.timetable.LessonViewActivity$12$2 -> eu.laprell.timetable.aa:
     eu.laprell.timetable.LessonViewActivity$12 this$1 -> a
-    674:679:void onAnimationEnd(com.nineoldandroids.animation.Animator) -> b
+    675:680:void onAnimationEnd(com.nineoldandroids.animation.Animator) -> b
 eu.laprell.timetable.LessonViewActivity$2 -> eu.laprell.timetable.ab:
     eu.laprell.timetable.LessonViewActivity this$0 -> a
     152:162:void onClick(android.view.View) -> onClick
 eu.laprell.timetable.LessonViewActivity$3 -> eu.laprell.timetable.ac:
     eu.laprell.timetable.LessonViewActivity this$0 -> a
-    185:249:void run() -> run
-eu.laprell.timetable.LessonViewActivity$3$1 -> eu.laprell.timetable.ad:
-    eu.laprell.timetable.LessonViewActivity$3 this$1 -> a
-    238:239:void setBackgroundColorAlpha(int) -> a
-eu.laprell.timetable.LessonViewActivity$4 -> eu.laprell.timetable.ae:
+    185:250:void run() -> run
+eu.laprell.timetable.LessonViewActivity$4 -> eu.laprell.timetable.ad:
     eu.laprell.timetable.LessonViewActivity this$0 -> a
-    314:317:void onAnimationEnd(com.nineoldandroids.animation.Animator) -> b
-eu.laprell.timetable.LessonViewActivity$5 -> eu.laprell.timetable.af:
+    315:318:void onAnimationEnd(com.nineoldandroids.animation.Animator) -> b
+eu.laprell.timetable.LessonViewActivity$5 -> eu.laprell.timetable.ae:
     eu.laprell.timetable.LessonViewActivity this$0 -> a
-    323:326:void onAnimationEnd(com.nineoldandroids.animation.Animator) -> b
-eu.laprell.timetable.LessonViewActivity$6 -> eu.laprell.timetable.ag:
+    324:327:void onAnimationEnd(com.nineoldandroids.animation.Animator) -> b
+eu.laprell.timetable.LessonViewActivity$6 -> eu.laprell.timetable.af:
     eu.laprell.timetable.LessonViewActivity this$0 -> a
-    357:358:void onAnimationUpdate(com.nineoldandroids.animation.ValueAnimator) -> a
-eu.laprell.timetable.LessonViewActivity$7 -> eu.laprell.timetable.ah:
+    358:359:void onAnimationUpdate(com.nineoldandroids.animation.ValueAnimator) -> a
+eu.laprell.timetable.LessonViewActivity$7 -> eu.laprell.timetable.ag:
     eu.laprell.timetable.LessonViewActivity this$0 -> a
-    373:416:void run() -> run
-eu.laprell.timetable.LessonViewActivity$7$1 -> eu.laprell.timetable.ai:
+    374:417:void run() -> run
+eu.laprell.timetable.LessonViewActivity$7$1 -> eu.laprell.timetable.ah:
     float val$distance -> a
     android.view.animation.Interpolator val$interpolator -> b
     eu.laprell.timetable.LessonViewActivity$7 this$1 -> c
-    381:399:com.nineoldandroids.animation.Animator makeAnimationForView(android.view.View,java.lang.Object) -> a
-eu.laprell.timetable.LessonViewActivity$8 -> eu.laprell.timetable.aj:
+    382:400:com.nineoldandroids.animation.Animator makeAnimationForView(android.view.View,java.lang.Object) -> a
+eu.laprell.timetable.LessonViewActivity$8 -> eu.laprell.timetable.ai:
     eu.laprell.timetable.LessonViewActivity this$0 -> a
-    430:474:java.lang.Void doInBackground(java.lang.Void[]) -> a
-    427:427:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-eu.laprell.timetable.LessonViewActivity$9 -> eu.laprell.timetable.ak:
+    431:475:java.lang.Void doInBackground(java.lang.Void[]) -> a
+    428:428:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+eu.laprell.timetable.LessonViewActivity$9 -> eu.laprell.timetable.aj:
     eu.laprell.timetable.LessonViewActivity this$0 -> a
-    521:526:void selectedColor(int) -> a
+    522:527:void selectedColor(int) -> a
 eu.laprell.timetable.MainActivity -> eu.laprell.timetable.MainActivity:
     eu.laprell.timetable.fragments.DrawerFragment$DrawerNavigationBackend mBackend -> n
     android.support.v4.app.Fragment mFragment -> o
@@ -17971,50 +17965,52 @@ eu.laprell.timetable.MainActivity -> eu.laprell.timetable.MainActivity:
     int mCurrentMenu -> w
     int mShouldDisplayDay -> x
     eu.laprell.timetable.background.MenuNavigation mNav -> y
-    128:210:void onCreate(android.os.Bundle) -> onCreate
-    213:224:void checkForOpenDay() -> l
-    228:235:void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
-    239:251:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
-    255:259:void onDestroy() -> onDestroy
-    263:265:void onResume() -> onResume
-    269:271:void onPause() -> onPause
-    275:278:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
-    283:285:void onPostCreate(android.os.Bundle) -> onPostCreate
-    289:291:void onConfigurationChanged(android.content.res.Configuration) -> onConfigurationChanged
-    295:300:void onBackPressed() -> onBackPressed
-    304:308:boolean navigateTo(int,java.lang.String) -> a
-    313:355:void changeFragment(int,int,int) -> a
-    359:360:void setDrawerNavigationBackend(eu.laprell.timetable.fragments.DrawerFragment$DrawerNavigationBackend) -> a
-    363:367:void reloadDrawer() -> k
-    47:47:eu.laprell.timetable.widgets.PartialDrawRelativeLayout access$000(eu.laprell.timetable.MainActivity) -> a
-    47:47:eu.laprell.timetable.widgets.ColorFilterDrawerLayout access$100(eu.laprell.timetable.MainActivity) -> b
-    47:47:eu.laprell.timetable.fragments.DrawerFragment$DrawerNavigationBackend access$200(eu.laprell.timetable.MainActivity) -> c
-    47:47:android.support.v7.app.ActionBarDrawerToggle access$300(eu.laprell.timetable.MainActivity) -> d
-    47:47:android.support.v4.app.Fragment access$400(eu.laprell.timetable.MainActivity) -> e
-eu.laprell.timetable.MainActivity$1 -> eu.laprell.timetable.al:
+    136:218:void onCreate(android.os.Bundle) -> onCreate
+    221:232:void checkForOpenDay() -> l
+    236:243:void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
+    247:261:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    265:269:void onDestroy() -> onDestroy
+    273:275:void onResume() -> onResume
+    279:281:void onPause() -> onPause
+    285:288:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    293:295:void onPostCreate(android.os.Bundle) -> onPostCreate
+    299:301:void onConfigurationChanged(android.content.res.Configuration) -> onConfigurationChanged
+    305:310:void onBackPressed() -> onBackPressed
+    314:318:boolean navigateTo(int,java.lang.String) -> a
+    323:367:void changeFragment(int,int,int) -> a
+    371:372:void setDrawerNavigationBackend(eu.laprell.timetable.fragments.DrawerFragment$DrawerNavigationBackend) -> a
+    375:379:void reloadDrawer() -> k
+    49:49:eu.laprell.timetable.widgets.PartialDrawRelativeLayout access$000(eu.laprell.timetable.MainActivity) -> a
+    49:49:eu.laprell.timetable.widgets.ColorFilterDrawerLayout access$100(eu.laprell.timetable.MainActivity) -> b
+    49:49:eu.laprell.timetable.fragments.DrawerFragment$DrawerNavigationBackend access$200(eu.laprell.timetable.MainActivity) -> c
+    49:49:android.support.v7.app.ActionBarDrawerToggle access$300(eu.laprell.timetable.MainActivity) -> d
+    49:49:android.support.v4.app.Fragment access$400(eu.laprell.timetable.MainActivity) -> e
+    49:49:android.support.v7.widget.Toolbar access$500(eu.laprell.timetable.MainActivity) -> f
+eu.laprell.timetable.MainActivity$1 -> eu.laprell.timetable.ak:
     float mLastPosition -> b
     android.graphics.RectF mRFrame -> c
     android.graphics.RectF mCFrame -> d
     eu.laprell.timetable.MainActivity this$0 -> a
-    68:101:void onDrawerSlide(android.view.View,float) -> a
-    105:106:void onDrawerOpened(android.view.View) -> a
-    110:114:void onDrawerClosed(android.view.View) -> b
-    118:119:void onDrawerStateChanged(int) -> a
+    70:109:void onDrawerSlide(android.view.View,float) -> a
+    113:114:void onDrawerOpened(android.view.View) -> a
+    118:122:void onDrawerClosed(android.view.View) -> b
+    126:127:void onDrawerStateChanged(int) -> a
 eu.laprell.timetable.MainApplication -> eu.laprell.timetable.MainApplication:
     boolean sLoggingEnabled -> a
     eu.laprell.timetable.MainApplication sApplication -> b
     eu.laprell.timetable.animation.ActivityTransitions mTransitions -> c
     eu.laprell.timetable.background.LessonNotifier mNotifier -> d
-    25:36:void onCreate() -> onCreate
-    39:39:eu.laprell.timetable.background.LessonNotifier getLessonNotifier() -> a
-    44:47:void onTrimMemory(int) -> onTrimMemory
-    50:51:void saveLogSettings() -> b
-    55:61:void onTerminate() -> onTerminate
-    64:67:eu.laprell.timetable.background.LessonNotifier getLessonNotifier(android.content.Context) -> a
+    java.util.Map mTrackers -> e
+    39:50:void onCreate() -> onCreate
+    53:53:eu.laprell.timetable.background.LessonNotifier getLessonNotifier() -> a
+    58:62:void onTrimMemory(int) -> onTrimMemory
+    65:66:void saveLogSettings() -> b
+    70:76:void onTerminate() -> onTerminate
+    79:82:eu.laprell.timetable.background.LessonNotifier getLessonNotifier(android.content.Context) -> a
 eu.laprell.timetable.NewTaskActivity -> eu.laprell.timetable.NewTaskActivity:
     11:14:void onCreate(android.os.Bundle) -> onCreate
-eu.laprell.timetable.R -> eu.laprell.timetable.am:
-eu.laprell.timetable.R$styleable -> eu.laprell.timetable.an:
+eu.laprell.timetable.R -> eu.laprell.timetable.al:
+eu.laprell.timetable.R$styleable -> eu.laprell.timetable.am:
     int[] ActionBar -> ActionBar
     int ActionBar_background -> ActionBar_background
     int ActionBar_backgroundSplit -> ActionBar_backgroundSplit
@@ -18341,7 +18337,7 @@ eu.laprell.timetable.SetupActivity -> eu.laprell.timetable.SetupActivity:
     33:37:void finishedSetup() -> i
     41:42:void finishedWithSetup() -> g
     46:68:void makeCustomSchool() -> h
-eu.laprell.timetable.SetupActivity$1 -> eu.laprell.timetable.ao:
+eu.laprell.timetable.SetupActivity$1 -> eu.laprell.timetable.an:
     eu.laprell.timetable.SetupActivity this$0 -> a
     49:58:java.lang.Void doInBackground(java.lang.Void[]) -> a
     63:66:void onPostExecute(java.lang.Void) -> a
@@ -18399,14 +18395,17 @@ eu.laprell.timetable.animation.ActivityTransitions$CircularRevealAnimationData -
     int locationY -> d
 eu.laprell.timetable.animation.ActivityTransitions$HeroTransitionInterface -> eu.laprell.timetable.animation.e:
     void setBackgroundColorAlpha(int) -> a
-eu.laprell.timetable.animation.CAnimator -> eu.laprell.timetable.animation.f:
+eu.laprell.timetable.animation.ActivityTransitions$SimpleWhiteBackgroundInterface -> eu.laprell.timetable.animation.f:
+    android.view.View mTarget -> a
+    350:351:void setBackgroundColorAlpha(int) -> a
+eu.laprell.timetable.animation.CAnimator -> eu.laprell.timetable.animation.g:
     void start() -> a
     14:23:void startOnPreDraw(android.view.View) -> a
-eu.laprell.timetable.animation.CAnimator$1 -> eu.laprell.timetable.animation.g:
+eu.laprell.timetable.animation.CAnimator$1 -> eu.laprell.timetable.animation.h:
     android.view.View val$from -> a
     eu.laprell.timetable.animation.CAnimator this$0 -> b
     17:20:boolean onPreDraw() -> onPreDraw
-eu.laprell.timetable.animation.CircleColorDrawable -> eu.laprell.timetable.animation.h:
+eu.laprell.timetable.animation.CircleColorDrawable -> eu.laprell.timetable.animation.i:
     android.graphics.Paint mCirclePaint -> a
     int mColor -> b
     float mAlpha -> c
@@ -18458,36 +18457,41 @@ eu.laprell.timetable.animation.CircularRevealRelativeLayout -> eu.laprell.timeta
     160:160:float getMaskAlpha() -> getMaskAlpha
     164:170:void setMaskAlpha(float) -> setMaskAlpha
     177:178:void setRenderOnlyHalf(boolean) -> setRenderOnlyHalf
-eu.laprell.timetable.animation.RippleDrawable -> eu.laprell.timetable.animation.i:
-    android.graphics.RadialGradient mRadial -> a
-    android.animation.ObjectAnimator mObjectAnimator -> b
-    android.graphics.Matrix mMatrix -> c
-    android.graphics.Paint mPaint -> d
-    float mCircleRadius -> e
-    float mTouchX -> f
-    float mTouchY -> g
-    boolean mInAnimation -> h
-    android.animation.Animator$AnimatorListener mListener -> i
-    62:65:void setBounds(int,int,int,int) -> setBounds
-    68:79:void updateRadial() -> b
-    82:106:boolean onTouchEvent(android.view.MotionEvent) -> a
-    124:124:int getSemi() -> c
-    138:149:void draw(android.graphics.Canvas) -> draw
-    153:154:void setAlpha(int) -> setAlpha
-    158:159:void setColorFilter(android.graphics.ColorFilter) -> setColorFilter
-    163:163:int getOpacity() -> getOpacity
-    200:202:void cancelAnimation() -> a
-    24:24:boolean access$002(eu.laprell.timetable.animation.RippleDrawable,boolean) -> a
-eu.laprell.timetable.animation.RippleDrawable$1 -> eu.laprell.timetable.animation.j:
+eu.laprell.timetable.animation.RippleDrawable -> eu.laprell.timetable.animation.j:
+    android.view.animation.DecelerateInterpolator sInterpolator -> a
+    android.graphics.RadialGradient mRadial -> b
+    android.animation.ObjectAnimator mObjectAnimator -> c
+    android.graphics.Matrix mMatrix -> d
+    android.graphics.Paint mPaint -> e
+    float mAnimationStep -> f
+    float mCircleRadius -> g
+    float mTouchX -> h
+    float mTouchY -> i
+    boolean mInAnimation -> j
+    boolean mTouched -> k
+    android.animation.Animator$AnimatorListener mListener -> l
+    float DP_1 -> m
+    67:70:void setBounds(int,int,int,int) -> setBounds
+    73:84:void updateRadial() -> b
+    88:121:boolean onTouchEvent(android.view.MotionEvent) -> a
+    125:136:void setAnimationStep(float) -> setAnimationStep
+    139:139:int getSemi() -> c
+    153:168:void draw(android.graphics.Canvas) -> draw
+    172:173:void setAlpha(int) -> setAlpha
+    177:178:void setColorFilter(android.graphics.ColorFilter) -> setColorFilter
+    182:182:int getOpacity() -> getOpacity
+    219:221:void cancelAnimation() -> a
+    25:25:boolean access$002(eu.laprell.timetable.animation.RippleDrawable,boolean) -> a
+eu.laprell.timetable.animation.RippleDrawable$1 -> eu.laprell.timetable.animation.k:
     eu.laprell.timetable.animation.RippleDrawable this$0 -> a
-    42:43:void onAnimationEnd(android.animation.Animator) -> onAnimationEnd
-    47:48:void onAnimationStart(android.animation.Animator) -> onAnimationStart
-eu.laprell.timetable.animation.RippleDrawable$RippleViewCallback -> eu.laprell.timetable.animation.k:
+    47:48:void onAnimationEnd(android.animation.Animator) -> onAnimationEnd
+    52:53:void onAnimationStart(android.animation.Animator) -> onAnimationStart
+eu.laprell.timetable.animation.RippleDrawable$RippleViewCallback -> eu.laprell.timetable.animation.l:
     android.view.View mTarget -> a
-    185:186:void invalidateDrawable(android.graphics.drawable.Drawable) -> invalidateDrawable
-    191:191:void scheduleDrawable(android.graphics.drawable.Drawable,java.lang.Runnable,long) -> scheduleDrawable
-    196:196:void unscheduleDrawable(android.graphics.drawable.Drawable,java.lang.Runnable) -> unscheduleDrawable
-eu.laprell.timetable.animation.WaveAnimator -> eu.laprell.timetable.animation.l:
+    204:205:void invalidateDrawable(android.graphics.drawable.Drawable) -> invalidateDrawable
+    210:210:void scheduleDrawable(android.graphics.drawable.Drawable,java.lang.Runnable,long) -> scheduleDrawable
+    215:215:void unscheduleDrawable(android.graphics.drawable.Drawable,java.lang.Runnable) -> unscheduleDrawable
+eu.laprell.timetable.animation.WaveAnimator -> eu.laprell.timetable.animation.m:
     eu.laprell.timetable.animation.WaveAnimator$WaveAnimationApplier mApplier -> a
     java.util.ArrayList mTargets -> b
     com.nineoldandroids.animation.AnimatorSet mSet -> c
@@ -18509,8 +18513,8 @@ eu.laprell.timetable.animation.WaveAnimator -> eu.laprell.timetable.animation.l:
     227:230:int[] repositionBy(int[],int[],int,int) -> a
     234:234:double getDistanceBetween(int[],int[]) -> a
     248:249:void setComputeMoreExactly(boolean) -> b
-eu.laprell.timetable.animation.WaveAnimator$1 -> eu.laprell.timetable.animation.m:
-eu.laprell.timetable.animation.WaveAnimator$Holder -> eu.laprell.timetable.animation.n:
+eu.laprell.timetable.animation.WaveAnimator$1 -> eu.laprell.timetable.animation.n:
+eu.laprell.timetable.animation.WaveAnimator$Holder -> eu.laprell.timetable.animation.o:
     android.view.View target -> b
     double distance -> c
     com.nineoldandroids.animation.Animator anim -> d
@@ -18524,7 +18528,7 @@ eu.laprell.timetable.animation.WaveAnimator$Holder -> eu.laprell.timetable.anima
     30:30:com.nineoldandroids.animation.Animator access$402(eu.laprell.timetable.animation.WaveAnimator$Holder,com.nineoldandroids.animation.Animator) -> a
     30:30:java.lang.Object access$200(eu.laprell.timetable.animation.WaveAnimator$Holder) -> c
     30:30:com.nineoldandroids.animation.Animator access$400(eu.laprell.timetable.animation.WaveAnimator$Holder) -> d
-eu.laprell.timetable.animation.WaveAnimator$WaveAnimationApplier -> eu.laprell.timetable.animation.o:
+eu.laprell.timetable.animation.WaveAnimator$WaveAnimationApplier -> eu.laprell.timetable.animation.p:
     com.nineoldandroids.animation.Animator makeAnimationForView(android.view.View,java.lang.Object) -> a
 eu.laprell.timetable.background.GlobalConfigs -> eu.laprell.timetable.background.a:
     eu.laprell.timetable.background.GlobalConfigs sConfig -> a
@@ -18532,9 +18536,10 @@ eu.laprell.timetable.background.GlobalConfigs -> eu.laprell.timetable.background
     eu.laprell.timetable.background.GlobalConfigs mMaster -> c
     android.content.SharedPreferences mPref -> d
     boolean mEnabledDebugMenu -> e
-    23:25:void loadConfig() -> b
-    38:41:boolean isDebugMenuEnabled() -> a
-    45:51:void setDebugMenuEnabled(boolean) -> a
+    25:27:void loadConfig() -> c
+    40:43:int getSchoolId() -> a
+    47:50:boolean isDebugMenuEnabled() -> b
+    54:60:void setDebugMenuEnabled(boolean) -> a
 eu.laprell.timetable.background.LessonNotifier -> eu.laprell.timetable.background.b:
     android.content.Context mContext -> a
     eu.laprell.timetable.database.TimeUnit[] mTimes -> b
@@ -18545,64 +18550,76 @@ eu.laprell.timetable.background.LessonNotifier -> eu.laprell.timetable.backgroun
     android.content.SharedPreferences mNotifPref -> g
     android.os.PowerManager$WakeLock mNotificationWakeLock -> h
     int mNotifyInSBefore -> i
-    java.lang.Runnable mInitRunnable -> j
-    java.lang.Runnable mDoCheck -> k
-    java.lang.Runnable mDelayCheck -> l
-    104:110:void checkForNewNotifications() -> a
-    130:145:void pendingTimeUnit(android.content.Intent) -> a
-    149:154:void cancelCurrentNotification() -> b
-    157:170:void _pendingTimeUnit(android.content.Intent) -> b
-    173:196:void executeNewPendingTimeUnit(eu.laprell.timetable.database.Day,eu.laprell.timetable.database.TimeUnit) -> a
-    199:232:void _check(long) -> a
-    235:273:long checkForDayAndFromTime(int,long,long,int) -> a
-    277:277:boolean makeTestNotification(eu.laprell.timetable.database.Lesson,eu.laprell.timetable.database.TimeUnit,eu.laprell.timetable.database.Day) -> a
-    281:336:boolean _makeNotification(eu.laprell.timetable.database.Lesson,eu.laprell.timetable.database.TimeUnit,eu.laprell.timetable.database.Day,boolean) -> a
-    343:398:void showNextSubjectNotification(java.lang.String,java.lang.String,android.graphics.Bitmap,long,java.lang.String,int) -> a
-    401:429:android.graphics.Bitmap getBitmapForWearable(int,int) -> a
-    433:436:int calculateDayDelta(eu.laprell.timetable.database.Day) -> a
-    446:461:java.util.Calendar generateNotificationTime(eu.laprell.timetable.database.Day,eu.laprell.timetable.database.TimeUnit) -> b
-    465:466:void saveNotifAlarmSet(java.util.Calendar,eu.laprell.timetable.database.TimeUnit) -> a
-    469:475:android.app.PendingIntent buildIntentForWakeup(eu.laprell.timetable.database.Day,eu.laprell.timetable.database.TimeUnit) -> c
-    479:483:void updateForNextWakeUp(android.app.PendingIntent,long) -> a
-    486:488:java.lang.String getDate(long) -> b
-    492:492:java.lang.String getDateM(int) -> a
-    496:496:boolean isAlarmAlreadySet(java.util.Calendar,eu.laprell.timetable.database.TimeUnit) -> b
-    501:501:boolean isAlreadyNotifiedToday(java.util.Calendar,eu.laprell.timetable.database.TimeUnit) -> c
-    506:506:java.lang.String getPrefFor(java.util.Calendar,long) -> a
-    510:510:java.lang.String getNotiPrefFor(java.util.Calendar,long) -> b
-    514:514:java.lang.String getBaseStringPrefFor(java.util.Calendar,long) -> c
-    523:549:int getDayOfWeek() -> c
-    553:553:int getDayOfYear() -> d
-    561:571:int getCurrentTimeInS() -> e
-    579:579:int getCurrentTimeInM() -> f
-    43:43:android.os.Handler access$002(eu.laprell.timetable.background.LessonNotifier,android.os.Handler) -> a
-    43:43:java.lang.Runnable access$100(eu.laprell.timetable.background.LessonNotifier) -> a
-    43:43:android.os.Handler access$000(eu.laprell.timetable.background.LessonNotifier) -> b
-    43:43:eu.laprell.timetable.database.TimetableDatabase access$202(eu.laprell.timetable.background.LessonNotifier,eu.laprell.timetable.database.TimetableDatabase) -> a
-    43:43:android.content.Context access$300(eu.laprell.timetable.background.LessonNotifier) -> c
-    43:43:eu.laprell.timetable.database.TimeUnit[] access$402(eu.laprell.timetable.background.LessonNotifier,eu.laprell.timetable.database.TimeUnit[]) -> a
-    43:43:eu.laprell.timetable.database.TimetableDatabase access$200(eu.laprell.timetable.background.LessonNotifier) -> d
-    43:43:android.content.SharedPreferences access$502(eu.laprell.timetable.background.LessonNotifier,android.content.SharedPreferences) -> a
-    43:43:android.content.SharedPreferences access$500(eu.laprell.timetable.background.LessonNotifier) -> e
-    43:43:void access$600(eu.laprell.timetable.background.LessonNotifier,long) -> a
-    43:43:void access$700(eu.laprell.timetable.background.LessonNotifier,android.content.Intent) -> a
+    java.util.ArrayList mQueue -> j
+    java.lang.Runnable mInitRunnable -> k
+    java.lang.Runnable mDoCheck -> l
+    java.lang.Runnable mRunQueueCheck -> m
+    java.lang.Runnable mCheckQueue -> n
+    107:108:void checkForNewNotifications() -> a
+    162:174:void postSafe(java.lang.Runnable) -> a
+    182:200:void pendingTimeUnit(android.content.Intent) -> a
+    204:209:void cancelCurrentNotification() -> b
+    212:231:void _pendingTimeUnit(android.content.Intent) -> b
+    234:260:void executeNewPendingTimeUnit(eu.laprell.timetable.database.Day,eu.laprell.timetable.database.TimeUnit) -> a
+    263:300:void _check(long) -> a
+    303:368:long checkForDayAndFromTime(int,long,long,int) -> a
+    372:372:boolean makeTestNotification(eu.laprell.timetable.database.Lesson,eu.laprell.timetable.database.TimeUnit,eu.laprell.timetable.database.Day) -> a
+    376:431:boolean _makeNotification(eu.laprell.timetable.database.Lesson,eu.laprell.timetable.database.TimeUnit,eu.laprell.timetable.database.Day,boolean) -> a
+    438:493:void showNextSubjectNotification(java.lang.String,java.lang.String,android.graphics.Bitmap,long,java.lang.String,int) -> a
+    496:524:android.graphics.Bitmap getBitmapForWearable(int,int) -> a
+    528:531:int calculateDayDelta(eu.laprell.timetable.database.Day) -> a
+    541:557:java.util.Calendar generateNotificationTime(eu.laprell.timetable.database.Day,eu.laprell.timetable.database.TimeUnit) -> b
+    561:562:void saveNotifAlarmSet(java.util.Calendar,eu.laprell.timetable.database.TimeUnit) -> a
+    565:571:android.app.PendingIntent buildIntentForWakeup(eu.laprell.timetable.database.Day,eu.laprell.timetable.database.TimeUnit) -> c
+    575:579:void updateForNextWakeUp(android.app.PendingIntent,long) -> a
+    582:584:java.lang.String getDate(long) -> b
+    588:588:java.lang.String getDateM(int) -> a
+    592:592:boolean isAlarmAlreadySet(java.util.Calendar,eu.laprell.timetable.database.TimeUnit) -> b
+    597:597:boolean isAlreadyNotifiedToday(java.util.Calendar,eu.laprell.timetable.database.TimeUnit) -> c
+    602:602:java.lang.String getPrefFor(java.util.Calendar,long) -> a
+    606:606:java.lang.String getNotiPrefFor(java.util.Calendar,long) -> b
+    610:610:java.lang.String getEndNotiPrefFor(java.util.Calendar,long) -> c
+    614:614:java.lang.String getBaseStringPrefFor(java.util.Calendar,long) -> d
+    623:649:int getDayOfWeek() -> c
+    653:653:int getDayOfYear() -> d
+    661:671:int getCurrentTimeInS() -> e
+    679:679:int getCurrentTimeInM() -> f
+    44:44:android.os.Handler access$002(eu.laprell.timetable.background.LessonNotifier,android.os.Handler) -> a
+    44:44:java.lang.Runnable access$100(eu.laprell.timetable.background.LessonNotifier) -> a
+    44:44:android.os.Handler access$000(eu.laprell.timetable.background.LessonNotifier) -> b
+    44:44:eu.laprell.timetable.database.TimetableDatabase access$202(eu.laprell.timetable.background.LessonNotifier,eu.laprell.timetable.database.TimetableDatabase) -> a
+    44:44:android.content.Context access$300(eu.laprell.timetable.background.LessonNotifier) -> c
+    44:44:eu.laprell.timetable.database.TimeUnit[] access$402(eu.laprell.timetable.background.LessonNotifier,eu.laprell.timetable.database.TimeUnit[]) -> a
+    44:44:eu.laprell.timetable.database.TimetableDatabase access$200(eu.laprell.timetable.background.LessonNotifier) -> d
+    44:44:android.content.SharedPreferences access$502(eu.laprell.timetable.background.LessonNotifier,android.content.SharedPreferences) -> a
+    44:44:android.content.SharedPreferences access$500(eu.laprell.timetable.background.LessonNotifier) -> e
+    44:44:void access$600(eu.laprell.timetable.background.LessonNotifier,long) -> a
+    44:44:java.util.ArrayList access$700(eu.laprell.timetable.background.LessonNotifier) -> f
+    44:44:java.lang.Runnable access$800(eu.laprell.timetable.background.LessonNotifier) -> g
+    44:44:android.os.Handler access$900(eu.laprell.timetable.background.LessonNotifier) -> h
+    44:44:java.lang.Runnable access$1000(eu.laprell.timetable.background.LessonNotifier) -> i
+    44:44:void access$1100(eu.laprell.timetable.background.LessonNotifier,android.content.Intent) -> a
 eu.laprell.timetable.background.LessonNotifier$1 -> eu.laprell.timetable.background.c:
     eu.laprell.timetable.background.LessonNotifier this$0 -> a
-    63:67:void run() -> run
+    65:69:void run() -> run
 eu.laprell.timetable.background.LessonNotifier$2 -> eu.laprell.timetable.background.d:
     eu.laprell.timetable.background.LessonNotifier this$0 -> a
-    78:88:void run() -> run
+    81:91:void run() -> run
 eu.laprell.timetable.background.LessonNotifier$3 -> eu.laprell.timetable.background.e:
     eu.laprell.timetable.background.LessonNotifier this$0 -> a
-    114:115:void run() -> run
+    113:114:void run() -> run
 eu.laprell.timetable.background.LessonNotifier$4 -> eu.laprell.timetable.background.f:
+    java.util.ArrayList mCopy -> b
     eu.laprell.timetable.background.LessonNotifier this$0 -> a
-    120:121:void run() -> run
+    122:141:void run() -> run
 eu.laprell.timetable.background.LessonNotifier$5 -> eu.laprell.timetable.background.g:
+    eu.laprell.timetable.background.LessonNotifier this$0 -> a
+    147:157:void run() -> run
+eu.laprell.timetable.background.LessonNotifier$6 -> eu.laprell.timetable.background.h:
     android.content.Intent val$i -> a
     eu.laprell.timetable.background.LessonNotifier this$0 -> b
-    142:143:void run() -> run
-eu.laprell.timetable.background.ListProviderWidget -> eu.laprell.timetable.background.h:
+    197:198:void run() -> run
+eu.laprell.timetable.background.ListProviderWidget -> eu.laprell.timetable.background.i:
     java.util.ArrayList mList -> a
     android.content.Context mContext -> b
     int appWidgetId -> c
@@ -18622,8 +18639,8 @@ eu.laprell.timetable.background.ListProviderWidget -> eu.laprell.timetable.backg
     118:118:int getViewType(int) -> a
     129:167:android.widget.RemoteViews getViewAt(int) -> getViewAt
     172:172:android.widget.RemoteViews getLoadingView() -> getLoadingView
-eu.laprell.timetable.background.ListProviderWidget$1 -> eu.laprell.timetable.background.i:
-eu.laprell.timetable.background.ListProviderWidget$Data -> eu.laprell.timetable.background.j:
+eu.laprell.timetable.background.ListProviderWidget$1 -> eu.laprell.timetable.background.j:
+eu.laprell.timetable.background.ListProviderWidget$Data -> eu.laprell.timetable.background.k:
     eu.laprell.timetable.database.Lesson lesson -> b
     eu.laprell.timetable.database.TimeUnit time -> c
     eu.laprell.timetable.database.Place place -> d
@@ -18637,79 +18654,100 @@ eu.laprell.timetable.background.ListProviderWidget$Data -> eu.laprell.timetable.
     26:26:eu.laprell.timetable.database.Lesson access$200(eu.laprell.timetable.background.ListProviderWidget$Data) -> b
     26:26:eu.laprell.timetable.database.Place access$300(eu.laprell.timetable.background.ListProviderWidget$Data) -> c
     26:26:int access$400(eu.laprell.timetable.background.ListProviderWidget$Data) -> d
-eu.laprell.timetable.background.Logger -> eu.laprell.timetable.background.k:
+eu.laprell.timetable.background.Logger -> eu.laprell.timetable.background.l:
     eu.laprell.timetable.background.Logger sLogger -> a
     android.os.Handler mHandler -> b
     boolean mToLogCat -> c
     android.content.Context mContext -> d
     java.io.File mLogFile -> e
     java.lang.Runnable mInit -> f
-    47:56:void init() -> d
-    59:68:void initLogFile() -> e
-    71:73:void _clearLog() -> f
-    76:78:void log(int,java.lang.String,java.lang.String,java.lang.Throwable) -> a
-    130:141:java.lang.String getLog() -> g
-    145:145:java.lang.String getCurrentLog() -> a
-    149:150:void log(java.lang.String,java.lang.String,java.lang.Throwable) -> a
-    153:154:void log(java.lang.String,java.lang.String) -> a
-    157:161:void assignContext(android.content.Context) -> a
-    164:170:void clearLog() -> b
-    26:26:java.io.File access$002(eu.laprell.timetable.background.Logger,java.io.File) -> a
-    26:26:android.content.Context access$100(eu.laprell.timetable.background.Logger) -> a
-    26:26:void access$200(eu.laprell.timetable.background.Logger) -> b
-    26:26:android.os.Handler access$302(eu.laprell.timetable.background.Logger,android.os.Handler) -> a
-    26:26:java.lang.Runnable access$400(eu.laprell.timetable.background.Logger) -> c
-    26:26:android.os.Handler access$300(eu.laprell.timetable.background.Logger) -> d
-    26:26:boolean access$600(eu.laprell.timetable.background.Logger) -> e
-    26:26:java.io.File access$000(eu.laprell.timetable.background.Logger) -> f
-    26:26:eu.laprell.timetable.background.Logger access$700() -> c
-    26:26:void access$800(eu.laprell.timetable.background.Logger) -> g
-eu.laprell.timetable.background.Logger$1 -> eu.laprell.timetable.background.l:
+    44:53:void init() -> d
+    56:65:void initLogFile() -> e
+    68:70:void _clearLog() -> f
+    73:75:void log(int,java.lang.String,java.lang.String,java.lang.Throwable) -> a
+    127:127:java.lang.String getLog() -> g
+    131:131:java.lang.String getCurrentLog() -> a
+    135:136:void log(java.lang.String,java.lang.String,java.lang.Throwable) -> a
+    139:140:void log(java.lang.String,java.lang.String) -> a
+    143:147:void assignContext(android.content.Context) -> a
+    150:156:void clearLog() -> b
+    23:23:java.io.File access$002(eu.laprell.timetable.background.Logger,java.io.File) -> a
+    23:23:android.content.Context access$100(eu.laprell.timetable.background.Logger) -> a
+    23:23:void access$200(eu.laprell.timetable.background.Logger) -> b
+    23:23:android.os.Handler access$302(eu.laprell.timetable.background.Logger,android.os.Handler) -> a
+    23:23:java.lang.Runnable access$400(eu.laprell.timetable.background.Logger) -> c
+    23:23:android.os.Handler access$300(eu.laprell.timetable.background.Logger) -> d
+    23:23:boolean access$600(eu.laprell.timetable.background.Logger) -> e
+    23:23:java.io.File access$000(eu.laprell.timetable.background.Logger) -> f
+    23:23:eu.laprell.timetable.background.Logger access$700() -> c
+    23:23:void access$800(eu.laprell.timetable.background.Logger) -> g
+eu.laprell.timetable.background.Logger$1 -> eu.laprell.timetable.background.m:
     eu.laprell.timetable.background.Logger this$0 -> a
-    38:40:void run() -> run
-eu.laprell.timetable.background.Logger$2 -> eu.laprell.timetable.background.m:
+    35:37:void run() -> run
+eu.laprell.timetable.background.Logger$2 -> eu.laprell.timetable.background.n:
     eu.laprell.timetable.background.Logger this$0 -> a
-    50:54:void run() -> run
-eu.laprell.timetable.background.Logger$3 -> eu.laprell.timetable.background.n:
-    167:168:void run() -> run
-eu.laprell.timetable.background.Logger$LogData -> eu.laprell.timetable.background.o:
+    47:51:void run() -> run
+eu.laprell.timetable.background.Logger$3 -> eu.laprell.timetable.background.o:
+    153:154:void run() -> run
+eu.laprell.timetable.background.Logger$LogData -> eu.laprell.timetable.background.p:
     int mLevel -> b
     long mTime -> c
     java.lang.String mTab -> d
     java.lang.String mMsg -> e
     java.lang.Throwable mThro -> f
     eu.laprell.timetable.background.Logger this$0 -> a
-    97:126:void run() -> run
-eu.laprell.timetable.background.MenuNavigation -> eu.laprell.timetable.background.p:
+    94:123:void run() -> run
+eu.laprell.timetable.background.MenuNavigation -> eu.laprell.timetable.background.q:
     android.content.Context mContext -> a
     java.util.ArrayList mTitleStrings -> b
     java.util.ArrayList mImages -> c
     java.util.ArrayList mMenus -> d
     java.util.ArrayList mMenuExtended -> e
-    50:105:void reloadFromConfiguration() -> d
-    108:114:void forceReloading() -> a
-    117:117:int getImageAtPos(int) -> a
-    121:121:java.lang.String getTitleAtPos(int) -> b
-    125:125:int getMenuAtPos(int) -> c
-    129:129:int getMenuCountFull() -> b
-    133:133:int getMenuRefAt(int) -> d
-    137:141:int getAbsPosOfMenu(int) -> e
-    145:149:int getMenuPosition(int) -> f
-    153:153:java.lang.String getString(int) -> g
-    157:157:android.content.res.Resources getResources() -> c
-eu.laprell.timetable.background.SpecialBitmapCache -> eu.laprell.timetable.background.q:
+    55:119:void reloadFromConfiguration() -> d
+    122:128:void forceReloading() -> a
+    131:131:int getImageAtPos(int) -> a
+    135:135:java.lang.String getTitleAtPos(int) -> b
+    139:139:int getMenuAtPos(int) -> c
+    143:143:int getMenuCountFull() -> b
+    147:147:int getMenuRefAt(int) -> d
+    151:155:int getAbsPosOfMenu(int) -> e
+    159:163:int getMenuPosition(int) -> f
+    167:167:java.lang.String getString(int) -> g
+    171:171:android.content.res.Resources getResources() -> c
+eu.laprell.timetable.background.SecurePreferences -> eu.laprell.timetable.background.r:
+    boolean encryptKeys -> a
+    javax.crypto.Cipher writer -> b
+    javax.crypto.Cipher reader -> c
+    javax.crypto.Cipher keyWriter -> d
+    android.content.SharedPreferences preferences -> e
+    117:123:void initCiphers(java.lang.String) -> a
+    126:128:javax.crypto.spec.IvParameterSpec getIv() -> a
+    132:133:javax.crypto.spec.SecretKeySpec getSecretKey(java.lang.String) -> b
+    137:139:byte[] createKeyBytes(java.lang.String) -> c
+    143:149:void put(java.lang.String,java.lang.String) -> a
+    156:157:void put(java.lang.String,boolean) -> a
+    180:184:java.lang.String getString(java.lang.String,java.lang.String) -> b
+    248:253:boolean getBoolean(java.lang.String,boolean) -> b
+    261:263:java.lang.String toKey(java.lang.String) -> e
+    267:270:void putValue(java.lang.String,java.lang.String) -> c
+    275:280:java.lang.String encrypt(java.lang.String,javax.crypto.Cipher) -> a
+    284:290:java.lang.String decrypt(java.lang.String) -> d
+    296:299:byte[] convert(javax.crypto.Cipher,byte[]) -> a
+eu.laprell.timetable.background.SecurePreferences$SecurePreferencesException -> eu.laprell.timetable.background.s:
+eu.laprell.timetable.background.SpecialBitmapCache -> eu.laprell.timetable.background.t:
     eu.laprell.timetable.background.SpecialBitmapCache sCache -> a
     android.support.v4.util.LruCache mBitmaps -> b
     android.app.Application mApp -> c
-    16:19:void init(android.app.Application) -> a
-    21:21:eu.laprell.timetable.background.SpecialBitmapCache getInstance() -> a
-    60:76:android.graphics.Bitmap loadBitmap(int,int,int) -> a
-    80:92:int getMinScaleFactor(int,int,int,int) -> a
-    96:101:android.graphics.BitmapFactory$Options loadBitmapOptions(int) -> a
-eu.laprell.timetable.background.SpecialBitmapCache$CustomLruCache -> eu.laprell.timetable.background.r:
+    20:23:void init(android.app.Application) -> a
+    25:25:eu.laprell.timetable.background.SpecialBitmapCache getInstance() -> a
+    85:104:android.graphics.Bitmap loadBitmap(int,int,int) -> a
+    108:120:int getMinScaleFactor(int,int,int,int) -> a
+    124:129:android.graphics.BitmapFactory$Options loadBitmapOptions(int) -> b
+    133:138:void onTrimMemory(int) -> a
+eu.laprell.timetable.background.SpecialBitmapCache$CustomLruCache -> eu.laprell.timetable.background.u:
     eu.laprell.timetable.background.SpecialBitmapCache this$0 -> a
-    55:55:int sizeOf(java.lang.Integer,android.graphics.Bitmap) -> a
-    43:43:int sizeOf(java.lang.Object,java.lang.Object) -> b
+    76:76:int sizeOf(java.lang.Integer,android.graphics.Bitmap) -> a
+    64:64:int sizeOf(java.lang.Object,java.lang.Object) -> b
 eu.laprell.timetable.background.TimeReceiver -> eu.laprell.timetable.background.TimeReceiver:
     14:23:void onReceive(android.content.Context,android.content.Intent) -> onReceive
     26:36:eu.laprell.timetable.background.LessonNotifier getLessonNotifier(android.content.Context) -> a
@@ -19008,7 +19046,8 @@ eu.laprell.timetable.database.TimeUnit -> eu.laprell.timetable.database.TimeUnit
     85:85:java.lang.String[] geDefaultProjection() -> e
     93:94:void setStartTime(int,int) -> a
     97:98:void setEndTime(int,int) -> b
-    105:105:java.lang.String getTimeAsString() -> l
+    101:101:int getDuration() -> l
+    105:105:java.lang.String getTimeAsString() -> m
     109:118:java.lang.String makeTimeString(java.lang.String) -> a
     122:122:boolean isBefore(eu.laprell.timetable.database.TimeUnit) -> a
     130:130:boolean isAfter(eu.laprell.timetable.database.TimeUnit) -> b
@@ -19083,30 +19122,27 @@ eu.laprell.timetable.fragments.ChangeImageFragment$ImageFragment -> eu.laprell.t
 eu.laprell.timetable.fragments.ChangeImageFragment$OnImageChangeResult -> eu.laprell.timetable.fragments.g:
     void selectedImage(int) -> a
 eu.laprell.timetable.fragments.DayOverviewFragment -> eu.laprell.timetable.fragments.h:
-    android.support.v4.view.ViewPager mPager -> a
-    android.support.v4.view.PagerTabStrip mStrip -> b
-    eu.laprell.timetable.fragments.DayOverviewFragment$TimetableCollectionPagerAdapter mAdapter -> c
-    java.lang.String[] mWeekdays -> d
-    int mOpenDay -> e
-    int mColumnsCount -> f
-    33:42:void onCreate(android.os.Bundle) -> a
-    46:46:float getToolbarElevationDp() -> b
-    52:78:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
-    82:82:int getOpenedDay() -> P
+    java.lang.String[] mWeekdays -> a
+    int mOpenDay -> b
+    int mColumnsCount -> c
+    29:43:void onCreate(android.os.Bundle) -> a
+    47:47:float getToolbarElevationDp() -> b
+    53:76:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
+    80:80:int getOpenedDay() -> P
     20:20:int access$002(eu.laprell.timetable.fragments.DayOverviewFragment,int) -> a
     20:20:int access$100(eu.laprell.timetable.fragments.DayOverviewFragment) -> a
     20:20:java.lang.String[] access$200(eu.laprell.timetable.fragments.DayOverviewFragment) -> b
 eu.laprell.timetable.fragments.DayOverviewFragment$1 -> eu.laprell.timetable.fragments.i:
     eu.laprell.timetable.fragments.DayOverviewFragment this$0 -> a
-    65:65:void onPageScrolled(int,float,int) -> a
-    69:70:void onPageSelected(int) -> a
-    75:75:void onPageScrollStateChanged(int) -> b
+    63:63:void onPageScrolled(int,float,int) -> a
+    67:68:void onPageSelected(int) -> a
+    73:73:void onPageScrollStateChanged(int) -> b
 eu.laprell.timetable.fragments.DayOverviewFragment$TimetableCollectionPagerAdapter -> eu.laprell.timetable.fragments.j:
     eu.laprell.timetable.fragments.DayOverviewFragment this$0 -> a
-    92:99:android.support.v4.app.Fragment getItem(int) -> a
-    104:104:float getPageWidth(int) -> d
-    109:109:int getCount() -> b
-    114:114:java.lang.CharSequence getPageTitle(int) -> c
+    90:97:android.support.v4.app.Fragment getItem(int) -> a
+    102:102:float getPageWidth(int) -> d
+    107:107:int getCount() -> b
+    112:112:java.lang.CharSequence getPageTitle(int) -> c
 eu.laprell.timetable.fragments.DebugFragment -> eu.laprell.timetable.fragments.k:
     android.widget.Button mLoggingButton -> a
     38:49:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
@@ -19134,53 +19170,57 @@ eu.laprell.timetable.fragments.DrawerFragment -> eu.laprell.timetable.fragments.
     eu.laprell.timetable.widgets.RippleTouchImageView mExpandView -> f
     android.widget.TextView mTopTitle -> g
     eu.laprell.timetable.fragments.DrawerFragment$DrawerNavigationCallback mCallback -> h
-    int mSchoolImageId -> i
-    android.graphics.Bitmap mSchoolImage -> aj
-    java.lang.String mSchoolName -> ak
-    int mTopImageHeight -> al
-    58:85:void onCreate(android.os.Bundle) -> a
-    90:148:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
-    152:155:void updateLPDrawerTop() -> a
-    158:203:void loadTopBarInfo() -> b
-    206:214:void _navigate(int) -> c
-    37:37:eu.laprell.timetable.fragments.DrawerFragment$MyAdapter access$000(eu.laprell.timetable.fragments.DrawerFragment) -> a
-    37:37:void access$200(eu.laprell.timetable.fragments.DrawerFragment,int) -> a
-    37:37:android.support.v7.widget.RecyclerView access$300(eu.laprell.timetable.fragments.DrawerFragment) -> b
-    37:37:int access$402(eu.laprell.timetable.fragments.DrawerFragment,int) -> b
-    37:37:android.widget.FrameLayout access$500(eu.laprell.timetable.fragments.DrawerFragment) -> c
-    37:37:void access$600(eu.laprell.timetable.fragments.DrawerFragment) -> d
-    37:37:int access$702(eu.laprell.timetable.fragments.DrawerFragment,int) -> c
-    37:37:java.lang.String access$802(eu.laprell.timetable.fragments.DrawerFragment,java.lang.String) -> a
-    37:37:android.graphics.Bitmap access$902(eu.laprell.timetable.fragments.DrawerFragment,android.graphics.Bitmap) -> a
-    37:37:int access$700(eu.laprell.timetable.fragments.DrawerFragment) -> e
-    37:37:android.widget.TextView access$1002(eu.laprell.timetable.fragments.DrawerFragment,android.widget.TextView) -> a
-    37:37:android.widget.ImageView access$1102(eu.laprell.timetable.fragments.DrawerFragment,android.widget.ImageView) -> a
-    37:37:eu.laprell.timetable.widgets.RippleTouchImageView access$1202(eu.laprell.timetable.fragments.DrawerFragment,eu.laprell.timetable.widgets.RippleTouchImageView) -> a
-    37:37:java.lang.String access$800(eu.laprell.timetable.fragments.DrawerFragment) -> f
-    37:37:android.widget.TextView access$1000(eu.laprell.timetable.fragments.DrawerFragment) -> g
-    37:37:android.graphics.Bitmap access$900(eu.laprell.timetable.fragments.DrawerFragment) -> h
-    37:37:android.widget.ImageView access$1100(eu.laprell.timetable.fragments.DrawerFragment) -> i
-    37:37:android.widget.FrameLayout access$502(eu.laprell.timetable.fragments.DrawerFragment,android.widget.FrameLayout) -> a
-    37:37:int access$400(eu.laprell.timetable.fragments.DrawerFragment) -> j
-    37:37:void access$1300(eu.laprell.timetable.fragments.DrawerFragment) -> k
+    android.os.AsyncTask mBitmapLoadingTask -> i
+    int mSchoolImageId -> aj
+    android.graphics.Bitmap mSchoolImage -> ak
+    java.lang.String mSchoolName -> al
+    int mTopImageHeight -> am
+    61:88:void onCreate(android.os.Bundle) -> a
+    93:151:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
+    155:158:void updateLPDrawerTop() -> a
+    162:167:void onResume() -> s
+    170:230:void loadTopBarInfo() -> b
+    234:240:void onDestroyView() -> g
+    243:251:void _navigate(int) -> c
+    38:38:eu.laprell.timetable.fragments.DrawerFragment$MyAdapter access$000(eu.laprell.timetable.fragments.DrawerFragment) -> a
+    38:38:void access$200(eu.laprell.timetable.fragments.DrawerFragment,int) -> a
+    38:38:android.support.v7.widget.RecyclerView access$300(eu.laprell.timetable.fragments.DrawerFragment) -> b
+    38:38:int access$402(eu.laprell.timetable.fragments.DrawerFragment,int) -> b
+    38:38:android.widget.FrameLayout access$500(eu.laprell.timetable.fragments.DrawerFragment) -> c
+    38:38:void access$600(eu.laprell.timetable.fragments.DrawerFragment) -> d
+    38:38:int access$702(eu.laprell.timetable.fragments.DrawerFragment,int) -> c
+    38:38:java.lang.String access$802(eu.laprell.timetable.fragments.DrawerFragment,java.lang.String) -> a
+    38:38:android.graphics.Bitmap access$902(eu.laprell.timetable.fragments.DrawerFragment,android.graphics.Bitmap) -> a
+    38:38:int access$700(eu.laprell.timetable.fragments.DrawerFragment) -> e
+    38:38:android.widget.TextView access$1002(eu.laprell.timetable.fragments.DrawerFragment,android.widget.TextView) -> a
+    38:38:android.widget.ImageView access$1102(eu.laprell.timetable.fragments.DrawerFragment,android.widget.ImageView) -> a
+    38:38:eu.laprell.timetable.widgets.RippleTouchImageView access$1202(eu.laprell.timetable.fragments.DrawerFragment,eu.laprell.timetable.widgets.RippleTouchImageView) -> a
+    38:38:android.os.AsyncTask access$1302(eu.laprell.timetable.fragments.DrawerFragment,android.os.AsyncTask) -> a
+    38:38:java.lang.String access$800(eu.laprell.timetable.fragments.DrawerFragment) -> f
+    38:38:android.widget.TextView access$1000(eu.laprell.timetable.fragments.DrawerFragment) -> g
+    38:38:android.graphics.Bitmap access$900(eu.laprell.timetable.fragments.DrawerFragment) -> h
+    38:38:android.widget.ImageView access$1100(eu.laprell.timetable.fragments.DrawerFragment) -> i
+    38:38:android.widget.FrameLayout access$502(eu.laprell.timetable.fragments.DrawerFragment,android.widget.FrameLayout) -> a
+    38:38:int access$400(eu.laprell.timetable.fragments.DrawerFragment) -> j
+    38:38:void access$1400(eu.laprell.timetable.fragments.DrawerFragment) -> k
 eu.laprell.timetable.fragments.DrawerFragment$1 -> eu.laprell.timetable.fragments.n:
     eu.laprell.timetable.fragments.DrawerFragment this$0 -> a
-    65:66:void navigateMenu(int) -> a
-    70:72:void reloadDrawer() -> a
-    76:76:int getDrawerContentWidth() -> b
-    82:82:void dispatchDrawerOpened(float,float) -> a
+    68:69:void navigateMenu(int) -> a
+    73:75:void reloadDrawer() -> a
+    79:79:int getDrawerContentWidth() -> b
+    85:85:void dispatchDrawerOpened(float,float) -> a
 eu.laprell.timetable.fragments.DrawerFragment$2 -> eu.laprell.timetable.fragments.o:
     eu.laprell.timetable.fragments.DrawerFragment this$0 -> a
-    105:112:void onClick(android.view.View) -> onClick
+    108:115:void onClick(android.view.View) -> onClick
 eu.laprell.timetable.fragments.DrawerFragment$3 -> eu.laprell.timetable.fragments.p:
     eu.laprell.timetable.fragments.DrawerFragment this$0 -> a
-    119:145:void run() -> run
+    122:148:void run() -> run
 eu.laprell.timetable.fragments.DrawerFragment$4 -> eu.laprell.timetable.fragments.q:
     eu.laprell.timetable.fragments.DrawerFragment this$0 -> a
-    162:188:java.lang.Void doInBackground(java.lang.Void[]) -> a
-    193:201:void onPostExecute(java.lang.Void) -> a
-    158:158:void onPostExecute(java.lang.Object) -> onPostExecute
-    158:158:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    173:212:java.lang.Boolean doInBackground(java.lang.Void[]) -> a
+    217:228:void onPostExecute(java.lang.Boolean) -> a
+    170:170:void onPostExecute(java.lang.Object) -> onPostExecute
+    170:170:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 eu.laprell.timetable.fragments.DrawerFragment$DrawerNavigationBackend -> eu.laprell.timetable.fragments.r:
     void navigateMenu(int) -> a
     void reloadDrawer() -> a
@@ -19195,20 +19235,20 @@ eu.laprell.timetable.fragments.DrawerFragment$MyAdapter -> eu.laprell.timetable.
     android.graphics.drawable.ColorDrawable mBlueOverlay -> d
     android.view.View$OnClickListener mListener -> e
     eu.laprell.timetable.fragments.DrawerFragment this$0 -> a
-    261:270:int getItemViewType(int) -> a
-    276:311:eu.laprell.timetable.fragments.DrawerFragment$ViewHolder onCreateViewHolder(android.view.ViewGroup,int) -> c
-    317:339:void onBindViewHolder(eu.laprell.timetable.fragments.DrawerFragment$ViewHolder,int) -> a
-    344:344:int getItemCount() -> a
-    348:351:void selectPosition(int) -> d
-    238:238:void onBindViewHolder(android.support.v7.widget.RecyclerView$ViewHolder,int) -> a
-    238:238:android.support.v7.widget.RecyclerView$ViewHolder onCreateViewHolder(android.view.ViewGroup,int) -> a
-    238:238:eu.laprell.timetable.background.MenuNavigation access$100(eu.laprell.timetable.fragments.DrawerFragment$MyAdapter) -> a
+    298:307:int getItemViewType(int) -> a
+    313:348:eu.laprell.timetable.fragments.DrawerFragment$ViewHolder onCreateViewHolder(android.view.ViewGroup,int) -> c
+    354:376:void onBindViewHolder(eu.laprell.timetable.fragments.DrawerFragment$ViewHolder,int) -> a
+    381:381:int getItemCount() -> a
+    385:388:void selectPosition(int) -> d
+    275:275:void onBindViewHolder(android.support.v7.widget.RecyclerView$ViewHolder,int) -> a
+    275:275:android.support.v7.widget.RecyclerView$ViewHolder onCreateViewHolder(android.view.ViewGroup,int) -> a
+    275:275:eu.laprell.timetable.background.MenuNavigation access$100(eu.laprell.timetable.fragments.DrawerFragment$MyAdapter) -> a
 eu.laprell.timetable.fragments.DrawerFragment$ViewHolder -> eu.laprell.timetable.fragments.u:
     android.view.View mView -> i
     android.widget.TextView mCaption -> j
     android.widget.ImageView mImage -> k
     android.widget.FrameLayout mContainer -> l
-    219:219:android.widget.FrameLayout access$1400(eu.laprell.timetable.fragments.DrawerFragment$ViewHolder) -> a
+    256:256:android.widget.FrameLayout access$1500(eu.laprell.timetable.fragments.DrawerFragment$ViewHolder) -> a
 eu.laprell.timetable.fragments.InfoFragment -> eu.laprell.timetable.fragments.v:
     long mLastClick -> a
     int mClickCount -> b
@@ -19467,32 +19507,32 @@ eu.laprell.timetable.fragments.TimeTableDayFragment2 -> eu.laprell.timetable.fra
     eu.laprell.timetable.widgets.NavigationFrameLayout mContainer -> b
     android.support.v7.widget.RecyclerView mRecyclerView -> c
     eu.laprell.timetable.fragments.TimeTableDayFragment2$TimeTableDayDatabaseAdapter mAdapter -> d
-    eu.laprell.timetable.database.Day mDay -> e
-    java.util.ArrayList mList -> f
-    fr.castorflex.android.circularprogressbar.CircularProgressBar mProgress -> g
-    eu.laprell.timetable.database.TimeUnit[] mTimes -> h
-    android.widget.ListAdapter mEditAdapter -> i
+    android.os.AsyncTask mLoadingTask -> e
+    eu.laprell.timetable.database.Day mDay -> f
+    java.util.ArrayList mList -> g
+    fr.castorflex.android.circularprogressbar.CircularProgressBar mProgress -> h
+    eu.laprell.timetable.database.TimeUnit[] mTimes -> i
     int mCurrentEdit -> aj
     android.support.v7.widget.ListPopupWindow mEditList -> ak
-    android.widget.Button mDayText -> al
-    int mDayToDisplay -> am
-    android.view.View$OnClickListener mMoreViewClick -> an
-    97:131:void onCreate(android.os.Bundle) -> a
-    135:139:void onDestroy() -> u
-    142:154:void makeFreeTime() -> P
-    157:175:void convertInFreeTime(eu.laprell.timetable.database.TimeUnit) -> a
-    178:183:void addFreeTime(eu.laprell.timetable.database.TimeUnit) -> b
-    186:207:void askforBreak(eu.laprell.timetable.database.TimeUnit) -> c
-    210:211:void makeNewLesson() -> Q
-    216:293:void makeNewLesson(eu.laprell.timetable.database.TimeUnit,boolean) -> a
-    298:392:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
-    428:436:void searchForMissing() -> R
-    439:468:eu.laprell.timetable.fragments.TimeTableDayFragment2$Data getDataFrom(eu.laprell.timetable.database.TimetableDatabase,eu.laprell.timetable.database.Day,int,int) -> a
-    472:536:void fetchData() -> S
-    539:556:void loadTable() -> T
-    559:586:void refreshTable() -> U
-    629:635:void onActivityResult(int,int,android.content.Intent) -> a
-    639:655:android.graphics.drawable.BitmapDrawable scaleForInserting(int,android.graphics.Rect,eu.laprell.timetable.fragments.TimeTableDayFragment2$Data) -> a
+    int mDayToDisplay -> al
+    android.view.View$OnClickListener mMoreViewClick -> am
+    96:130:void onCreate(android.os.Bundle) -> a
+    134:140:void onDestroyView() -> g
+    144:148:void onDestroy() -> u
+    151:163:void makeFreeTime() -> P
+    166:184:void convertInFreeTime(eu.laprell.timetable.database.TimeUnit) -> a
+    187:192:void addFreeTime(eu.laprell.timetable.database.TimeUnit) -> b
+    195:216:void askforBreak(eu.laprell.timetable.database.TimeUnit) -> c
+    219:220:void makeNewLesson() -> Q
+    225:302:void makeNewLesson(eu.laprell.timetable.database.TimeUnit,boolean) -> a
+    307:402:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
+    438:446:void searchForMissing() -> R
+    449:478:eu.laprell.timetable.fragments.TimeTableDayFragment2$Data getDataFrom(eu.laprell.timetable.database.TimetableDatabase,eu.laprell.timetable.database.Day,int,int) -> a
+    482:546:void fetchData() -> S
+    549:568:void loadTable() -> T
+    571:598:void refreshTable() -> U
+    641:647:void onActivityResult(int,int,android.content.Intent) -> a
+    651:667:android.graphics.drawable.BitmapDrawable scaleForInserting(int,android.graphics.Rect,eu.laprell.timetable.fragments.TimeTableDayFragment2$Data) -> a
     64:64:void access$000(eu.laprell.timetable.fragments.TimeTableDayFragment2) -> a
     64:64:void access$100(eu.laprell.timetable.fragments.TimeTableDayFragment2,eu.laprell.timetable.database.TimeUnit,boolean) -> a
     64:64:android.support.v7.widget.ListPopupWindow access$200(eu.laprell.timetable.fragments.TimeTableDayFragment2) -> b
@@ -19510,63 +19550,64 @@ eu.laprell.timetable.fragments.TimeTableDayFragment2 -> eu.laprell.timetable.fra
     64:64:void access$1900(eu.laprell.timetable.fragments.TimeTableDayFragment2) -> l
     64:64:void access$2300(eu.laprell.timetable.fragments.TimeTableDayFragment2) -> m
     64:64:fr.castorflex.android.circularprogressbar.CircularProgressBar access$2400(eu.laprell.timetable.fragments.TimeTableDayFragment2) -> n
+    64:64:android.os.AsyncTask access$2502(eu.laprell.timetable.fragments.TimeTableDayFragment2,android.os.AsyncTask) -> a
 eu.laprell.timetable.fragments.TimeTableDayFragment2$1 -> eu.laprell.timetable.fragments.bg:
     eu.laprell.timetable.fragments.TimeTableDayFragment2 this$0 -> a
-    114:121:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+    113:120:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
 eu.laprell.timetable.fragments.TimeTableDayFragment2$10 -> eu.laprell.timetable.fragments.bh:
     eu.laprell.timetable.fragments.TimeTableDayFragment2 this$0 -> a
-    542:543:java.lang.Void doInBackground(java.lang.Void[]) -> a
-    548:554:void onPostExecute(java.lang.Void) -> a
-    539:539:void onPostExecute(java.lang.Object) -> onPostExecute
-    539:539:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    552:553:java.lang.Void doInBackground(java.lang.Void[]) -> a
+    558:566:void onPostExecute(java.lang.Void) -> a
+    549:549:void onPostExecute(java.lang.Object) -> onPostExecute
+    549:549:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 eu.laprell.timetable.fragments.TimeTableDayFragment2$11 -> eu.laprell.timetable.fragments.bi:
     eu.laprell.timetable.fragments.TimeTableDayFragment2 this$0 -> a
-    566:572:int[] doInBackground(java.lang.Void[]) -> a
-    577:584:void onPostExecute(int[]) -> a
-    563:563:void onPostExecute(java.lang.Object) -> onPostExecute
-    563:563:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    578:584:int[] doInBackground(java.lang.Void[]) -> a
+    589:596:void onPostExecute(int[]) -> a
+    575:575:void onPostExecute(java.lang.Object) -> onPostExecute
+    575:575:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 eu.laprell.timetable.fragments.TimeTableDayFragment2$2 -> eu.laprell.timetable.fragments.bj:
     eu.laprell.timetable.fragments.TimeTableDayFragment2 this$0 -> a
-    126:127:void onDismiss() -> onDismiss
+    125:126:void onDismiss() -> onDismiss
 eu.laprell.timetable.fragments.TimeTableDayFragment2$3 -> eu.laprell.timetable.fragments.bk:
     eu.laprell.timetable.fragments.TimeTableDayFragment2 this$0 -> a
-    151:152:void onFinished() -> a
+    160:161:void onFinished() -> a
 eu.laprell.timetable.fragments.TimeTableDayFragment2$4 -> eu.laprell.timetable.fragments.bl:
     eu.laprell.timetable.fragments.TimeTableDayFragment2 this$0 -> a
-    172:173:void onFinished() -> a
+    181:182:void onFinished() -> a
 eu.laprell.timetable.fragments.TimeTableDayFragment2$5 -> eu.laprell.timetable.fragments.bm:
     eu.laprell.timetable.database.TimeUnit val$t -> a
     eu.laprell.timetable.fragments.TimeTableDayFragment2 this$0 -> b
-    194:195:void onNegative(com.afollestad.materialdialogs.MaterialDialog) -> b
-    199:203:void onPositive(com.afollestad.materialdialogs.MaterialDialog) -> a
+    203:204:void onNegative(com.afollestad.materialdialogs.MaterialDialog) -> b
+    208:212:void onPositive(com.afollestad.materialdialogs.MaterialDialog) -> a
 eu.laprell.timetable.fragments.TimeTableDayFragment2$6 -> eu.laprell.timetable.fragments.bn:
     eu.laprell.timetable.database.TimeUnit val$t -> a
     eu.laprell.timetable.fragments.TimeTableDayFragment2 this$0 -> b
-    240:268:void createdLesson(eu.laprell.timetable.database.Lesson) -> a
-    272:291:void createFreetime() -> a
+    249:277:void createdLesson(eu.laprell.timetable.database.Lesson) -> a
+    281:300:void createFreetime() -> a
 eu.laprell.timetable.fragments.TimeTableDayFragment2$6$1 -> eu.laprell.timetable.fragments.bo:
     eu.laprell.timetable.database.Creator$Data val$data -> a
     eu.laprell.timetable.fragments.TimeTableDayFragment2$6 this$1 -> b
-    256:257:java.lang.Void doInBackground(java.lang.Void[]) -> a
-    262:265:void onPostExecute(java.lang.Void) -> a
-    253:253:void onPostExecute(java.lang.Object) -> onPostExecute
-    253:253:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    265:266:java.lang.Void doInBackground(java.lang.Void[]) -> a
+    271:274:void onPostExecute(java.lang.Void) -> a
+    262:262:void onPostExecute(java.lang.Object) -> onPostExecute
+    262:262:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 eu.laprell.timetable.fragments.TimeTableDayFragment2$6$2 -> eu.laprell.timetable.fragments.bp:
     eu.laprell.timetable.database.Creator$Data val$data -> a
     eu.laprell.timetable.fragments.TimeTableDayFragment2$6 this$1 -> b
-    280:281:java.lang.Void doInBackground(java.lang.Void[]) -> a
-    286:289:void onPostExecute(java.lang.Void) -> a
-    277:277:void onPostExecute(java.lang.Object) -> onPostExecute
-    277:277:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    289:290:java.lang.Void doInBackground(java.lang.Void[]) -> a
+    295:298:void onPostExecute(java.lang.Void) -> a
+    286:286:void onPostExecute(java.lang.Object) -> onPostExecute
+    286:286:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 eu.laprell.timetable.fragments.TimeTableDayFragment2$7 -> eu.laprell.timetable.fragments.bq:
     eu.laprell.timetable.fragments.TimeTableDayFragment2 this$0 -> a
-    321:378:void onClick(android.view.View) -> onClick
+    331:388:void onClick(android.view.View) -> onClick
 eu.laprell.timetable.fragments.TimeTableDayFragment2$8 -> eu.laprell.timetable.fragments.br:
     eu.laprell.timetable.fragments.TimeTableDayFragment2 this$0 -> a
-    388:389:void run() -> run
+    398:399:void run() -> run
 eu.laprell.timetable.fragments.TimeTableDayFragment2$9 -> eu.laprell.timetable.fragments.bs:
     eu.laprell.timetable.fragments.TimeTableDayFragment2 this$0 -> a
-    398:424:void onClick(android.view.View) -> onClick
+    408:434:void onClick(android.view.View) -> onClick
 eu.laprell.timetable.fragments.TimeTableDayFragment2$Data -> eu.laprell.timetable.fragments.bt:
     eu.laprell.timetable.database.Lesson lesson -> b
     eu.laprell.timetable.database.TimeUnit time -> c
@@ -19577,36 +19618,36 @@ eu.laprell.timetable.fragments.TimeTableDayFragment2$Data -> eu.laprell.timetabl
     android.graphics.drawable.BitmapDrawable image -> h
     eu.laprell.timetable.utils.BitmapUtils$ScalingConfig scale_config -> i
     eu.laprell.timetable.fragments.TimeTableDayFragment2 this$0 -> a
-    588:588:eu.laprell.timetable.database.TimeUnit access$600(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data) -> a
-    588:588:eu.laprell.timetable.database.Lesson access$1100(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data) -> b
-    588:588:eu.laprell.timetable.database.Place access$1200(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data) -> c
-    588:588:eu.laprell.timetable.database.Teacher access$1300(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data) -> d
-    588:588:eu.laprell.timetable.utils.BitmapUtils$ScalingConfig access$1500(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data) -> e
-    588:588:eu.laprell.timetable.database.Lesson access$1102(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data,eu.laprell.timetable.database.Lesson) -> a
-    588:588:eu.laprell.timetable.database.Teacher access$1302(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data,eu.laprell.timetable.database.Teacher) -> a
-    588:588:int access$2102(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data,int) -> a
-    588:588:eu.laprell.timetable.database.Place access$1202(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data,eu.laprell.timetable.database.Place) -> a
-    588:588:eu.laprell.timetable.database.TimeUnit access$602(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data,eu.laprell.timetable.database.TimeUnit) -> a
-    588:588:android.graphics.drawable.BitmapDrawable access$2202(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data,android.graphics.drawable.BitmapDrawable) -> a
-    588:588:boolean access$2502(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data,boolean) -> a
-    588:588:eu.laprell.timetable.utils.BitmapUtils$ScalingConfig access$1502(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data,eu.laprell.timetable.utils.BitmapUtils$ScalingConfig) -> a
-    588:588:int access$2100(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data) -> f
-    588:588:android.graphics.drawable.BitmapDrawable access$2200(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data) -> g
-    588:588:boolean access$2500(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data) -> h
+    600:600:eu.laprell.timetable.database.TimeUnit access$600(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data) -> a
+    600:600:eu.laprell.timetable.database.Lesson access$1100(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data) -> b
+    600:600:eu.laprell.timetable.database.Place access$1200(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data) -> c
+    600:600:eu.laprell.timetable.database.Teacher access$1300(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data) -> d
+    600:600:eu.laprell.timetable.utils.BitmapUtils$ScalingConfig access$1500(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data) -> e
+    600:600:eu.laprell.timetable.database.Lesson access$1102(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data,eu.laprell.timetable.database.Lesson) -> a
+    600:600:eu.laprell.timetable.database.Teacher access$1302(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data,eu.laprell.timetable.database.Teacher) -> a
+    600:600:int access$2102(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data,int) -> a
+    600:600:eu.laprell.timetable.database.Place access$1202(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data,eu.laprell.timetable.database.Place) -> a
+    600:600:eu.laprell.timetable.database.TimeUnit access$602(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data,eu.laprell.timetable.database.TimeUnit) -> a
+    600:600:android.graphics.drawable.BitmapDrawable access$2202(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data,android.graphics.drawable.BitmapDrawable) -> a
+    600:600:boolean access$2602(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data,boolean) -> a
+    600:600:eu.laprell.timetable.utils.BitmapUtils$ScalingConfig access$1502(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data,eu.laprell.timetable.utils.BitmapUtils$ScalingConfig) -> a
+    600:600:int access$2100(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data) -> f
+    600:600:android.graphics.drawable.BitmapDrawable access$2200(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data) -> g
+    600:600:boolean access$2600(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data) -> h
 eu.laprell.timetable.fragments.TimeTableDayFragment2$TimeTableDayDatabaseAdapter -> eu.laprell.timetable.fragments.bu:
     android.view.View$OnClickListener mListener -> b
     android.view.View$OnClickListener mMoreListener -> c
     boolean mCountNull -> d
     eu.laprell.timetable.fragments.TimeTableDayFragment2 this$0 -> a
-    670:678:int getItemViewType(int) -> a
-    684:687:long getItemId(int) -> b
-    693:708:eu.laprell.timetable.fragments.TimeTableDayFragment2$ViewHolder onCreateViewHolder(android.view.ViewGroup,int) -> c
-    713:776:void onBindViewHolderDebug(eu.laprell.timetable.fragments.TimeTableDayFragment2$ViewHolder,int) -> b
-    781:807:void onBindViewHolder(eu.laprell.timetable.fragments.TimeTableDayFragment2$ViewHolder,int) -> a
-    812:818:int getItemCount() -> a
-    822:823:void setCountToNull(boolean) -> a
-    658:658:void onBindViewHolder(android.support.v7.widget.RecyclerView$ViewHolder,int) -> a
-    658:658:android.support.v7.widget.RecyclerView$ViewHolder onCreateViewHolder(android.view.ViewGroup,int) -> a
+    682:690:int getItemViewType(int) -> a
+    696:699:long getItemId(int) -> b
+    705:720:eu.laprell.timetable.fragments.TimeTableDayFragment2$ViewHolder onCreateViewHolder(android.view.ViewGroup,int) -> c
+    725:788:void onBindViewHolderDebug(eu.laprell.timetable.fragments.TimeTableDayFragment2$ViewHolder,int) -> b
+    793:819:void onBindViewHolder(eu.laprell.timetable.fragments.TimeTableDayFragment2$ViewHolder,int) -> a
+    824:830:int getItemCount() -> a
+    834:835:void setCountToNull(boolean) -> a
+    670:670:void onBindViewHolder(android.support.v7.widget.RecyclerView$ViewHolder,int) -> a
+    670:670:android.support.v7.widget.RecyclerView$ViewHolder onCreateViewHolder(android.view.ViewGroup,int) -> a
 eu.laprell.timetable.fragments.TimeTableDayFragment2$ViewHolder -> eu.laprell.timetable.fragments.bv:
     android.view.View mView -> i
     eu.laprell.timetable.widgets.VerticalDropShadowCard mShadow -> j
@@ -19679,7 +19720,127 @@ eu.laprell.timetable.fragments.WeekOverviewFragment$DayData -> eu.laprell.timeta
     67:67:eu.laprell.timetable.database.Lesson[] access$102(eu.laprell.timetable.fragments.WeekOverviewFragment$DayData,eu.laprell.timetable.database.Lesson[]) -> a
     67:67:eu.laprell.timetable.database.Place[] access$202(eu.laprell.timetable.fragments.WeekOverviewFragment$DayData,eu.laprell.timetable.database.Place[]) -> a
     67:67:eu.laprell.timetable.database.Teacher[] access$402(eu.laprell.timetable.fragments.WeekOverviewFragment$DayData,eu.laprell.timetable.database.Teacher[]) -> a
-eu.laprell.timetable.fragments.dialogs.SubjectChooseDialog -> eu.laprell.timetable.fragments.a.a:
+eu.laprell.timetable.fragments.addons.AddonsFragments -> eu.laprell.timetable.fragments.a.a:
+    13:17:android.support.v4.app.Fragment getAddonFragmentForMenu(int) -> a
+eu.laprell.timetable.fragments.addons.KghMasterRepPlanFragment -> eu.laprell.timetable.fragments.a.b:
+    fr.castorflex.android.circularprogressbar.CircularProgressBar mProgress -> a
+    android.support.v4.view.ViewPager mPager -> b
+    eu.laprell.timetable.fragments.addons.KghMasterRepPlanFragment$RepreDayAdapter mAdapter -> c
+    android.os.AsyncTask mDataLodingTask -> d
+    eu.laprell.timetable.background.SecurePreferences mLoginStore -> e
+    com.afollestad.materialdialogs.MaterialDialog mLoginDialog -> f
+    java.util.ArrayList mChilds -> g
+    86:96:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
+    100:100:java.lang.String getChecksum(long) -> a
+    108:142:void checkForData() -> P
+    145:192:void showLoginScreen() -> Q
+    195:251:void checkLoginInfo(java.lang.String,java.lang.String) -> a
+    255:290:boolean testLogin(java.lang.String,java.lang.String) -> b
+    295:295:float getToolbarElevationDp() -> b
+    299:310:boolean hasConnection() -> R
+    314:416:void loadData(java.lang.String,java.lang.String) -> c
+    421:459:boolean fetchData(eu.laprell.timetable.fragments.addons.KghRepresentationPlanFragment,java.lang.String,java.lang.String,int) -> a
+    463:476:void writeNewCache(java.lang.String,int) -> a
+    479:494:void writeToFile(java.io.File,java.lang.String) -> a
+    497:549:boolean parseJson(eu.laprell.timetable.fragments.addons.KghRepresentationPlanFragment,java.lang.String) -> a
+    554:560:void onDestroyView() -> g
+    563:572:eu.laprell.timetable.fragments.addons.KghMasterRepPlanFragment$Data parseJsonObjectToData(org.json.JSONObject) -> a
+    61:61:boolean access$000(eu.laprell.timetable.fragments.addons.KghMasterRepPlanFragment) -> a
+    61:61:boolean access$100(eu.laprell.timetable.fragments.addons.KghMasterRepPlanFragment,java.lang.String,java.lang.String) -> a
+    61:61:eu.laprell.timetable.background.SecurePreferences access$200(eu.laprell.timetable.fragments.addons.KghMasterRepPlanFragment) -> b
+    61:61:void access$300(eu.laprell.timetable.fragments.addons.KghMasterRepPlanFragment,java.lang.String,java.lang.String) -> b
+    61:61:com.afollestad.materialdialogs.MaterialDialog access$400(eu.laprell.timetable.fragments.addons.KghMasterRepPlanFragment) -> c
+    61:61:com.afollestad.materialdialogs.MaterialDialog access$402(eu.laprell.timetable.fragments.addons.KghMasterRepPlanFragment,com.afollestad.materialdialogs.MaterialDialog) -> a
+    61:61:android.support.v4.view.ViewPager access$500(eu.laprell.timetable.fragments.addons.KghMasterRepPlanFragment) -> d
+    61:61:boolean access$600(eu.laprell.timetable.fragments.addons.KghMasterRepPlanFragment,eu.laprell.timetable.fragments.addons.KghRepresentationPlanFragment,java.lang.String) -> a
+    61:61:java.util.ArrayList access$700(eu.laprell.timetable.fragments.addons.KghMasterRepPlanFragment) -> e
+    61:61:boolean access$800(eu.laprell.timetable.fragments.addons.KghMasterRepPlanFragment,eu.laprell.timetable.fragments.addons.KghRepresentationPlanFragment,java.lang.String,java.lang.String,int) -> a
+    61:61:android.os.AsyncTask access$902(eu.laprell.timetable.fragments.addons.KghMasterRepPlanFragment,android.os.AsyncTask) -> a
+    61:61:eu.laprell.timetable.fragments.addons.KghMasterRepPlanFragment$RepreDayAdapter access$1000(eu.laprell.timetable.fragments.addons.KghMasterRepPlanFragment) -> f
+    61:61:fr.castorflex.android.circularprogressbar.CircularProgressBar access$1200(eu.laprell.timetable.fragments.addons.KghMasterRepPlanFragment) -> g
+eu.laprell.timetable.fragments.addons.KghMasterRepPlanFragment$1 -> eu.laprell.timetable.fragments.a.c:
+    eu.laprell.timetable.fragments.addons.KghMasterRepPlanFragment this$0 -> a
+    154:161:void onPositive(com.afollestad.materialdialogs.MaterialDialog) -> a
+    166:167:void onNegative(com.afollestad.materialdialogs.MaterialDialog) -> b
+eu.laprell.timetable.fragments.addons.KghMasterRepPlanFragment$2 -> eu.laprell.timetable.fragments.a.d:
+    android.view.View val$positiveAction -> a
+    eu.laprell.timetable.fragments.addons.KghMasterRepPlanFragment this$0 -> b
+    178:178:void beforeTextChanged(java.lang.CharSequence,int,int,int) -> beforeTextChanged
+    182:183:void onTextChanged(java.lang.CharSequence,int,int,int) -> onTextChanged
+    187:187:void afterTextChanged(android.text.Editable) -> afterTextChanged
+eu.laprell.timetable.fragments.addons.KghMasterRepPlanFragment$3 -> eu.laprell.timetable.fragments.a.e:
+    java.lang.String val$u -> a
+    java.lang.String val$p -> b
+    fr.castorflex.android.circularprogressbar.CircularProgressBar val$progress -> c
+    android.view.View val$wrapper -> d
+    eu.laprell.timetable.fragments.addons.KghMasterRepPlanFragment this$0 -> e
+    214:217:java.lang.Integer doInBackground(java.lang.Void[]) -> a
+    222:249:void onPostExecute(java.lang.Integer) -> a
+    211:211:void onPostExecute(java.lang.Object) -> onPostExecute
+    211:211:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+eu.laprell.timetable.fragments.addons.KghMasterRepPlanFragment$4 -> eu.laprell.timetable.fragments.a.f:
+    java.lang.String val$user -> a
+    java.lang.String val$pwd -> b
+    eu.laprell.timetable.fragments.addons.KghMasterRepPlanFragment this$0 -> c
+    317:385:java.lang.Integer doInBackground(java.lang.Void[]) -> a
+    391:414:void onPostExecute(java.lang.Integer) -> a
+    314:314:void onPostExecute(java.lang.Object) -> onPostExecute
+    314:314:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+eu.laprell.timetable.fragments.addons.KghMasterRepPlanFragment$Data -> eu.laprell.timetable.fragments.a.g:
+    boolean newLevel -> a
+    java.lang.String level_name -> b
+    java.lang.String type -> c
+    java.lang.String orig_teacher -> d
+    java.lang.String new_teacher -> e
+    java.lang.String place -> f
+    java.lang.String course_number -> g
+    java.lang.String lesson -> h
+    eu.laprell.timetable.fragments.addons.KghMasterRepPlanFragment this$0 -> i
+eu.laprell.timetable.fragments.addons.KghMasterRepPlanFragment$RepreDayAdapter -> eu.laprell.timetable.fragments.a.h:
+    boolean mFakeZero -> b
+    eu.laprell.timetable.fragments.addons.KghMasterRepPlanFragment this$0 -> a
+    595:595:android.support.v4.app.Fragment getItem(int) -> a
+    600:600:int getCount() -> b
+    605:605:java.lang.CharSequence getPageTitle(int) -> c
+    586:586:boolean access$1102(eu.laprell.timetable.fragments.addons.KghMasterRepPlanFragment$RepreDayAdapter,boolean) -> a
+eu.laprell.timetable.fragments.addons.KghRepresentationPlanFragment -> eu.laprell.timetable.fragments.a.i:
+    android.support.v7.widget.RecyclerView mRecyclerView -> a
+    eu.laprell.timetable.fragments.addons.KghRepresentationPlanFragment$VerDataAdapter mAdapter -> b
+    java.lang.String mForDay -> c
+    java.util.ArrayList mList -> d
+    boolean mFakeZero -> e
+    34:42:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
+    46:46:java.lang.String getForDay() -> P
+    50:51:void setForDay(java.lang.String) -> a
+    54:58:void setFakeZero(boolean) -> a
+    61:61:java.util.List getList() -> Q
+    23:23:java.util.ArrayList access$000(eu.laprell.timetable.fragments.addons.KghRepresentationPlanFragment) -> a
+    23:23:boolean access$800(eu.laprell.timetable.fragments.addons.KghRepresentationPlanFragment) -> b
+eu.laprell.timetable.fragments.addons.KghRepresentationPlanFragment$VHolder -> eu.laprell.timetable.fragments.a.j:
+    android.widget.TextView mHeaderText -> j
+    android.widget.TextView mNumText -> k
+    android.widget.TextView mTypeText -> l
+    android.widget.TextView mPlaceText -> m
+    android.widget.TextView mOrigTeacherText -> n
+    android.widget.TextView mNewTeacherText -> o
+    android.widget.TextView mCourseText -> p
+    eu.laprell.timetable.fragments.addons.KghRepresentationPlanFragment this$0 -> i
+    64:64:android.widget.TextView access$100(eu.laprell.timetable.fragments.addons.KghRepresentationPlanFragment$VHolder) -> a
+    64:64:android.widget.TextView access$200(eu.laprell.timetable.fragments.addons.KghRepresentationPlanFragment$VHolder) -> b
+    64:64:android.widget.TextView access$300(eu.laprell.timetable.fragments.addons.KghRepresentationPlanFragment$VHolder) -> c
+    64:64:android.widget.TextView access$400(eu.laprell.timetable.fragments.addons.KghRepresentationPlanFragment$VHolder) -> d
+    64:64:android.widget.TextView access$500(eu.laprell.timetable.fragments.addons.KghRepresentationPlanFragment$VHolder) -> e
+    64:64:android.widget.TextView access$600(eu.laprell.timetable.fragments.addons.KghRepresentationPlanFragment$VHolder) -> f
+    64:64:android.widget.TextView access$700(eu.laprell.timetable.fragments.addons.KghRepresentationPlanFragment$VHolder) -> g
+eu.laprell.timetable.fragments.addons.KghRepresentationPlanFragment$VerDataAdapter -> eu.laprell.timetable.fragments.a.k:
+    eu.laprell.timetable.fragments.addons.KghRepresentationPlanFragment this$0 -> a
+    97:97:int getItemViewType(int) -> a
+    102:105:eu.laprell.timetable.fragments.addons.KghRepresentationPlanFragment$VHolder onCreateViewHolder(android.view.ViewGroup,int) -> c
+    110:122:void onBindViewHolder(eu.laprell.timetable.fragments.addons.KghRepresentationPlanFragment$VHolder,int) -> a
+    126:126:int getItemCount() -> a
+    93:93:void onBindViewHolder(android.support.v7.widget.RecyclerView$ViewHolder,int) -> a
+    93:93:android.support.v7.widget.RecyclerView$ViewHolder onCreateViewHolder(android.view.ViewGroup,int) -> a
+eu.laprell.timetable.fragments.dialogs.SubjectChooseDialog -> eu.laprell.timetable.fragments.b.a:
     android.content.Context mContext -> a
     eu.laprell.timetable.utils.Dialogs$SubjectsDialogCallback mCallback -> b
     java.util.ArrayList mAlreadyUsed -> c
@@ -19699,24 +19860,24 @@ eu.laprell.timetable.fragments.dialogs.SubjectChooseDialog -> eu.laprell.timetab
     29:29:java.util.ArrayList access$600(eu.laprell.timetable.fragments.dialogs.SubjectChooseDialog) -> f
     29:29:eu.laprell.timetable.fragments.dialogs.SubjectChooseDialog$ViewAdapter access$302(eu.laprell.timetable.fragments.dialogs.SubjectChooseDialog,eu.laprell.timetable.fragments.dialogs.SubjectChooseDialog$ViewAdapter) -> a
     29:29:void access$800(eu.laprell.timetable.fragments.dialogs.SubjectChooseDialog) -> g
-eu.laprell.timetable.fragments.dialogs.SubjectChooseDialog$1 -> eu.laprell.timetable.fragments.a.b:
+eu.laprell.timetable.fragments.dialogs.SubjectChooseDialog$1 -> eu.laprell.timetable.fragments.b.b:
     eu.laprell.timetable.fragments.dialogs.SubjectChooseDialog this$0 -> a
     63:74:void onNeutral(com.afollestad.materialdialogs.MaterialDialog) -> c
     78:78:void onNegative(com.afollestad.materialdialogs.MaterialDialog) -> b
     82:82:void onPositive(com.afollestad.materialdialogs.MaterialDialog) -> a
-eu.laprell.timetable.fragments.dialogs.SubjectChooseDialog$1$1 -> eu.laprell.timetable.fragments.a.c:
+eu.laprell.timetable.fragments.dialogs.SubjectChooseDialog$1$1 -> eu.laprell.timetable.fragments.b.c:
     eu.laprell.timetable.fragments.dialogs.SubjectChooseDialog$1 this$1 -> a
     66:72:void newSubject(java.lang.String) -> a
-eu.laprell.timetable.fragments.dialogs.SubjectChooseDialog$2 -> eu.laprell.timetable.fragments.a.d:
+eu.laprell.timetable.fragments.dialogs.SubjectChooseDialog$2 -> eu.laprell.timetable.fragments.b.d:
     eu.laprell.timetable.fragments.dialogs.SubjectChooseDialog this$0 -> a
     93:107:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-eu.laprell.timetable.fragments.dialogs.SubjectChooseDialog$MakeListTask -> eu.laprell.timetable.fragments.a.e:
+eu.laprell.timetable.fragments.dialogs.SubjectChooseDialog$MakeListTask -> eu.laprell.timetable.fragments.b.e:
     eu.laprell.timetable.fragments.dialogs.SubjectChooseDialog this$0 -> a
     203:231:java.lang.Void doInBackground(java.lang.Void[]) -> a
     236:240:void onPostExecute(java.lang.Void) -> a
     197:197:void onPostExecute(java.lang.Object) -> onPostExecute
     197:197:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-eu.laprell.timetable.fragments.dialogs.SubjectChooseDialog$ViewAdapter -> eu.laprell.timetable.fragments.a.f:
+eu.laprell.timetable.fragments.dialogs.SubjectChooseDialog$ViewAdapter -> eu.laprell.timetable.fragments.b.f:
     eu.laprell.timetable.fragments.dialogs.SubjectChooseDialog this$0 -> a
     117:117:int getCount() -> getCount
     122:122:int getViewTypeCount() -> getViewTypeCount
@@ -19725,12 +19886,12 @@ eu.laprell.timetable.fragments.dialogs.SubjectChooseDialog$ViewAdapter -> eu.lap
     156:163:boolean isAlreadyUsed(int) -> a
     168:171:long getItemId(int) -> getItemId
     176:192:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-eu.laprell.timetable.fragments.interfaces.LessonInfoCallback -> eu.laprell.timetable.fragments.b.a:
+eu.laprell.timetable.fragments.interfaces.LessonInfoCallback -> eu.laprell.timetable.fragments.c.a:
     void prepareEnterAnimationAlpha(eu.laprell.timetable.animation.WaveAnimator) -> a
     eu.laprell.timetable.animation.WaveAnimator getGoInEditModeAnimation() -> a
     android.view.View getMainView() -> b
     void exitEditMode() -> c
-eu.laprell.timetable.fragments.interfaces.LessonViewController -> eu.laprell.timetable.fragments.b.b:
+eu.laprell.timetable.fragments.interfaces.LessonViewController -> eu.laprell.timetable.fragments.c.b:
     eu.laprell.timetable.database.Lesson getLesson() -> k
     void makeLessonDirty() -> l
     int getDay() -> m
@@ -19741,15 +19902,15 @@ eu.laprell.timetable.fragments.interfaces.LessonViewController -> eu.laprell.tim
     eu.laprell.timetable.database.Teacher getTeacher() -> q
     void setTeacher(eu.laprell.timetable.database.Teacher) -> a
     void makeTeacherDirty() -> r
-eu.laprell.timetable.fragments.interfaces.SetupResultInterface -> eu.laprell.timetable.fragments.b.c:
+eu.laprell.timetable.fragments.interfaces.SetupResultInterface -> eu.laprell.timetable.fragments.c.c:
     void finishedWithSetup() -> g
     void makeCustomSchool() -> h
-eu.laprell.timetable.fragments.model.AbsModel -> eu.laprell.timetable.fragments.c.a:
+eu.laprell.timetable.fragments.model.AbsModel -> eu.laprell.timetable.fragments.d.a:
     eu.laprell.timetable.fragments.BaseFragment mBase -> a
     android.content.Context mContext -> b
     28:28:android.content.Context getContext() -> a
     64:64:eu.laprell.timetable.background.LessonNotifier getLessonNotifier() -> b
-eu.laprell.timetable.fragments.model.TimeGridModel -> eu.laprell.timetable.fragments.c.b:
+eu.laprell.timetable.fragments.model.TimeGridModel -> eu.laprell.timetable.fragments.d.b:
     java.util.ArrayList mList -> a
     eu.laprell.timetable.fragments.model.TimeGridModel$SavingAsyncTask mTask -> b
     eu.laprell.timetable.fragments.model.TimeGridModel$TimeGridVisualizer mVisual -> c
@@ -19766,20 +19927,20 @@ eu.laprell.timetable.fragments.model.TimeGridModel -> eu.laprell.timetable.fragm
     25:25:eu.laprell.timetable.fragments.model.TimeGridModel$TimeGridVisualizer access$100(eu.laprell.timetable.fragments.model.TimeGridModel) -> b
     25:25:void access$200(eu.laprell.timetable.fragments.model.TimeGridModel,long) -> a
     25:25:eu.laprell.timetable.fragments.model.TimeGridModel$SavingAsyncTask access$302(eu.laprell.timetable.fragments.model.TimeGridModel,eu.laprell.timetable.fragments.model.TimeGridModel$SavingAsyncTask) -> a
-eu.laprell.timetable.fragments.model.TimeGridModel$1 -> eu.laprell.timetable.fragments.c.c:
+eu.laprell.timetable.fragments.model.TimeGridModel$1 -> eu.laprell.timetable.fragments.d.c:
     eu.laprell.timetable.fragments.model.TimeGridModel this$0 -> a
     79:105:eu.laprell.timetable.animation.WaveAnimator doInBackground(java.lang.Void[]) -> a
     111:112:void onPostExecute(eu.laprell.timetable.animation.WaveAnimator) -> a
     76:76:void onPostExecute(java.lang.Object) -> onPostExecute
     76:76:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-eu.laprell.timetable.fragments.model.TimeGridModel$2 -> eu.laprell.timetable.fragments.c.d:
+eu.laprell.timetable.fragments.model.TimeGridModel$2 -> eu.laprell.timetable.fragments.d.d:
     eu.laprell.timetable.database.TimeUnit val$t -> a
     eu.laprell.timetable.fragments.model.TimeGridModel this$0 -> b
     120:156:java.lang.Integer doInBackground(java.lang.Void[]) -> a
     161:164:void onPostExecute(java.lang.Integer) -> a
     117:117:void onPostExecute(java.lang.Object) -> onPostExecute
     117:117:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-eu.laprell.timetable.fragments.model.TimeGridModel$Data -> eu.laprell.timetable.fragments.c.e:
+eu.laprell.timetable.fragments.model.TimeGridModel$Data -> eu.laprell.timetable.fragments.d.e:
     eu.laprell.timetable.database.TimeUnit time -> a
     int num -> b
     android.view.View$OnClickListener lis -> c
@@ -19790,12 +19951,12 @@ eu.laprell.timetable.fragments.model.TimeGridModel$Data -> eu.laprell.timetable.
     android.widget.Button startButton -> h
     android.widget.Button endButton -> i
     eu.laprell.timetable.fragments.model.TimeGridModel this$0 -> j
-eu.laprell.timetable.fragments.model.TimeGridModel$SavingAsyncTask -> eu.laprell.timetable.fragments.c.f:
+eu.laprell.timetable.fragments.model.TimeGridModel$SavingAsyncTask -> eu.laprell.timetable.fragments.d.f:
     eu.laprell.timetable.fragments.model.TimeGridModel this$0 -> a
     218:233:java.lang.Void doInBackground(eu.laprell.timetable.fragments.model.TimeGridModel$Data[]) -> a
     237:244:void doExecute(eu.laprell.timetable.fragments.model.TimeGridModel$Data) -> a
     215:215:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-eu.laprell.timetable.fragments.model.TimeGridModel$TimeGridVisualizer -> eu.laprell.timetable.fragments.c.g:
+eu.laprell.timetable.fragments.model.TimeGridModel$TimeGridVisualizer -> eu.laprell.timetable.fragments.d.g:
     android.view.View prepareViewFromData(eu.laprell.timetable.fragments.model.TimeGridModel$Data) -> a
     void animateNewViewIn(eu.laprell.timetable.fragments.model.TimeGridModel$Data,int) -> a
     eu.laprell.timetable.animation.WaveAnimator buildWaveAnimator() -> P
@@ -19923,87 +20084,83 @@ eu.laprell.timetable.utils.Const -> eu.laprell.timetable.utils.r:
     boolean FW_SUPPORTS_HERO_TRANSITION -> a
     boolean FW_SUPPORTS_DROP_SHADOWS -> b
 eu.laprell.timetable.utils.Dialogs -> eu.laprell.timetable.utils.s:
-    34:51:void showNewRoomDialog(android.content.Context,eu.laprell.timetable.utils.Dialogs$CustomRoomDialogCallback) -> a
-    58:75:void showNewSubjectDialog(android.content.Context,eu.laprell.timetable.utils.Dialogs$CustomSubjectDialogCallback) -> a
-    83:113:void showNewTeacherDialog(android.content.Context,eu.laprell.timetable.utils.Dialogs$CustomTeacherDialogCallback) -> a
-    120:131:void showDayOfWeekList(android.content.Context,eu.laprell.timetable.utils.Dialogs$DayOfWeekCallback) -> a
-    138:163:void showColorList(android.content.Context,eu.laprell.timetable.utils.Dialogs$ColorSelectedCallback) -> a
-    183:184:void showSubjectsList2(android.content.Context,eu.laprell.timetable.utils.Dialogs$SubjectsDialogCallback) -> a
-    190:236:void showTeachersList(android.content.Context,eu.laprell.timetable.utils.Dialogs$TeacherSelectedCallback) -> a
-    239:272:void showTimeList(android.content.Context,eu.laprell.timetable.utils.Dialogs$TimeDialogCallback) -> a
-    290:346:void showRoomList(android.content.Context,eu.laprell.timetable.utils.Dialogs$RoomDialogCallback) -> a
-    349:350:void makeSimpleLessonDialog(android.content.Context,eu.laprell.timetable.utils.Dialogs$LessonCreatedCallback,java.lang.String,eu.laprell.timetable.database.TimeUnit) -> a
+    34:47:void showNewRoomDialog(android.content.Context,eu.laprell.timetable.utils.Dialogs$CustomRoomDialogCallback) -> a
+    54:67:void showNewSubjectDialog(android.content.Context,eu.laprell.timetable.utils.Dialogs$CustomSubjectDialogCallback) -> a
+    75:105:void showNewTeacherDialog(android.content.Context,eu.laprell.timetable.utils.Dialogs$CustomTeacherDialogCallback) -> a
+    112:123:void showDayOfWeekList(android.content.Context,eu.laprell.timetable.utils.Dialogs$DayOfWeekCallback) -> a
+    130:155:void showColorList(android.content.Context,eu.laprell.timetable.utils.Dialogs$ColorSelectedCallback) -> a
+    175:176:void showSubjectsList2(android.content.Context,eu.laprell.timetable.utils.Dialogs$SubjectsDialogCallback) -> a
+    182:228:void showTeachersList(android.content.Context,eu.laprell.timetable.utils.Dialogs$TeacherSelectedCallback) -> a
+    231:264:void showTimeList(android.content.Context,eu.laprell.timetable.utils.Dialogs$TimeDialogCallback) -> a
+    282:336:void showRoomList(android.content.Context,eu.laprell.timetable.utils.Dialogs$RoomDialogCallback) -> a
+    339:340:void makeSimpleLessonDialog(android.content.Context,eu.laprell.timetable.utils.Dialogs$LessonCreatedCallback,java.lang.String,eu.laprell.timetable.database.TimeUnit) -> a
 eu.laprell.timetable.utils.Dialogs$1 -> eu.laprell.timetable.utils.t:
     eu.laprell.timetable.utils.Dialogs$CustomRoomDialogCallback val$cb -> a
     43:45:void onPositive(com.afollestad.materialdialogs.MaterialDialog) -> a
-    49:49:void onNegative(com.afollestad.materialdialogs.MaterialDialog) -> b
 eu.laprell.timetable.utils.Dialogs$2 -> eu.laprell.timetable.utils.u:
     eu.laprell.timetable.utils.Dialogs$CustomSubjectDialogCallback val$cb -> a
-    67:69:void onPositive(com.afollestad.materialdialogs.MaterialDialog) -> a
-    73:73:void onNegative(com.afollestad.materialdialogs.MaterialDialog) -> b
+    63:65:void onPositive(com.afollestad.materialdialogs.MaterialDialog) -> a
 eu.laprell.timetable.utils.Dialogs$3 -> eu.laprell.timetable.utils.v:
     android.content.Context val$c -> a
     eu.laprell.timetable.utils.Dialogs$CustomTeacherDialogCallback val$cb -> b
-    92:106:void onPositive(com.afollestad.materialdialogs.MaterialDialog) -> a
-    110:111:void onNegative(com.afollestad.materialdialogs.MaterialDialog) -> b
+    84:98:void onPositive(com.afollestad.materialdialogs.MaterialDialog) -> a
+    102:103:void onNegative(com.afollestad.materialdialogs.MaterialDialog) -> b
 eu.laprell.timetable.utils.Dialogs$4 -> eu.laprell.timetable.utils.w:
     eu.laprell.timetable.utils.Dialogs$DayOfWeekCallback val$cb -> a
-    126:127:void onSelection(com.afollestad.materialdialogs.MaterialDialog,android.view.View,int,java.lang.CharSequence) -> a
+    118:119:void onSelection(com.afollestad.materialdialogs.MaterialDialog,android.view.View,int,java.lang.CharSequence) -> a
 eu.laprell.timetable.utils.Dialogs$5 -> eu.laprell.timetable.utils.x:
     int[] val$colors -> a
     eu.laprell.timetable.utils.Dialogs$ColorSelectedCallback val$cb -> b
     com.afollestad.materialdialogs.MaterialDialog val$dialog -> c
-    151:158:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+    143:150:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
 eu.laprell.timetable.utils.Dialogs$6 -> eu.laprell.timetable.utils.y:
     android.content.Context val$c -> a
     eu.laprell.timetable.utils.Dialogs$TeacherSelectedCallback val$cb -> b
-    193:196:eu.laprell.timetable.database.Teacher[] doInBackground(java.lang.Void[]) -> a
-    201:234:void onPostExecute(eu.laprell.timetable.database.Teacher[]) -> a
-    190:190:void onPostExecute(java.lang.Object) -> onPostExecute
-    190:190:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    185:188:eu.laprell.timetable.database.Teacher[] doInBackground(java.lang.Void[]) -> a
+    193:226:void onPostExecute(eu.laprell.timetable.database.Teacher[]) -> a
+    182:182:void onPostExecute(java.lang.Object) -> onPostExecute
+    182:182:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 eu.laprell.timetable.utils.Dialogs$6$1 -> eu.laprell.timetable.utils.z:
     eu.laprell.timetable.utils.Dialogs$6 this$0 -> a
-    218:230:void onNeutral(com.afollestad.materialdialogs.MaterialDialog) -> c
+    210:222:void onNeutral(com.afollestad.materialdialogs.MaterialDialog) -> c
 eu.laprell.timetable.utils.Dialogs$6$1$1 -> eu.laprell.timetable.utils.aa:
     eu.laprell.timetable.utils.Dialogs$6$1 this$1 -> a
-    222:228:void newTeacher(java.lang.String,java.lang.String,java.lang.String) -> a
+    214:220:void newTeacher(java.lang.String,java.lang.String,java.lang.String) -> a
 eu.laprell.timetable.utils.Dialogs$6$2 -> eu.laprell.timetable.utils.ab:
     eu.laprell.timetable.database.Teacher[] val$teachersList -> a
     eu.laprell.timetable.utils.Dialogs$6 this$0 -> b
-    211:212:void onSelection(com.afollestad.materialdialogs.MaterialDialog,android.view.View,int,java.lang.CharSequence) -> a
+    203:204:void onSelection(com.afollestad.materialdialogs.MaterialDialog,android.view.View,int,java.lang.CharSequence) -> a
 eu.laprell.timetable.utils.Dialogs$7 -> eu.laprell.timetable.utils.ac:
     android.content.Context val$c -> a
     eu.laprell.timetable.utils.Dialogs$TimeDialogCallback val$cb -> b
-    242:245:eu.laprell.timetable.database.TimeUnit[] doInBackground(java.lang.Void[]) -> a
-    250:270:void onPostExecute(eu.laprell.timetable.database.TimeUnit[]) -> a
-    239:239:void onPostExecute(java.lang.Object) -> onPostExecute
-    239:239:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    234:237:eu.laprell.timetable.database.TimeUnit[] doInBackground(java.lang.Void[]) -> a
+    242:262:void onPostExecute(eu.laprell.timetable.database.TimeUnit[]) -> a
+    231:231:void onPostExecute(java.lang.Object) -> onPostExecute
+    231:231:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 eu.laprell.timetable.utils.Dialogs$7$1 -> eu.laprell.timetable.utils.ad:
     eu.laprell.timetable.database.TimeUnit[] val$timeUnits -> a
     eu.laprell.timetable.utils.Dialogs$7 this$0 -> b
-    262:263:void onSelection(com.afollestad.materialdialogs.MaterialDialog,android.view.View,int,java.lang.CharSequence) -> a
+    254:255:void onSelection(com.afollestad.materialdialogs.MaterialDialog,android.view.View,int,java.lang.CharSequence) -> a
 eu.laprell.timetable.utils.Dialogs$8 -> eu.laprell.timetable.utils.ae:
     android.content.Context val$c -> a
     eu.laprell.timetable.utils.Dialogs$RoomDialogCallback val$cb -> b
-    293:296:eu.laprell.timetable.database.Place[] doInBackground(java.lang.Void[]) -> a
-    301:344:void onPostExecute(eu.laprell.timetable.database.Place[]) -> a
-    290:290:void onPostExecute(java.lang.Object) -> onPostExecute
-    290:290:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    285:288:eu.laprell.timetable.database.Place[] doInBackground(java.lang.Void[]) -> a
+    293:334:void onPostExecute(eu.laprell.timetable.database.Place[]) -> a
+    282:282:void onPostExecute(java.lang.Object) -> onPostExecute
+    282:282:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 eu.laprell.timetable.utils.Dialogs$8$1 -> eu.laprell.timetable.utils.af:
     eu.laprell.timetable.utils.Dialogs$8 this$0 -> a
-    309:310:void newRoom(java.lang.String) -> a
+    301:302:void newRoom(java.lang.String) -> a
 eu.laprell.timetable.utils.Dialogs$8$2 -> eu.laprell.timetable.utils.ag:
     eu.laprell.timetable.utils.Dialogs$8 this$0 -> a
-    325:325:void onPositive(com.afollestad.materialdialogs.MaterialDialog) -> a
-    326:326:void onNegative(com.afollestad.materialdialogs.MaterialDialog) -> b
-    329:335:void onNeutral(com.afollestad.materialdialogs.MaterialDialog) -> c
+    319:325:void onNeutral(com.afollestad.materialdialogs.MaterialDialog) -> c
 eu.laprell.timetable.utils.Dialogs$8$2$1 -> eu.laprell.timetable.utils.ah:
     eu.laprell.timetable.utils.Dialogs$8$2 this$1 -> a
-    332:333:void newRoom(java.lang.String) -> a
+    322:323:void newRoom(java.lang.String) -> a
 eu.laprell.timetable.utils.Dialogs$8$3 -> eu.laprell.timetable.utils.ai:
     eu.laprell.timetable.database.Place[] val$placeEntries -> a
     eu.laprell.timetable.utils.Dialogs$8 this$0 -> b
-    321:322:void onSelection(com.afollestad.materialdialogs.MaterialDialog,android.view.View,int,java.lang.CharSequence) -> a
+    313:314:void onSelection(com.afollestad.materialdialogs.MaterialDialog,android.view.View,int,java.lang.CharSequence) -> a
 eu.laprell.timetable.utils.Dialogs$ColorSelectedCallback -> eu.laprell.timetable.utils.aj:
     void selectedColor(int) -> a
 eu.laprell.timetable.utils.Dialogs$CustomRoomDialogCallback -> eu.laprell.timetable.utils.ak:
@@ -20031,54 +20188,58 @@ eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog -> eu.laprell.timetable.ut
     eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog$ColorCheckTask mTask -> h
     int mSelectedColor -> i
     java.lang.String mSelectedLesson -> j
-    434:435:void show() -> a
-    439:462:void onClick(android.view.View) -> onClick
-    465:468:void displayColor(int) -> a
-    472:477:void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
-    352:352:android.widget.CheckBox access$000(eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog) -> a
-    352:352:eu.laprell.timetable.utils.Dialogs$LessonCreatedCallback access$100(eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog) -> b
-    352:352:com.afollestad.materialdialogs.MaterialDialog access$200(eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog) -> c
-    352:352:java.lang.String access$300(eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog) -> d
-    352:352:android.content.Context access$400(eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog) -> e
-    352:352:int access$500(eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog) -> f
-    352:352:android.widget.TextView access$600(eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog) -> g
-    352:352:java.lang.String access$302(eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog,java.lang.String) -> a
-    352:352:eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog$ColorCheckTask access$700(eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog) -> h
-    352:352:eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog$ColorCheckTask access$702(eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog,eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog$ColorCheckTask) -> a
-    352:352:void access$900(eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog,int) -> a
+    424:425:void show() -> a
+    429:452:void onClick(android.view.View) -> onClick
+    455:458:void displayColor(int) -> a
+    462:467:void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
+    342:342:android.widget.CheckBox access$000(eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog) -> a
+    342:342:eu.laprell.timetable.utils.Dialogs$LessonCreatedCallback access$100(eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog) -> b
+    342:342:com.afollestad.materialdialogs.MaterialDialog access$200(eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog) -> c
+    342:342:java.lang.String access$300(eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog) -> d
+    342:342:android.content.Context access$400(eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog) -> e
+    342:342:int access$500(eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog) -> f
+    342:342:android.widget.TextView access$600(eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog) -> g
+    342:342:java.lang.String access$302(eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog,java.lang.String) -> a
+    342:342:eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog$ColorCheckTask access$700(eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog) -> h
+    342:342:eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog$ColorCheckTask access$702(eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog,eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog$ColorCheckTask) -> a
+    342:342:void access$900(eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog,int) -> a
 eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog$1 -> eu.laprell.timetable.utils.ar:
     eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog this$0 -> a
-    380:402:void onPositive(com.afollestad.materialdialogs.MaterialDialog) -> a
-    406:407:void onNegative(com.afollestad.materialdialogs.MaterialDialog) -> b
+    370:392:void onPositive(com.afollestad.materialdialogs.MaterialDialog) -> a
+    396:397:void onNegative(com.afollestad.materialdialogs.MaterialDialog) -> b
 eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog$2 -> eu.laprell.timetable.utils.as:
     eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog this$0 -> a
-    443:452:void selectedSubject(java.lang.String) -> a
+    433:442:void selectedSubject(java.lang.String) -> a
 eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog$3 -> eu.laprell.timetable.utils.at:
     eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog this$0 -> a
-    458:459:void selectedColor(int) -> a
+    448:449:void selectedColor(int) -> a
 eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog$ColorCheckTask -> eu.laprell.timetable.utils.au:
     eu.laprell.timetable.utils.Dialogs$SimpleLessonDialog this$0 -> a
-    482:487:java.lang.Integer doInBackground(java.lang.String[]) -> a
-    492:498:void onPostExecute(java.lang.Integer) -> a
-    479:479:void onPostExecute(java.lang.Object) -> onPostExecute
-    479:479:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    472:477:java.lang.Integer doInBackground(java.lang.String[]) -> a
+    482:488:void onPostExecute(java.lang.Integer) -> a
+    469:469:void onPostExecute(java.lang.Object) -> onPostExecute
+    469:469:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 eu.laprell.timetable.utils.Dialogs$SubjectsDialogCallback -> eu.laprell.timetable.utils.av:
     void selectedSubject(java.lang.String) -> a
 eu.laprell.timetable.utils.Dialogs$TeacherSelectedCallback -> eu.laprell.timetable.utils.aw:
     void selectedTeacher(eu.laprell.timetable.database.Teacher) -> a
 eu.laprell.timetable.utils.Dialogs$TimeDialogCallback -> eu.laprell.timetable.utils.ax:
     void selectedTime(eu.laprell.timetable.database.TimeUnit,java.lang.String) -> a
-eu.laprell.timetable.utils.IntentUtils -> eu.laprell.timetable.utils.ay:
+eu.laprell.timetable.utils.FileUtils -> eu.laprell.timetable.utils.ay:
+    16:27:java.lang.String readFromfile(java.io.File) -> a
+    31:69:java.lang.String readFromfile(java.io.File,int) -> a
+eu.laprell.timetable.utils.IntentUtils -> eu.laprell.timetable.utils.az:
     14:20:void shareText(android.content.Context,java.lang.String,java.lang.String,java.lang.String) -> a
-eu.laprell.timetable.utils.MetricsUtils -> eu.laprell.timetable.utils.az:
+eu.laprell.timetable.utils.MetricsUtils -> eu.laprell.timetable.utils.ba:
     java.util.concurrent.atomic.AtomicInteger sNextGeneratedId -> a
     android.content.res.Resources sRes -> b
     26:29:float convertDpToPixel(float) -> a
-    46:46:float convertSpToPixel(float) -> b
+    39:42:float convertPixelsToDp(float) -> b
+    46:46:float convertSpToPixel(float) -> c
     57:64:int generateViewId() -> a
-eu.laprell.timetable.utils.PrefUtils -> eu.laprell.timetable.utils.ba:
+eu.laprell.timetable.utils.PrefUtils -> eu.laprell.timetable.utils.bb:
     18:18:android.content.SharedPreferences getSchoolPref(android.content.Context) -> a
-eu.laprell.timetable.utils.RemoteViewUtils -> eu.laprell.timetable.utils.bb:
+eu.laprell.timetable.utils.RemoteViewUtils -> eu.laprell.timetable.utils.bc:
     52:89:boolean setDrawableParameters(android.widget.RemoteViews,int,boolean,int,int,android.graphics.PorterDuff$Mode,int) -> a
 eu.laprell.timetable.utils.misc.FlWrapper -> eu.laprell.timetable.utils.a.a:
     float mValue -> a
@@ -20120,63 +20281,68 @@ eu.laprell.timetable.widgets.GeometryFrameLayout -> eu.laprell.timetable.widgets
     38:43:void init() -> a
     47:48:void onDraw(android.graphics.Canvas) -> onDraw
 eu.laprell.timetable.widgets.LessonCardView -> eu.laprell.timetable.widgets.LessonCardView:
-    int mLessonInfoColor -> a
-    int mLessonNrColor -> b
-    int mLessonTitleColor -> c
-    java.lang.String mLessonNr -> d
-    java.lang.String mStartTime -> e
-    java.lang.String mEndTime -> f
-    java.lang.String mTitle -> g
-    java.lang.String mAdditionalInfo -> h
-    android.graphics.drawable.Drawable mImage -> i
-    android.graphics.Paint mInfoPaint -> j
-    android.graphics.Paint mTitlePaint -> k
-    android.graphics.Paint mNrPaint -> l
-    android.graphics.Rect mImageRect -> m
-    float mNrBoxWidth -> n
-    float mTextPosNr -> o
-    float mTextPosSTime -> p
-    float mTextPosETime -> q
-    float mTextStartNr -> r
-    float mTextStartSTime -> s
-    float mTextStartETime -> t
-    float mColumnLeftStart -> u
-    float mColumnRightStart -> v
-    float mColumnRightEnd -> w
-    float mTextSizeNr -> x
-    float mTextSizeAdd -> y
-    float mTextSizeTi -> z
-    float mTextPosTitle -> A
-    float mTextPosInfo -> B
-    float mTextStartInfo -> C
-    100:122:void init() -> a
-    126:129:void onSizeChanged(int,int,int,int) -> onSizeChanged
-    132:155:void calculateSizes(int,int) -> a
-    159:162:void calculateTextSizes() -> b
-    165:167:void measureEndTimeBox() -> c
-    170:172:void measureStartTimeBox() -> d
-    176:195:void onDraw(android.graphics.Canvas) -> onDraw
-    199:202:void invalidateDrawable(android.graphics.drawable.Drawable) -> invalidateDrawable
-    205:205:void scheduleDrawable(android.graphics.drawable.Drawable,java.lang.Runnable,long) -> scheduleDrawable
-    208:208:void unscheduleDrawable(android.graphics.drawable.Drawable,java.lang.Runnable) -> unscheduleDrawable
-    211:211:android.graphics.Rect getImageRect() -> getImageRect
-    215:215:int getLessonInfoColor() -> getLessonInfoColor
-    219:220:void setLessonInfoColor(int) -> setLessonInfoColor
-    223:223:int getLessonNrColor() -> getLessonNrColor
-    227:228:void setLessonNrColor(int) -> setLessonNrColor
-    231:231:int getLessonNr() -> getLessonNr
-    235:239:void setLessonNr(int) -> setLessonNr
-    242:242:java.lang.String getTitle() -> getTitle
-    246:248:void setTitle(java.lang.String) -> setTitle
-    251:251:android.graphics.drawable.Drawable getImage() -> getImage
-    255:262:void setImage(android.graphics.drawable.Drawable) -> setImage
-    265:265:java.lang.String getAdditionalInfo() -> getAdditionalInfo
-    269:271:void setAdditionalInfo(java.lang.String) -> setAdditionalInfo
-    274:274:java.lang.String getStartTime() -> getStartTime
-    278:280:void setStartTime(java.lang.String) -> setStartTime
-    283:283:java.lang.String getEndTime() -> getEndTime
-    287:289:void setEndTime(java.lang.String) -> setEndTime
-    292:305:android.graphics.Rect getImageLocationOnScreen() -> getImageLocationOnScreen
+    float DIMEN_8DP -> a
+    int mLessonInfoColor -> b
+    int mLessonNrColor -> c
+    int mLessonTitleColor -> d
+    java.lang.String mLessonNr -> e
+    java.lang.String mStartTime -> f
+    java.lang.String mEndTime -> g
+    java.lang.String mTitle -> h
+    java.lang.String mAdditionalInfo -> i
+    android.graphics.drawable.Drawable mImage -> j
+    android.graphics.Paint mInfoPaint -> k
+    android.graphics.Paint mTitlePaint -> l
+    android.graphics.Paint mNrPaint -> m
+    android.graphics.Rect mImageRect -> n
+    float mNrBoxWidth -> o
+    float mTextYPosNr -> p
+    float mTextYPosSTime -> q
+    float mTextYPosETime -> r
+    float mTextXPosNr -> s
+    float mTextXPosSTime -> t
+    float mTextXPosETime -> u
+    float mColumnLeftStart -> v
+    float mColumnRightStart -> w
+    float mColumnRightEnd -> x
+    float mTextHeightNr -> y
+    float mTextHeightAdd -> z
+    float mTextHeightTi -> A
+    float mTextPosTitle -> B
+    float mTextPosInfo -> C
+    float mTextStartInfo -> D
+    float mWidestLeftColumnWidth -> E
+    107:129:void init() -> a
+    133:136:void onSizeChanged(int,int,int,int) -> onSizeChanged
+    139:168:void calculateSizes(int,int) -> a
+    172:172:int getPaddingStart() -> getPaddingStart
+    177:177:int getPaddingEnd() -> getPaddingEnd
+    182:185:void calculateTextSizes() -> b
+    188:190:void measureEndTimeBox() -> c
+    193:195:void measureStartTimeBox() -> d
+    198:200:void measureNrBox() -> e
+    204:223:void onDraw(android.graphics.Canvas) -> onDraw
+    227:230:void invalidateDrawable(android.graphics.drawable.Drawable) -> invalidateDrawable
+    233:233:void scheduleDrawable(android.graphics.drawable.Drawable,java.lang.Runnable,long) -> scheduleDrawable
+    236:236:void unscheduleDrawable(android.graphics.drawable.Drawable,java.lang.Runnable) -> unscheduleDrawable
+    239:239:android.graphics.Rect getImageRect() -> getImageRect
+    243:243:int getLessonInfoColor() -> getLessonInfoColor
+    247:248:void setLessonInfoColor(int) -> setLessonInfoColor
+    251:251:int getLessonNrColor() -> getLessonNrColor
+    255:256:void setLessonNrColor(int) -> setLessonNrColor
+    259:259:int getLessonNr() -> getLessonNr
+    263:267:void setLessonNr(int) -> setLessonNr
+    270:270:java.lang.String getTitle() -> getTitle
+    274:276:void setTitle(java.lang.String) -> setTitle
+    279:279:android.graphics.drawable.Drawable getImage() -> getImage
+    283:290:void setImage(android.graphics.drawable.Drawable) -> setImage
+    293:293:java.lang.String getAdditionalInfo() -> getAdditionalInfo
+    297:299:void setAdditionalInfo(java.lang.String) -> setAdditionalInfo
+    302:302:java.lang.String getStartTime() -> getStartTime
+    306:308:void setStartTime(java.lang.String) -> setStartTime
+    311:311:java.lang.String getEndTime() -> getEndTime
+    315:317:void setEndTime(java.lang.String) -> setEndTime
+    320:330:android.graphics.Rect getImageLocationOnScreen() -> getImageLocationOnScreen
 eu.laprell.timetable.widgets.NavigationFrameLayout -> eu.laprell.timetable.widgets.NavigationFrameLayout:
     boolean mEnableTouchEventsForChildren -> a
     boolean mEnableTouchInGeneral -> b
@@ -20735,3 +20901,194 @@ fr.castorflex.android.smoothprogressbar.SmoothProgressDrawable$Builder -> fr.cas
 fr.castorflex.android.smoothprogressbar.SmoothProgressDrawable$Callbacks -> fr.castorflex.android.smoothprogressbar.p:
     void onStop() -> a
     void onStart() -> b
+fr.castorflex.android.verticalviewpager.VerticalViewPager -> fr.castorflex.android.verticalviewpager.VerticalViewPager:
+    int[] LAYOUT_ATTRS -> a
+    int mExpectedAdapterCount -> b
+    java.util.Comparator COMPARATOR -> c
+    android.view.animation.Interpolator sInterpolator -> d
+    java.util.ArrayList mItems -> e
+    fr.castorflex.android.verticalviewpager.VerticalViewPager$ItemInfo mTempItem -> f
+    android.graphics.Rect mTempRect -> g
+    android.support.v4.view.PagerAdapter mAdapter -> h
+    int mCurItem -> i
+    int mRestoredCurItem -> j
+    android.os.Parcelable mRestoredAdapterState -> k
+    java.lang.ClassLoader mRestoredClassLoader -> l
+    android.widget.Scroller mScroller -> m
+    fr.castorflex.android.verticalviewpager.VerticalViewPager$PagerObserver mObserver -> n
+    int mPageMargin -> o
+    android.graphics.drawable.Drawable mMarginDrawable -> p
+    int mLeftPageBounds -> q
+    int mRightPageBounds -> r
+    float mFirstOffset -> s
+    float mLastOffset -> t
+    int mChildWidthMeasureSpec -> u
+    int mChildHeightMeasureSpec -> v
+    boolean mInLayout -> w
+    boolean mScrollingCacheEnabled -> x
+    boolean mPopulatePending -> y
+    int mOffscreenPageLimit -> z
+    boolean mIsBeingDragged -> A
+    boolean mIsUnableToDrag -> B
+    int mDefaultGutterSize -> C
+    int mGutterSize -> D
+    int mTouchSlop -> E
+    float mLastMotionX -> F
+    float mLastMotionY -> G
+    float mInitialMotionX -> H
+    float mInitialMotionY -> I
+    int mActivePointerId -> J
+    android.view.VelocityTracker mVelocityTracker -> K
+    int mMinimumVelocity -> L
+    int mMaximumVelocity -> M
+    int mFlingDistance -> N
+    int mCloseEnough -> O
+    boolean mFakeDragging -> P
+    android.support.v4.widget.EdgeEffectCompat mTopEdge -> Q
+    android.support.v4.widget.EdgeEffectCompat mBottomEdge -> R
+    boolean mFirstLayout -> S
+    boolean mNeedCalculatePageOffsets -> T
+    boolean mCalledSuper -> U
+    int mDecorChildCount -> V
+    android.support.v4.view.ViewPager$OnPageChangeListener mOnPageChangeListener -> W
+    android.support.v4.view.ViewPager$OnPageChangeListener mInternalPageChangeListener -> aa
+    fr.castorflex.android.verticalviewpager.VerticalViewPager$OnAdapterChangeListener mAdapterChangeListener -> ab
+    android.support.v4.view.ViewPager$PageTransformer mPageTransformer -> ac
+    java.lang.reflect.Method mSetChildrenDrawingOrderEnabled -> ad
+    int mDrawingOrder -> ae
+    java.util.ArrayList mDrawingOrderedChildren -> af
+    fr.castorflex.android.verticalviewpager.VerticalViewPager$ViewPositionComparator sPositionComparator -> ag
+    java.lang.Runnable mEndScrollRunnable -> ah
+    int mScrollState -> ai
+    246:271:void initViewPager() -> a
+    275:277:void onDetachedFromWindow() -> onDetachedFromWindow
+    280:292:void setScrollState(int) -> setScrollState
+    300:343:void setAdapter(android.support.v4.view.PagerAdapter) -> setAdapter
+    346:354:void removeNonDecorViews() -> g
+    362:362:android.support.v4.view.PagerAdapter getAdapter() -> getAdapter
+    366:367:void setOnAdapterChangeListener(fr.castorflex.android.verticalviewpager.VerticalViewPager$OnAdapterChangeListener) -> setOnAdapterChangeListener
+    374:374:int getClientHeight() -> getClientHeight
+    386:388:void setCurrentItem(int) -> setCurrentItem
+    397:399:void setCurrentItem(int,boolean) -> setCurrentItem
+    402:402:int getCurrentItem() -> getCurrentItem
+    406:407:void setCurrentItemInternal(int,boolean,boolean) -> a
+    410:450:void setCurrentItemInternal(int,boolean,boolean,int) -> a
+    454:480:void scrollToItem(int,boolean,int,boolean) -> a
+    489:490:void setOnPageChangeListener(android.support.v4.view.ViewPager$OnPageChangeListener) -> setOnPageChangeListener
+    505:517:void setPageTransformer(boolean,android.support.v4.view.ViewPager$PageTransformer) -> setPageTransformer
+    520:535:void setChildrenDrawingOrderEnabledCompat(boolean) -> setChildrenDrawingOrderEnabledCompat
+    539:541:int getChildDrawingOrder(int,int) -> getChildDrawingOrder
+    564:564:int getOffscreenPageLimit() -> getOffscreenPageLimit
+    585:594:void setOffscreenPageLimit(int) -> setOffscreenPageLimit
+    605:612:void setPageMargin(int) -> setPageMargin
+    620:620:int getPageMargin() -> getPageMargin
+    629:633:void setPageMarginDrawable(android.graphics.drawable.Drawable) -> setPageMarginDrawable
+    641:642:void setPageMarginDrawable(int) -> setPageMarginDrawable
+    646:646:boolean verifyDrawable(android.graphics.drawable.Drawable) -> verifyDrawable
+    651:656:void drawableStateChanged() -> drawableStateChanged
+    663:665:float distanceInfluenceForSnapDuration(float) -> a
+    686:724:void smoothScrollTo(int,int,int) -> a
+    727:736:fr.castorflex.android.verticalviewpager.VerticalViewPager$ItemInfo addNewItem(int,int) -> a
+    742:808:void dataSetChanged() -> b
+    811:812:void populate() -> c
+    815:1000:void populate(int) -> a
+    1003:1016:void sortChildDrawingOrder() -> h
+    1019:1102:void calculatePageOffsets(fr.castorflex.android.verticalviewpager.VerticalViewPager$ItemInfo,int,fr.castorflex.android.verticalviewpager.VerticalViewPager$ItemInfo) -> a
+    1159:1165:android.os.Parcelable onSaveInstanceState() -> onSaveInstanceState
+    1170:1186:void onRestoreInstanceState(android.os.Parcelable) -> onRestoreInstanceState
+    1190:1212:void addView(android.view.View,int,android.view.ViewGroup$LayoutParams) -> addView
+    1216:1221:void removeView(android.view.View) -> removeView
+    1224:1230:fr.castorflex.android.verticalviewpager.VerticalViewPager$ItemInfo infoForChild(android.view.View) -> a
+    1235:1241:fr.castorflex.android.verticalviewpager.VerticalViewPager$ItemInfo infoForAnyChild(android.view.View) -> b
+    1245:1251:fr.castorflex.android.verticalviewpager.VerticalViewPager$ItemInfo infoForPosition(int) -> b
+    1256:1258:void onAttachedToWindow() -> onAttachedToWindow
+    1267:1353:void onMeasure(int,int) -> onMeasure
+    1357:1363:void onSizeChanged(int,int,int,int) -> onSizeChanged
+    1366:1392:void recomputeScrollPosition(int,int,int,int) -> a
+    1396:1501:void onLayout(boolean,int,int,int,int) -> onLayout
+    1505:1526:void computeScroll() -> computeScroll
+    1529:1553:boolean pageScrolled(int) -> e
+    1570:1631:void onPageScrolled(int,float,int) -> a
+    1634:1662:void completeScroll(boolean) -> a
+    1665:1665:boolean isGutterDrag(float,float) -> a
+    1669:1675:void enableLayers(boolean) -> b
+    1685:1818:boolean onInterceptTouchEvent(android.view.MotionEvent) -> onInterceptTouchEvent
+    1823:1945:boolean onTouchEvent(android.view.MotionEvent) -> onTouchEvent
+    1949:1953:void requestParentDisallowInterceptTouchEvent(boolean) -> c
+    1956:1999:boolean performDrag(float) -> b
+    2007:2045:fr.castorflex.android.verticalviewpager.VerticalViewPager$ItemInfo infoForCurrentScrollPosition() -> i
+    2050:2065:int determineTargetPage(int,float,int,int) -> a
+    2070:2107:void draw(android.graphics.Canvas) -> draw
+    2111:2151:void onDraw(android.graphics.Canvas) -> onDraw
+    2280:2292:void onSecondaryPointerUp(android.view.MotionEvent) -> a
+    2295:2302:void endDrag() -> j
+    2305:2317:void setScrollingCacheEnabled(boolean) -> setScrollingCacheEnabled
+    2320:2331:boolean internalCanScrollVertically(int) -> c
+    2347:2366:boolean canScroll(android.view.View,boolean,int,int,int) -> a
+    2372:2372:boolean dispatchKeyEvent(android.view.KeyEvent) -> dispatchKeyEvent
+    2384:2406:boolean executeKeyEvent(android.view.KeyEvent) -> a
+    2410:2472:boolean arrowScroll(int) -> d
+    2476:2498:android.graphics.Rect getChildRectInPagerCoordinates(android.graphics.Rect,android.view.View) -> a
+    2502:2506:boolean pageUp() -> d
+    2510:2514:boolean pageDown() -> e
+    2522:2559:void addFocusables(java.util.ArrayList,int,int) -> addFocusables
+    2569:2578:void addTouchables(java.util.ArrayList) -> addTouchables
+    2589:2610:boolean onRequestFocusInDescendants(int,android.graphics.Rect) -> onRequestFocusInDescendants
+    2616:2633:boolean dispatchPopulateAccessibilityEvent(android.view.accessibility.AccessibilityEvent) -> dispatchPopulateAccessibilityEvent
+    2638:2638:android.view.ViewGroup$LayoutParams generateDefaultLayoutParams() -> generateDefaultLayoutParams
+    2643:2643:android.view.ViewGroup$LayoutParams generateLayoutParams(android.view.ViewGroup$LayoutParams) -> generateLayoutParams
+    2648:2648:boolean checkLayoutParams(android.view.ViewGroup$LayoutParams) -> checkLayoutParams
+    2653:2653:android.view.ViewGroup$LayoutParams generateLayoutParams(android.util.AttributeSet) -> generateLayoutParams
+    54:54:void access$000(fr.castorflex.android.verticalviewpager.VerticalViewPager,int) -> a
+    54:54:android.support.v4.view.PagerAdapter access$200(fr.castorflex.android.verticalviewpager.VerticalViewPager) -> a
+    54:54:int access$300(fr.castorflex.android.verticalviewpager.VerticalViewPager) -> b
+    54:54:int[] access$400() -> f
+fr.castorflex.android.verticalviewpager.VerticalViewPager$1 -> fr.castorflex.android.verticalviewpager.a:
+    90:90:int compare(fr.castorflex.android.verticalviewpager.VerticalViewPager$ItemInfo,fr.castorflex.android.verticalviewpager.VerticalViewPager$ItemInfo) -> a
+    87:87:int compare(java.lang.Object,java.lang.Object) -> compare
+fr.castorflex.android.verticalviewpager.VerticalViewPager$2 -> fr.castorflex.android.verticalviewpager.b:
+    96:97:float getInterpolation(float) -> getInterpolation
+fr.castorflex.android.verticalviewpager.VerticalViewPager$3 -> fr.castorflex.android.verticalviewpager.c:
+    fr.castorflex.android.verticalviewpager.VerticalViewPager this$0 -> a
+    214:216:void run() -> run
+fr.castorflex.android.verticalviewpager.VerticalViewPager$Decor -> fr.castorflex.android.verticalviewpager.d:
+fr.castorflex.android.verticalviewpager.VerticalViewPager$ItemInfo -> fr.castorflex.android.verticalviewpager.e:
+    java.lang.Object object -> a
+    int position -> b
+    boolean scrolling -> c
+    float heightFactor -> d
+    float offset -> e
+fr.castorflex.android.verticalviewpager.VerticalViewPager$LayoutParams -> fr.castorflex.android.verticalviewpager.VerticalViewPager$LayoutParams:
+    boolean isDecor -> a
+    int gravity -> b
+    float heightFactor -> c
+    boolean needsMeasure -> d
+    int position -> e
+    int childIndex -> f
+fr.castorflex.android.verticalviewpager.VerticalViewPager$MyAccessibilityDelegate -> fr.castorflex.android.verticalviewpager.f:
+    fr.castorflex.android.verticalviewpager.VerticalViewPager this$0 -> b
+    2660:2670:void onInitializeAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent) -> d
+    2674:2683:void onInitializeAccessibilityNodeInfo(android.view.View,android.support.v4.view.accessibility.AccessibilityNodeInfoCompat) -> a
+    2687:2706:boolean performAccessibilityAction(android.view.View,int,android.os.Bundle) -> a
+    2710:2710:boolean canScroll() -> b
+fr.castorflex.android.verticalviewpager.VerticalViewPager$OnAdapterChangeListener -> fr.castorflex.android.verticalviewpager.g:
+    void onAdapterChanged(android.support.v4.view.PagerAdapter,android.support.v4.view.PagerAdapter) -> a
+fr.castorflex.android.verticalviewpager.VerticalViewPager$PagerObserver -> fr.castorflex.android.verticalviewpager.h:
+    fr.castorflex.android.verticalviewpager.VerticalViewPager this$0 -> a
+    2717:2718:void onChanged() -> onChanged
+    2722:2723:void onInvalidated() -> onInvalidated
+fr.castorflex.android.verticalviewpager.VerticalViewPager$SavedState -> fr.castorflex.android.verticalviewpager.VerticalViewPager$SavedState:
+    int position -> a
+    android.os.Parcelable adapterState -> b
+    java.lang.ClassLoader loader -> c
+    android.os.Parcelable$Creator CREATOR -> CREATOR
+    1121:1124:void writeToParcel(android.os.Parcel,int) -> writeToParcel
+    1128:1128:java.lang.String toString() -> toString
+fr.castorflex.android.verticalviewpager.VerticalViewPager$SavedState$1 -> fr.castorflex.android.verticalviewpager.i:
+    1137:1137:fr.castorflex.android.verticalviewpager.VerticalViewPager$SavedState createFromParcel(android.os.Parcel,java.lang.ClassLoader) -> b
+    1142:1142:fr.castorflex.android.verticalviewpager.VerticalViewPager$SavedState[] newArray(int) -> b
+    1134:1134:java.lang.Object[] newArray(int) -> a
+    1134:1134:java.lang.Object createFromParcel(android.os.Parcel,java.lang.ClassLoader) -> a
+fr.castorflex.android.verticalviewpager.VerticalViewPager$ViewPositionComparator -> fr.castorflex.android.verticalviewpager.j:
+    2781:2786:int compare(android.view.View,android.view.View) -> a
+    2778:2778:int compare(java.lang.Object,java.lang.Object) -> compare

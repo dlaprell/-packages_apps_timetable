@@ -63,9 +63,12 @@
 }
 
 -keepclassmembers class eu.laprell.timetable.animation.RippleDrawable {
-    public void setAnimationStep(float f);
+    public void setAnimationStep(float);
 }
 
+-keepclassmembers class eu.laprell.animation.ActivityTransitions.SimpleWhiteBackgroundInterface {
+    public void setBackgroundColorAlpha(int);
+}
 
 -keepclassmembers class * implements android.os.Parcelable {
     static ** CREATOR;
