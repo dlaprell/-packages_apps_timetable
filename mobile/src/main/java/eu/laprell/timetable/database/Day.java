@@ -7,6 +7,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import java.util.Arrays;
+
 import eu.laprell.timetable.R;
 import eu.laprell.timetable.utils.ArrayUtils;
 
@@ -192,6 +194,17 @@ public class Day extends DatabaseEntry<Day> implements Parcelable {
                 return mPlaces[i];
         }
         return -1;
+    }
+
+    @Override
+    public String toString() {
+        return "Day{" +
+                "mPlaces=" + Arrays.toString(mPlaces) +
+                ", mTimeUnits=" + Arrays.toString(mTimeUnits) +
+                ", mLessons=" + Arrays.toString(mLessons) +
+                ", mDayOfWeek=" + mDayOfWeek +
+                ", getId()='" + getId() + '\'' +
+                '}';
     }
 
     protected Day(Parcel in) {

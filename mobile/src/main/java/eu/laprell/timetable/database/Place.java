@@ -64,6 +64,14 @@ public class Place extends DatabaseEntry<Place> implements Parcelable {
         this.mTitle = mTitle;
     }
 
+    @Override
+    public String toString() {
+        return "Place{" +
+                "mTitle='" + mTitle + '\'' +
+                ", getId()='" + getId() + '\'' +
+                '}';
+    }
+
     protected Place(Parcel in) {
         super(in.readLong());
         fromParcel(in);

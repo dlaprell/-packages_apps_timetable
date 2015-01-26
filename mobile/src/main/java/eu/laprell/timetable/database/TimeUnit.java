@@ -138,6 +138,17 @@ public class TimeUnit extends DatabaseEntry<TimeUnit> implements Parcelable {
         return t.getStartTime() == mStartTime;
     }
 
+    @Override
+    public String toString() {
+        return "TimeUnit{" +
+                "mStartTime=" + mStartTime +
+                ", mEndTime=" + mEndTime +
+                ", mBreak=" + mBreak +
+                ", getId()='" + getId() + '\'' +
+                ", toNormalTime" + makeTimeString("{s:e}") +
+                '}';
+    }
+
     protected TimeUnit(Parcel in) {
         this(in.readLong());
         fromParcel(in);

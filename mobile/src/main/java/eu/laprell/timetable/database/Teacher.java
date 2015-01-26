@@ -141,6 +141,16 @@ public class Teacher extends DatabaseEntry<Teacher> implements Parcelable {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "mFirstName='" + mFirstName + '\'' +
+                ", mSecondName='" + mSecondName + '\'' +
+                ", mPrefix='" + mPrefix + '\'' +
+                ", getId()='" + getId() + '\'' +
+                '}';
+    }
+
     protected Teacher(Parcel in) {
         super(in.readLong());
         fromParcel(in);

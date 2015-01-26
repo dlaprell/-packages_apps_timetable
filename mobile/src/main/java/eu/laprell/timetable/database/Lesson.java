@@ -140,6 +140,19 @@ public class Lesson extends DatabaseEntry<Lesson> implements Parcelable {
         return (mColor & 0x00FFFFFF) != 0;
     }
 
+    @Override
+    public String toString() {
+        return "Lesson{" +
+                "mTeacherId=" + mTeacherId +
+                ", mIdNumber='" + mIdNumber + '\'' +
+                ", mTitle='" + mTitle + '\'' +
+                ", mTime=" + mTime +
+                ", mColor=" + mColor +
+                ", mImageId=" + mImageId +
+                ", getId()='" + getId() + '\'' +
+                '}';
+    }
+
     protected Lesson(Parcel in) {
         super(in.readLong());
         fromParcel(in);
