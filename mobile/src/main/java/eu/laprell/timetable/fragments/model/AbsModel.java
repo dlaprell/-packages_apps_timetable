@@ -7,7 +7,7 @@ import android.content.res.Resources;
 
 import java.io.File;
 
-import eu.laprell.timetable.background.LessonNotifier;
+import eu.laprell.timetable.background.notifications.LessonNotifier2;
 import eu.laprell.timetable.fragments.BaseFragment;
 
 /**
@@ -60,7 +60,7 @@ public abstract class AbsModel {
         return mContext.getApplicationInfo();
     }
 
-    public LessonNotifier getLessonNotifier() {
+    public LessonNotifier2 getLessonNotifier() {
         return mBase.getLessonNotifier();
     }
 }

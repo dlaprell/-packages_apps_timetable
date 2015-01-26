@@ -10,6 +10,7 @@ import android.widget.RemoteViewsService;
 import java.util.ArrayList;
 
 import eu.laprell.timetable.R;
+import eu.laprell.timetable.background.notifications.NotifUtils;
 import eu.laprell.timetable.database.Day;
 import eu.laprell.timetable.database.DbAccess;
 import eu.laprell.timetable.database.Lesson;
@@ -54,7 +55,7 @@ public class ListProviderWidget implements RemoteViewsService.RemoteViewsFactory
     }
 
     private void populateListItem() {
-        mDay = mAccess.get().getDayForDayOfWeek(LessonNotifier.getDayOfWeek());
+        mDay = mAccess.get().getDayForDayOfWeek(NotifUtils.getDayOfWeek());
 
         final TimetableDatabase db = mAccess.get();
 

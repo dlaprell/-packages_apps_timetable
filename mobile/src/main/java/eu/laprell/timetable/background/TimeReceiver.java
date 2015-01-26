@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import eu.laprell.timetable.BackgroundService;
 import eu.laprell.timetable.MainApplication;
+import eu.laprell.timetable.background.notifications.LessonNotifier2;
 import eu.laprell.timetable.utils.Const;
 
 public class TimeReceiver extends BroadcastReceiver {
@@ -22,8 +23,8 @@ public class TimeReceiver extends BroadcastReceiver {
         }
     }
 
-    public static LessonNotifier getLessonNotifier(Context c) {
-        LessonNotifier n =  MainApplication.getLessonNotifier(c);
+    public static LessonNotifier2 getLessonNotifier(Context c) {
+        LessonNotifier2 n = MainApplication.getLessonNotifier(c);
 
         if(n == null) {
             if(BackgroundService.get() == null)

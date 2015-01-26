@@ -36,6 +36,18 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/dbg_fake_pending_timeunit"
+            android:text="@string/dbg_fake_pending_time_unit" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/dbg_reset_notif_state"
+            android:text="@string/dbg_reset_notification_pref" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/dbg_deactivate_debug_menu"
             android:text="@string/dbg_deactivate_debug_menu" />
 

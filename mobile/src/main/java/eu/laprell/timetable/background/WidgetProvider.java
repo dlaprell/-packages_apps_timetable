@@ -10,6 +10,7 @@ import android.widget.RemoteViews;
 
 import eu.laprell.timetable.R;
 import eu.laprell.timetable.WidgetService;
+import eu.laprell.timetable.background.notifications.NotifUtils;
 
 public class WidgetProvider extends AppWidgetProvider {
 
@@ -31,7 +32,7 @@ public class WidgetProvider extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         getDaysIfNecessary(context);
-        mDayString = mDays[LessonNotifier.getDayOfWeek() - 1];
+        mDayString = mDays[NotifUtils.getDayOfWeek() - 1];
 
         final int N = appWidgetIds.length;
         for (int i = 0; i < N; ++i) {
@@ -42,7 +43,7 @@ public class WidgetProvider extends AppWidgetProvider {
         }
 
         SharedPreferences pref = context.getSharedPreferences("widgets", 0);
-        int day = LessonNotifier.getDayOfYear();
+        int day = NotifUtils.getDayOfYear();
         if(pref.getInt("last_day_shown", -1) != day) {
             WidgetService.updateWidgets(context);
             TimeReceiver.getLessonNotifier(context).checkForNewNotifications();

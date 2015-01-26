@@ -22,7 +22,7 @@ public class Const {
             = "eu.laprell.timetable.VIEW_IN_TIMETABLE";
 
     public static final String ACTION_NEXT_TIMEUNIT_PENDING =
-            "eu.laprell.timetable.NEXT_TIMEUNIT_PENDING_NEW";
+            "eu.laprell.timetable.NEXT_TIMEUNIT_PENDING_NOVA";
 
     public static final int NOTIFICATION_ID_NEXT_LESSON = 1;
     public static final int NOTIFICATION_ID_NEXT_LESSON_TEST = 100;

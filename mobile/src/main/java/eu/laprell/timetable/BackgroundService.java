@@ -6,7 +6,7 @@ import android.os.IBinder;
 
 import java.util.Calendar;
 
-import eu.laprell.timetable.background.LessonNotifier;
+import eu.laprell.timetable.background.notifications.LessonNotifier2;
 import eu.laprell.timetable.database.Day;
 import eu.laprell.timetable.database.TimetableDatabase;
 
@@ -17,7 +17,7 @@ public class BackgroundService extends Service {
     }
 
     private TimetableDatabase mDb;
-    private LessonNotifier mNotifier;
+    private LessonNotifier2 mNotifier;
 
     public BackgroundService() {
     }
@@ -27,10 +27,10 @@ public class BackgroundService extends Service {
         mDb = new TimetableDatabase(this);
         sService = this;
 
-        mNotifier = new LessonNotifier(this);
+        mNotifier = new LessonNotifier2(this);
     }
 
-    public LessonNotifier getLessonNotifier() {
+    public LessonNotifier2 getLessonNotifier() {
         return mNotifier;
     }
 

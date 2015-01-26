@@ -1,6 +1,7 @@
 package eu.laprell.timetable.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,12 +18,14 @@ import eu.laprell.timetable.MainApplication;
 import eu.laprell.timetable.R;
 import eu.laprell.timetable.background.GlobalConfigs;
 import eu.laprell.timetable.background.Logger;
+import eu.laprell.timetable.background.TimeReceiver;
 import eu.laprell.timetable.database.AbsTimetableDatabase;
 import eu.laprell.timetable.database.Day;
 import eu.laprell.timetable.database.DbAccess;
 import eu.laprell.timetable.database.Lesson;
 import eu.laprell.timetable.database.TimeUnit;
 import eu.laprell.timetable.database.TimetableDatabase;
+import eu.laprell.timetable.utils.Const;
 import eu.laprell.timetable.utils.IntentUtils;
 
 /**
@@ -41,6 +44,8 @@ public class DebugFragment extends BaseFragment implements View.OnClickListener 
         v.findViewById(R.id.dbg_share_last_log).setOnClickListener(this);
         v.findViewById(R.id.dbg_clear_log).setOnClickListener(this);
         v.findViewById(R.id.dbg_deactivate_debug_menu).setOnClickListener(this);
+        v.findViewById(R.id.dbg_fake_pending_timeunit).setOnClickListener(this);
+        v.findViewById(R.id.dbg_reset_notif_state).setOnClickListener(this);
 
         mLoggingButton = (Button)v.findViewById(R.id.dbg_toggle_logging);
         mLoggingButton.setOnClickListener(this);
@@ -73,7 +78,47 @@ public class DebugFragment extends BaseFragment implements View.OnClickListener 
                 v.setEnabled(false);
                 new GlobalConfigs(v.getContext()).setDebugMenuEnabled(false);
                 break;
+            case R.id.dbg_fake_pending_timeunit:
+                fakePendingTimeUnit();
+                break;
+            case R.id.dbg_reset_notif_state:
+                //getLessonNotifier().clearAndInit();
+                getLessonNotifier().checkForNewNotifications();
+                break;
         }
+    }
+
+    private void fakePendingTimeUnit() {
+        final Context context = getActivity();
+
+        Toast.makeText(context, "Will fake pending TimeUnit", Toast.LENGTH_SHORT).show();
+
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                DbAccess access = new DbAccess(context);
+                TimetableDatabase db = access.get();
+                Random r = new Random();
+
+                long[] tids = db.getDatabaseEntries(AbsTimetableDatabase.TYPE_TIMEUNIT);
+                if(tids.length == 0) return null;
+
+                TimeUnit t = (TimeUnit) db.getDatabaseEntryById(AbsTimetableDatabase.TYPE_TIMEUNIT,
+                        tids[r.nextInt(tids.length)]);
+
+                Day d = db.getDayForDayOfWeek(r.nextInt(5) + 1);
+
+                Intent i = new Intent(context, TimeReceiver.class);
+                i.setAction(Const.ACTION_NEXT_TIMEUNIT_PENDING);
+                i.putExtra("day", d);
+                i.putExtra("timeunit", t);
+
+                context.sendBroadcast(i);
+
+                access.close();
+                return null;
+            }
+        }.execute();
     }
 
     private void shareLastLog() {
