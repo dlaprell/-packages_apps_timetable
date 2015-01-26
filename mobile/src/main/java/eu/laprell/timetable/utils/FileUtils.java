@@ -26,4 +26,43 @@ public class FileUtils {
 
         return out.toString();
     }
+
+    public static String readFromfile(File file, int numLines) throws IOException {
+        InputStream in = new FileInputStream(file);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in), 1024);
+
+        String[] lines = new String[numLines];
+
+        int pos = 0;
+
+        String line;
+        while ((line = reader.readLine()) != null) {
+            lines[pos] = line;
+
+            pos = ((pos + 1) % numLines);
+        }
+        reader.close();
+
+        // Now build the final string
+
+        StringBuilder out = new StringBuilder();
+        int end = pos;
+
+         do {
+             pos++;
+             if(pos >= numLines)
+                 pos = 0;
+
+            line = lines[pos];
+
+            if(line != null) {
+                out.append(line);
+                out.append('\n');
+            }
+
+            lines[pos] = null;
+        } while (pos != end);
+
+        return out.toString();
+    }
 }

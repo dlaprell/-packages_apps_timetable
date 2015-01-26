@@ -124,7 +124,7 @@ public class Logger {
     }
 
     private String getLog() throws IOException {
-        return FileUtils.readFromfile(mLogFile);
+        return FileUtils.readFromfile(mLogFile, 150);
     }
 
     public static String getCurrentLog() throws IOException {
