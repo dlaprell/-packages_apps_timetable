@@ -17777,10 +17777,10 @@ eu.laprell.timetable.AddActivity$AddAdapter -> eu.laprell.timetable.p:
 eu.laprell.timetable.BackgroundService -> eu.laprell.timetable.BackgroundService:
     eu.laprell.timetable.BackgroundService sService -> a
     eu.laprell.timetable.database.TimetableDatabase mDb -> b
-    eu.laprell.timetable.background.LessonNotifier mNotifier -> c
+    eu.laprell.timetable.background.notifications.LessonNotifier2 mNotifier -> c
     16:16:eu.laprell.timetable.BackgroundService get() -> a
     27:31:void onCreate() -> onCreate
-    34:34:eu.laprell.timetable.background.LessonNotifier getLessonNotifier() -> b
+    34:34:eu.laprell.timetable.background.notifications.LessonNotifier2 getLessonNotifier() -> b
     39:39:int onStartCommand(android.content.Intent,int,int) -> onStartCommand
     44:44:android.os.IBinder onBind(android.content.Intent) -> onBind
     48:48:eu.laprell.timetable.database.TimetableDatabase getTimetableDatabase() -> c
@@ -17999,14 +17999,14 @@ eu.laprell.timetable.MainApplication -> eu.laprell.timetable.MainApplication:
     boolean sLoggingEnabled -> a
     eu.laprell.timetable.MainApplication sApplication -> b
     eu.laprell.timetable.animation.ActivityTransitions mTransitions -> c
-    eu.laprell.timetable.background.LessonNotifier mNotifier -> d
+    eu.laprell.timetable.background.notifications.LessonNotifier2 mNotifier -> d
     java.util.Map mTrackers -> e
     39:50:void onCreate() -> onCreate
-    53:53:eu.laprell.timetable.background.LessonNotifier getLessonNotifier() -> a
+    53:53:eu.laprell.timetable.background.notifications.LessonNotifier2 getLessonNotifier() -> a
     58:62:void onTrimMemory(int) -> onTrimMemory
     65:66:void saveLogSettings() -> b
     70:76:void onTerminate() -> onTerminate
-    79:82:eu.laprell.timetable.background.LessonNotifier getLessonNotifier(android.content.Context) -> a
+    79:82:eu.laprell.timetable.background.notifications.LessonNotifier2 getLessonNotifier(android.content.Context) -> a
 eu.laprell.timetable.NewTaskActivity -> eu.laprell.timetable.NewTaskActivity:
     11:14:void onCreate(android.os.Bundle) -> onCreate
 eu.laprell.timetable.R -> eu.laprell.timetable.al:
@@ -18540,86 +18540,7 @@ eu.laprell.timetable.background.GlobalConfigs -> eu.laprell.timetable.background
     40:43:int getSchoolId() -> a
     47:50:boolean isDebugMenuEnabled() -> b
     54:60:void setDebugMenuEnabled(boolean) -> a
-eu.laprell.timetable.background.LessonNotifier -> eu.laprell.timetable.background.b:
-    android.content.Context mContext -> a
-    eu.laprell.timetable.database.TimeUnit[] mTimes -> b
-    android.os.Handler mHandler -> c
-    android.os.Handler mUiHandler -> d
-    eu.laprell.timetable.database.TimetableDatabase mDatabase -> e
-    java.lang.Thread mThread -> f
-    android.content.SharedPreferences mNotifPref -> g
-    android.os.PowerManager$WakeLock mNotificationWakeLock -> h
-    int mNotifyInSBefore -> i
-    java.util.ArrayList mQueue -> j
-    java.lang.Runnable mInitRunnable -> k
-    java.lang.Runnable mDoCheck -> l
-    java.lang.Runnable mRunQueueCheck -> m
-    java.lang.Runnable mCheckQueue -> n
-    107:108:void checkForNewNotifications() -> a
-    162:174:void postSafe(java.lang.Runnable) -> a
-    182:200:void pendingTimeUnit(android.content.Intent) -> a
-    204:209:void cancelCurrentNotification() -> b
-    212:231:void _pendingTimeUnit(android.content.Intent) -> b
-    234:260:void executeNewPendingTimeUnit(eu.laprell.timetable.database.Day,eu.laprell.timetable.database.TimeUnit) -> a
-    263:300:void _check(long) -> a
-    303:368:long checkForDayAndFromTime(int,long,long,int) -> a
-    372:372:boolean makeTestNotification(eu.laprell.timetable.database.Lesson,eu.laprell.timetable.database.TimeUnit,eu.laprell.timetable.database.Day) -> a
-    376:431:boolean _makeNotification(eu.laprell.timetable.database.Lesson,eu.laprell.timetable.database.TimeUnit,eu.laprell.timetable.database.Day,boolean) -> a
-    438:493:void showNextSubjectNotification(java.lang.String,java.lang.String,android.graphics.Bitmap,long,java.lang.String,int) -> a
-    496:524:android.graphics.Bitmap getBitmapForWearable(int,int) -> a
-    528:531:int calculateDayDelta(eu.laprell.timetable.database.Day) -> a
-    541:557:java.util.Calendar generateNotificationTime(eu.laprell.timetable.database.Day,eu.laprell.timetable.database.TimeUnit) -> b
-    561:562:void saveNotifAlarmSet(java.util.Calendar,eu.laprell.timetable.database.TimeUnit) -> a
-    565:571:android.app.PendingIntent buildIntentForWakeup(eu.laprell.timetable.database.Day,eu.laprell.timetable.database.TimeUnit) -> c
-    575:579:void updateForNextWakeUp(android.app.PendingIntent,long) -> a
-    582:584:java.lang.String getDate(long) -> b
-    588:588:java.lang.String getDateM(int) -> a
-    592:592:boolean isAlarmAlreadySet(java.util.Calendar,eu.laprell.timetable.database.TimeUnit) -> b
-    597:597:boolean isAlreadyNotifiedToday(java.util.Calendar,eu.laprell.timetable.database.TimeUnit) -> c
-    602:602:java.lang.String getPrefFor(java.util.Calendar,long) -> a
-    606:606:java.lang.String getNotiPrefFor(java.util.Calendar,long) -> b
-    610:610:java.lang.String getEndNotiPrefFor(java.util.Calendar,long) -> c
-    614:614:java.lang.String getBaseStringPrefFor(java.util.Calendar,long) -> d
-    623:649:int getDayOfWeek() -> c
-    653:653:int getDayOfYear() -> d
-    661:671:int getCurrentTimeInS() -> e
-    679:679:int getCurrentTimeInM() -> f
-    44:44:android.os.Handler access$002(eu.laprell.timetable.background.LessonNotifier,android.os.Handler) -> a
-    44:44:java.lang.Runnable access$100(eu.laprell.timetable.background.LessonNotifier) -> a
-    44:44:android.os.Handler access$000(eu.laprell.timetable.background.LessonNotifier) -> b
-    44:44:eu.laprell.timetable.database.TimetableDatabase access$202(eu.laprell.timetable.background.LessonNotifier,eu.laprell.timetable.database.TimetableDatabase) -> a
-    44:44:android.content.Context access$300(eu.laprell.timetable.background.LessonNotifier) -> c
-    44:44:eu.laprell.timetable.database.TimeUnit[] access$402(eu.laprell.timetable.background.LessonNotifier,eu.laprell.timetable.database.TimeUnit[]) -> a
-    44:44:eu.laprell.timetable.database.TimetableDatabase access$200(eu.laprell.timetable.background.LessonNotifier) -> d
-    44:44:android.content.SharedPreferences access$502(eu.laprell.timetable.background.LessonNotifier,android.content.SharedPreferences) -> a
-    44:44:android.content.SharedPreferences access$500(eu.laprell.timetable.background.LessonNotifier) -> e
-    44:44:void access$600(eu.laprell.timetable.background.LessonNotifier,long) -> a
-    44:44:java.util.ArrayList access$700(eu.laprell.timetable.background.LessonNotifier) -> f
-    44:44:java.lang.Runnable access$800(eu.laprell.timetable.background.LessonNotifier) -> g
-    44:44:android.os.Handler access$900(eu.laprell.timetable.background.LessonNotifier) -> h
-    44:44:java.lang.Runnable access$1000(eu.laprell.timetable.background.LessonNotifier) -> i
-    44:44:void access$1100(eu.laprell.timetable.background.LessonNotifier,android.content.Intent) -> a
-eu.laprell.timetable.background.LessonNotifier$1 -> eu.laprell.timetable.background.c:
-    eu.laprell.timetable.background.LessonNotifier this$0 -> a
-    65:69:void run() -> run
-eu.laprell.timetable.background.LessonNotifier$2 -> eu.laprell.timetable.background.d:
-    eu.laprell.timetable.background.LessonNotifier this$0 -> a
-    81:91:void run() -> run
-eu.laprell.timetable.background.LessonNotifier$3 -> eu.laprell.timetable.background.e:
-    eu.laprell.timetable.background.LessonNotifier this$0 -> a
-    113:114:void run() -> run
-eu.laprell.timetable.background.LessonNotifier$4 -> eu.laprell.timetable.background.f:
-    java.util.ArrayList mCopy -> b
-    eu.laprell.timetable.background.LessonNotifier this$0 -> a
-    122:141:void run() -> run
-eu.laprell.timetable.background.LessonNotifier$5 -> eu.laprell.timetable.background.g:
-    eu.laprell.timetable.background.LessonNotifier this$0 -> a
-    147:157:void run() -> run
-eu.laprell.timetable.background.LessonNotifier$6 -> eu.laprell.timetable.background.h:
-    android.content.Intent val$i -> a
-    eu.laprell.timetable.background.LessonNotifier this$0 -> b
-    197:198:void run() -> run
-eu.laprell.timetable.background.ListProviderWidget -> eu.laprell.timetable.background.i:
+eu.laprell.timetable.background.ListProviderWidget -> eu.laprell.timetable.background.b:
     java.util.ArrayList mList -> a
     android.content.Context mContext -> b
     int appWidgetId -> c
@@ -18628,33 +18549,33 @@ eu.laprell.timetable.background.ListProviderWidget -> eu.laprell.timetable.backg
     java.lang.String mBreakFirstLetter -> f
     java.lang.String mBreak -> g
     java.lang.String mFree -> h
-    57:80:void populateListItem() -> a
-    85:85:void onCreate() -> onCreate
-    90:90:void onDataSetChanged() -> onDataSetChanged
-    95:95:void onDestroy() -> onDestroy
-    99:99:int getCount() -> getCount
-    104:104:long getItemId(int) -> getItemId
-    109:109:boolean hasStableIds() -> hasStableIds
-    114:114:int getViewTypeCount() -> getViewTypeCount
-    118:118:int getViewType(int) -> a
-    129:167:android.widget.RemoteViews getViewAt(int) -> getViewAt
-    172:172:android.widget.RemoteViews getLoadingView() -> getLoadingView
-eu.laprell.timetable.background.ListProviderWidget$1 -> eu.laprell.timetable.background.j:
-eu.laprell.timetable.background.ListProviderWidget$Data -> eu.laprell.timetable.background.k:
+    58:81:void populateListItem() -> a
+    86:86:void onCreate() -> onCreate
+    91:91:void onDataSetChanged() -> onDataSetChanged
+    96:96:void onDestroy() -> onDestroy
+    100:100:int getCount() -> getCount
+    105:105:long getItemId(int) -> getItemId
+    110:110:boolean hasStableIds() -> hasStableIds
+    115:115:int getViewTypeCount() -> getViewTypeCount
+    119:119:int getViewType(int) -> a
+    130:168:android.widget.RemoteViews getViewAt(int) -> getViewAt
+    173:173:android.widget.RemoteViews getLoadingView() -> getLoadingView
+eu.laprell.timetable.background.ListProviderWidget$1 -> eu.laprell.timetable.background.c:
+eu.laprell.timetable.background.ListProviderWidget$Data -> eu.laprell.timetable.background.d:
     eu.laprell.timetable.database.Lesson lesson -> b
     eu.laprell.timetable.database.TimeUnit time -> c
     eu.laprell.timetable.database.Place place -> d
     int num -> e
     eu.laprell.timetable.background.ListProviderWidget this$0 -> a
-    26:26:eu.laprell.timetable.database.TimeUnit access$102(eu.laprell.timetable.background.ListProviderWidget$Data,eu.laprell.timetable.database.TimeUnit) -> a
-    26:26:eu.laprell.timetable.database.Lesson access$202(eu.laprell.timetable.background.ListProviderWidget$Data,eu.laprell.timetable.database.Lesson) -> a
-    26:26:eu.laprell.timetable.database.Place access$302(eu.laprell.timetable.background.ListProviderWidget$Data,eu.laprell.timetable.database.Place) -> a
-    26:26:eu.laprell.timetable.database.TimeUnit access$100(eu.laprell.timetable.background.ListProviderWidget$Data) -> a
-    26:26:int access$402(eu.laprell.timetable.background.ListProviderWidget$Data,int) -> a
-    26:26:eu.laprell.timetable.database.Lesson access$200(eu.laprell.timetable.background.ListProviderWidget$Data) -> b
-    26:26:eu.laprell.timetable.database.Place access$300(eu.laprell.timetable.background.ListProviderWidget$Data) -> c
-    26:26:int access$400(eu.laprell.timetable.background.ListProviderWidget$Data) -> d
-eu.laprell.timetable.background.Logger -> eu.laprell.timetable.background.l:
+    27:27:eu.laprell.timetable.database.TimeUnit access$102(eu.laprell.timetable.background.ListProviderWidget$Data,eu.laprell.timetable.database.TimeUnit) -> a
+    27:27:eu.laprell.timetable.database.Lesson access$202(eu.laprell.timetable.background.ListProviderWidget$Data,eu.laprell.timetable.database.Lesson) -> a
+    27:27:eu.laprell.timetable.database.Place access$302(eu.laprell.timetable.background.ListProviderWidget$Data,eu.laprell.timetable.database.Place) -> a
+    27:27:eu.laprell.timetable.database.TimeUnit access$100(eu.laprell.timetable.background.ListProviderWidget$Data) -> a
+    27:27:int access$402(eu.laprell.timetable.background.ListProviderWidget$Data,int) -> a
+    27:27:eu.laprell.timetable.database.Lesson access$200(eu.laprell.timetable.background.ListProviderWidget$Data) -> b
+    27:27:eu.laprell.timetable.database.Place access$300(eu.laprell.timetable.background.ListProviderWidget$Data) -> c
+    27:27:int access$400(eu.laprell.timetable.background.ListProviderWidget$Data) -> d
+eu.laprell.timetable.background.Logger -> eu.laprell.timetable.background.e:
     eu.laprell.timetable.background.Logger sLogger -> a
     android.os.Handler mHandler -> b
     boolean mToLogCat -> c
@@ -18681,15 +18602,15 @@ eu.laprell.timetable.background.Logger -> eu.laprell.timetable.background.l:
     23:23:java.io.File access$000(eu.laprell.timetable.background.Logger) -> f
     23:23:eu.laprell.timetable.background.Logger access$700() -> c
     23:23:void access$800(eu.laprell.timetable.background.Logger) -> g
-eu.laprell.timetable.background.Logger$1 -> eu.laprell.timetable.background.m:
+eu.laprell.timetable.background.Logger$1 -> eu.laprell.timetable.background.f:
     eu.laprell.timetable.background.Logger this$0 -> a
     35:37:void run() -> run
-eu.laprell.timetable.background.Logger$2 -> eu.laprell.timetable.background.n:
+eu.laprell.timetable.background.Logger$2 -> eu.laprell.timetable.background.g:
     eu.laprell.timetable.background.Logger this$0 -> a
     47:51:void run() -> run
-eu.laprell.timetable.background.Logger$3 -> eu.laprell.timetable.background.o:
+eu.laprell.timetable.background.Logger$3 -> eu.laprell.timetable.background.h:
     153:154:void run() -> run
-eu.laprell.timetable.background.Logger$LogData -> eu.laprell.timetable.background.p:
+eu.laprell.timetable.background.Logger$LogData -> eu.laprell.timetable.background.i:
     int mLevel -> b
     long mTime -> c
     java.lang.String mTab -> d
@@ -18697,7 +18618,7 @@ eu.laprell.timetable.background.Logger$LogData -> eu.laprell.timetable.backgroun
     java.lang.Throwable mThro -> f
     eu.laprell.timetable.background.Logger this$0 -> a
     94:123:void run() -> run
-eu.laprell.timetable.background.MenuNavigation -> eu.laprell.timetable.background.q:
+eu.laprell.timetable.background.MenuNavigation -> eu.laprell.timetable.background.j:
     android.content.Context mContext -> a
     java.util.ArrayList mTitleStrings -> b
     java.util.ArrayList mImages -> c
@@ -18714,7 +18635,7 @@ eu.laprell.timetable.background.MenuNavigation -> eu.laprell.timetable.backgroun
     159:163:int getMenuPosition(int) -> f
     167:167:java.lang.String getString(int) -> g
     171:171:android.content.res.Resources getResources() -> c
-eu.laprell.timetable.background.SecurePreferences -> eu.laprell.timetable.background.r:
+eu.laprell.timetable.background.SecurePreferences -> eu.laprell.timetable.background.k:
     boolean encryptKeys -> a
     javax.crypto.Cipher writer -> b
     javax.crypto.Cipher reader -> c
@@ -18733,8 +18654,8 @@ eu.laprell.timetable.background.SecurePreferences -> eu.laprell.timetable.backgr
     275:280:java.lang.String encrypt(java.lang.String,javax.crypto.Cipher) -> a
     284:290:java.lang.String decrypt(java.lang.String) -> d
     296:299:byte[] convert(javax.crypto.Cipher,byte[]) -> a
-eu.laprell.timetable.background.SecurePreferences$SecurePreferencesException -> eu.laprell.timetable.background.s:
-eu.laprell.timetable.background.SpecialBitmapCache -> eu.laprell.timetable.background.t:
+eu.laprell.timetable.background.SecurePreferences$SecurePreferencesException -> eu.laprell.timetable.background.l:
+eu.laprell.timetable.background.SpecialBitmapCache -> eu.laprell.timetable.background.m:
     eu.laprell.timetable.background.SpecialBitmapCache sCache -> a
     android.support.v4.util.LruCache mBitmaps -> b
     android.app.Application mApp -> c
@@ -18744,20 +18665,69 @@ eu.laprell.timetable.background.SpecialBitmapCache -> eu.laprell.timetable.backg
     108:120:int getMinScaleFactor(int,int,int,int) -> a
     124:129:android.graphics.BitmapFactory$Options loadBitmapOptions(int) -> b
     133:138:void onTrimMemory(int) -> a
-eu.laprell.timetable.background.SpecialBitmapCache$CustomLruCache -> eu.laprell.timetable.background.u:
+eu.laprell.timetable.background.SpecialBitmapCache$CustomLruCache -> eu.laprell.timetable.background.n:
     eu.laprell.timetable.background.SpecialBitmapCache this$0 -> a
     76:76:int sizeOf(java.lang.Integer,android.graphics.Bitmap) -> a
     64:64:int sizeOf(java.lang.Object,java.lang.Object) -> b
 eu.laprell.timetable.background.TimeReceiver -> eu.laprell.timetable.background.TimeReceiver:
-    14:23:void onReceive(android.content.Context,android.content.Intent) -> onReceive
-    26:36:eu.laprell.timetable.background.LessonNotifier getLessonNotifier(android.content.Context) -> a
+    15:24:void onReceive(android.content.Context,android.content.Intent) -> onReceive
+    27:37:eu.laprell.timetable.background.notifications.LessonNotifier2 getLessonNotifier(android.content.Context) -> a
 eu.laprell.timetable.background.WidgetProvider -> eu.laprell.timetable.background.WidgetProvider:
     java.lang.String[] mDays -> a
     java.lang.String mDayString -> b
-    21:24:void onEnabled(android.content.Context) -> onEnabled
-    27:29:void getDaysIfNecessary(android.content.Context) -> a
-    33:54:void onUpdate(android.content.Context,android.appwidget.AppWidgetManager,int[]) -> onUpdate
-    60:78:android.widget.RemoteViews updateWidgetListView(android.content.Context,int) -> a
+    22:25:void onEnabled(android.content.Context) -> onEnabled
+    28:30:void getDaysIfNecessary(android.content.Context) -> a
+    34:55:void onUpdate(android.content.Context,android.appwidget.AppWidgetManager,int[]) -> onUpdate
+    61:79:android.widget.RemoteViews updateWidgetListView(android.content.Context,int) -> a
+eu.laprell.timetable.background.notifications.LessonNotifier2 -> eu.laprell.timetable.background.a.a:
+    android.content.Context mContext -> a
+    eu.laprell.timetable.database.TimeUnit[] mTimes -> b
+    int mNotifyInSBefore -> c
+    eu.laprell.timetable.database.TimetableDatabase mDatabase -> d
+    eu.laprell.timetable.background.notifications.NotificationStore mStore -> e
+    68:71:void reloadTimes() -> a
+    74:95:void pendingTimeUnit(android.content.Intent) -> a
+    99:123:void tryPostNotification(eu.laprell.timetable.background.notifications.NotificationObject) -> a
+    126:168:void checkForNewNotifications() -> b
+    178:189:eu.laprell.timetable.background.notifications.NotificationObject getNextNotificationTime(int,int) -> a
+    193:199:void setAlarmManagerWakeUp(eu.laprell.timetable.background.notifications.NotificationObject) -> b
+    202:208:android.app.PendingIntent buildIntentForWakeUp(eu.laprell.timetable.background.notifications.NotificationObject) -> c
+    212:217:eu.laprell.timetable.database.TimeUnit getNextTimeUnitAfter(int) -> a
+    222:227:void cancelCurrentNotification() -> c
+    230:230:boolean makeTestNotification(eu.laprell.timetable.database.Lesson,eu.laprell.timetable.database.TimeUnit,eu.laprell.timetable.database.Day) -> a
+    234:234:boolean isAtRightTime(eu.laprell.timetable.background.notifications.NotificationObject) -> d
+    238:242:boolean isAtRightTime(eu.laprell.timetable.database.TimeUnit,int) -> a
+    247:289:boolean _postNotification(eu.laprell.timetable.database.Lesson,eu.laprell.timetable.database.TimeUnit,eu.laprell.timetable.database.Day,boolean) -> a
+    296:351:void showNextSubjectNotification(java.lang.String,java.lang.String,android.graphics.Bitmap,long,java.lang.String,int) -> a
+    354:382:android.graphics.Bitmap getBitmapForWearable(int,int) -> b
+    386:389:int calculateDayDelta(int) -> b
+    393:393:java.util.Calendar generateNotificationTime(eu.laprell.timetable.background.notifications.NotificationObject) -> e
+    403:419:java.util.Calendar generateNotificationTime(int,eu.laprell.timetable.database.TimeUnit) -> a
+eu.laprell.timetable.background.notifications.NotifUtils -> eu.laprell.timetable.background.a.b:
+    16:18:java.lang.String getDate(long) -> a
+    30:56:int getDayOfWeek() -> a
+    60:60:int getDayOfYear() -> b
+    68:78:int getCurrentTimeInS() -> c
+    86:86:int getCurrentTimeInM() -> d
+eu.laprell.timetable.background.notifications.NotificationObject -> eu.laprell.timetable.background.a.c:
+    eu.laprell.timetable.database.TimeUnit mForTime -> a
+    int mAtDay -> b
+    java.util.Calendar mNotificationTime -> c
+    java.util.ArrayList sCache -> d
+    22:28:void finish() -> a
+    32:38:java.lang.String toString() -> toString
+    49:56:eu.laprell.timetable.background.notifications.NotificationObject obtain() -> b
+eu.laprell.timetable.background.notifications.NotificationStore -> eu.laprell.timetable.background.a.d:
+    android.content.Context mContext -> a
+    android.content.SharedPreferences mSaveState -> b
+    java.lang.Object mLock -> c
+    23:27:void saveNotificationPostedFor(eu.laprell.timetable.background.notifications.NotificationObject) -> a
+    32:36:boolean isNotificationPostedFor(eu.laprell.timetable.background.notifications.NotificationObject) -> b
+    40:42:java.lang.String getNotifiedKey(eu.laprell.timetable.background.notifications.NotificationObject) -> e
+    48:53:void saveAlarmSetForNotification(eu.laprell.timetable.background.notifications.NotificationObject) -> c
+    58:62:boolean isAlarmAlreadySetFor(eu.laprell.timetable.background.notifications.NotificationObject) -> d
+    66:68:java.lang.String getAlarmKey(eu.laprell.timetable.background.notifications.NotificationObject) -> f
+    73:73:java.lang.String getNotificationBaseString(eu.laprell.timetable.background.notifications.NotificationObject) -> g
 eu.laprell.timetable.database.AbsTimetableDatabase -> eu.laprell.timetable.database.a:
     eu.laprell.timetable.database.Lesson TYPE_LESSON -> a
     eu.laprell.timetable.database.TimeUnit TYPE_TIMEUNIT -> b
@@ -18831,32 +18801,33 @@ eu.laprell.timetable.database.Day -> eu.laprell.timetable.database.Day:
     long[] mTimeUnits -> c
     long[] mPlaces -> d
     android.os.Parcelable$Creator CREATOR -> CREATOR
-    84:84:eu.laprell.timetable.database.Day makeCopy(long) -> b
-    88:96:void checkIdArrays() -> n
-    99:99:long[] getTimeUnits() -> i
-    103:106:void setTimeUnits(long[]) -> a
-    109:109:int getDayOfWeek() -> j
-    113:114:void setDayOfWeek(int) -> a
-    117:117:long[] getLessons() -> k
-    121:124:void setLessons(long[]) -> b
-    128:128:java.lang.String getTable() -> c
-    133:137:void inContentValues(android.content.ContentValues) -> a
-    141:153:void generateFromCursor(android.database.Cursor) -> a
-    157:157:java.lang.String[] geDefaultProjection() -> e
-    166:166:long[] getPlaces() -> l
-    170:173:void setPlaces(long[]) -> c
-    176:179:void expandIdArrays() -> m
-    182:186:long getLessonIdAt(eu.laprell.timetable.database.TimeUnit) -> a
-    190:194:long getPlaceIdAt(eu.laprell.timetable.database.TimeUnit) -> b
-    215:215:int describeContents() -> describeContents
-    220:233:void writeToParcel(android.os.Parcel,int) -> writeToParcel
-    249:249:java.lang.String getString(int,android.content.Context) -> a
-    22:22:eu.laprell.timetable.database.DatabaseEntry makeCopy(long) -> a
+    86:86:eu.laprell.timetable.database.Day makeCopy(long) -> b
+    90:98:void checkIdArrays() -> n
+    101:101:long[] getTimeUnits() -> i
+    105:108:void setTimeUnits(long[]) -> a
+    111:111:int getDayOfWeek() -> j
+    115:116:void setDayOfWeek(int) -> a
+    119:119:long[] getLessons() -> k
+    123:126:void setLessons(long[]) -> b
+    130:130:java.lang.String getTable() -> c
+    135:139:void inContentValues(android.content.ContentValues) -> a
+    143:155:void generateFromCursor(android.database.Cursor) -> a
+    159:159:java.lang.String[] geDefaultProjection() -> e
+    168:168:long[] getPlaces() -> l
+    172:175:void setPlaces(long[]) -> c
+    178:181:void expandIdArrays() -> m
+    184:188:long getLessonIdAt(eu.laprell.timetable.database.TimeUnit) -> a
+    192:196:long getPlaceIdAt(eu.laprell.timetable.database.TimeUnit) -> b
+    201:201:java.lang.String toString() -> toString
+    228:228:int describeContents() -> describeContents
+    233:246:void writeToParcel(android.os.Parcel,int) -> writeToParcel
+    262:262:java.lang.String getString(int,android.content.Context) -> a
+    24:24:eu.laprell.timetable.database.DatabaseEntry makeCopy(long) -> a
 eu.laprell.timetable.database.Day$1 -> eu.laprell.timetable.database.f:
-    239:239:eu.laprell.timetable.database.Day createFromParcel(android.os.Parcel) -> a
-    244:244:eu.laprell.timetable.database.Day[] newArray(int) -> a
-    236:236:java.lang.Object[] newArray(int) -> newArray
-    236:236:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+    252:252:eu.laprell.timetable.database.Day createFromParcel(android.os.Parcel) -> a
+    257:257:eu.laprell.timetable.database.Day[] newArray(int) -> a
+    249:249:java.lang.Object[] newArray(int) -> newArray
+    249:249:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
 eu.laprell.timetable.database.DbAccess -> eu.laprell.timetable.database.g:
     android.content.Context mContext -> a
     eu.laprell.timetable.database.TimetableDatabase mDb -> b
@@ -18910,14 +18881,15 @@ eu.laprell.timetable.database.Lesson -> eu.laprell.timetable.database.Lesson:
     132:132:int getColor() -> m
     136:137:void setColor(int) -> b
     140:140:boolean hasColor() -> n
-    157:157:int describeContents() -> describeContents
-    162:171:void writeToParcel(android.os.Parcel,int) -> writeToParcel
+    145:145:java.lang.String toString() -> toString
+    170:170:int describeContents() -> describeContents
+    175:184:void writeToParcel(android.os.Parcel,int) -> writeToParcel
     19:19:eu.laprell.timetable.database.DatabaseEntry makeCopy(long) -> a
 eu.laprell.timetable.database.Lesson$1 -> eu.laprell.timetable.database.n:
-    177:177:eu.laprell.timetable.database.Lesson createFromParcel(android.os.Parcel) -> a
-    182:182:eu.laprell.timetable.database.Lesson[] newArray(int) -> a
-    174:174:java.lang.Object[] newArray(int) -> newArray
-    174:174:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+    190:190:eu.laprell.timetable.database.Lesson createFromParcel(android.os.Parcel) -> a
+    195:195:eu.laprell.timetable.database.Lesson[] newArray(int) -> a
+    187:187:java.lang.Object[] newArray(int) -> newArray
+    187:187:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
 eu.laprell.timetable.database.Place -> eu.laprell.timetable.database.Place:
     java.lang.String mTitle -> a
     android.os.Parcelable$Creator CREATOR -> CREATOR
@@ -18929,14 +18901,15 @@ eu.laprell.timetable.database.Place -> eu.laprell.timetable.database.Place:
     54:54:java.lang.String[] geDefaultProjection() -> e
     60:60:java.lang.String getTitle() -> i
     64:65:void setTitle(java.lang.String) -> a
-    76:76:int describeContents() -> describeContents
-    81:85:void writeToParcel(android.os.Parcel,int) -> writeToParcel
+    69:69:java.lang.String toString() -> toString
+    84:84:int describeContents() -> describeContents
+    89:93:void writeToParcel(android.os.Parcel,int) -> writeToParcel
     15:15:eu.laprell.timetable.database.DatabaseEntry makeCopy(long) -> a
 eu.laprell.timetable.database.Place$1 -> eu.laprell.timetable.database.o:
-    91:91:eu.laprell.timetable.database.Place createFromParcel(android.os.Parcel) -> a
-    96:96:eu.laprell.timetable.database.Place[] newArray(int) -> a
-    88:88:java.lang.Object[] newArray(int) -> newArray
-    88:88:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+    99:99:eu.laprell.timetable.database.Place createFromParcel(android.os.Parcel) -> a
+    104:104:eu.laprell.timetable.database.Place[] newArray(int) -> a
+    96:96:java.lang.Object[] newArray(int) -> newArray
+    96:96:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
 eu.laprell.timetable.database.Suggestor -> eu.laprell.timetable.database.p:
     eu.laprell.timetable.database.Suggestor$Item[] mAllSuggestions -> a
     boolean[] mSet -> b
@@ -19020,14 +18993,15 @@ eu.laprell.timetable.database.Teacher -> eu.laprell.timetable.database.Teacher:
     123:124:void setSecondName(java.lang.String) -> b
     131:132:void setPrefix(java.lang.String) -> c
     135:141:java.lang.String getFullName() -> i
-    155:155:int describeContents() -> describeContents
-    160:166:void writeToParcel(android.os.Parcel,int) -> writeToParcel
+    146:146:java.lang.String toString() -> toString
+    165:165:int describeContents() -> describeContents
+    170:176:void writeToParcel(android.os.Parcel,int) -> writeToParcel
     17:17:eu.laprell.timetable.database.DatabaseEntry makeCopy(long) -> a
 eu.laprell.timetable.database.Teacher$1 -> eu.laprell.timetable.database.w:
-    172:172:eu.laprell.timetable.database.Teacher createFromParcel(android.os.Parcel) -> a
-    177:177:eu.laprell.timetable.database.Teacher[] newArray(int) -> a
-    169:169:java.lang.Object[] newArray(int) -> newArray
-    169:169:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+    182:182:eu.laprell.timetable.database.Teacher createFromParcel(android.os.Parcel) -> a
+    187:187:eu.laprell.timetable.database.Teacher[] newArray(int) -> a
+    179:179:java.lang.Object[] newArray(int) -> newArray
+    179:179:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
 eu.laprell.timetable.database.TimeUnit -> eu.laprell.timetable.database.TimeUnit:
     int mStartTime -> a
     int mEndTime -> b
@@ -19046,24 +19020,23 @@ eu.laprell.timetable.database.TimeUnit -> eu.laprell.timetable.database.TimeUnit
     85:85:java.lang.String[] geDefaultProjection() -> e
     93:94:void setStartTime(int,int) -> a
     97:98:void setEndTime(int,int) -> b
-    101:101:int getDuration() -> l
-    105:105:java.lang.String getTimeAsString() -> m
+    105:105:java.lang.String getTimeAsString() -> l
     109:118:java.lang.String makeTimeString(java.lang.String) -> a
     122:122:boolean isBefore(eu.laprell.timetable.database.TimeUnit) -> a
     130:130:boolean isAfter(eu.laprell.timetable.database.TimeUnit) -> b
-    134:134:boolean isAfter(long) -> c
     138:138:boolean isMatching(eu.laprell.timetable.database.TimeUnit) -> c
-    152:152:int describeContents() -> describeContents
-    157:163:void writeToParcel(android.os.Parcel,int) -> writeToParcel
-    167:176:boolean equals(java.lang.Object) -> equals
-    181:184:int hashCode() -> hashCode
-    189:189:java.lang.String getDefaultSortOrder() -> h
+    143:143:java.lang.String toString() -> toString
+    163:163:int describeContents() -> describeContents
+    168:174:void writeToParcel(android.os.Parcel,int) -> writeToParcel
+    178:187:boolean equals(java.lang.Object) -> equals
+    192:195:int hashCode() -> hashCode
+    200:200:java.lang.String getDefaultSortOrder() -> h
     17:17:eu.laprell.timetable.database.DatabaseEntry makeCopy(long) -> a
 eu.laprell.timetable.database.TimeUnit$1 -> eu.laprell.timetable.database.x:
-    196:196:eu.laprell.timetable.database.TimeUnit createFromParcel(android.os.Parcel) -> a
-    201:201:eu.laprell.timetable.database.TimeUnit[] newArray(int) -> a
-    193:193:java.lang.Object[] newArray(int) -> newArray
-    193:193:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+    207:207:eu.laprell.timetable.database.TimeUnit createFromParcel(android.os.Parcel) -> a
+    212:212:eu.laprell.timetable.database.TimeUnit[] newArray(int) -> a
+    204:204:java.lang.Object[] newArray(int) -> newArray
+    204:204:java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
 eu.laprell.timetable.database.TimetableDatabase -> eu.laprell.timetable.database.y:
     18:22:eu.laprell.timetable.database.Lesson getLessonByTitle(java.lang.String) -> a
     27:41:eu.laprell.timetable.database.Day getDayForDayOfWeek(int) -> a
@@ -19075,11 +19048,11 @@ eu.laprell.timetable.database.TimetableDatabase -> eu.laprell.timetable.database
     122:125:eu.laprell.timetable.database.Teacher[] getTeachersByIds(long[]) -> d
     130:134:eu.laprell.timetable.database.Place getPlaceByTitle(java.lang.String) -> b
 eu.laprell.timetable.fragments.BaseFragment -> eu.laprell.timetable.fragments.a:
-    15:18:eu.laprell.timetable.background.LessonNotifier getLessonNotifier() -> a
-    22:22:float getToolbarElevationDp() -> b
-    27:27:void onDrawerOverlaps(float) -> a
-    30:30:int getBackgroundColor() -> c
-    34:34:boolean isTabletLayout() -> O
+    15:20:eu.laprell.timetable.background.notifications.LessonNotifier2 getLessonNotifier() -> a
+    24:24:float getToolbarElevationDp() -> b
+    29:29:void onDrawerOverlaps(float) -> a
+    32:32:int getBackgroundColor() -> c
+    36:36:boolean isTabletLayout() -> O
 eu.laprell.timetable.fragments.ChangeImageFragment -> eu.laprell.timetable.fragments.b:
     int[] mImages -> a
     int mColor -> b
@@ -19145,22 +19118,28 @@ eu.laprell.timetable.fragments.DayOverviewFragment$TimetableCollectionPagerAdapt
     112:112:java.lang.CharSequence getPageTitle(int) -> c
 eu.laprell.timetable.fragments.DebugFragment -> eu.laprell.timetable.fragments.k:
     android.widget.Button mLoggingButton -> a
-    38:49:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
-    54:77:void onClick(android.view.View) -> onClick
-    80:103:void shareLastLog() -> P
-    106:111:void updateLoggingText() -> Q
-    114:146:void showTestNotif() -> R
+    41:54:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
+    59:89:void onClick(android.view.View) -> onClick
+    92:122:void fakePendingTimeUnit() -> P
+    125:148:void shareLastLog() -> Q
+    151:156:void updateLoggingText() -> R
+    159:191:void showTestNotif() -> S
 eu.laprell.timetable.fragments.DebugFragment$1 -> eu.laprell.timetable.fragments.l:
-    eu.laprell.timetable.fragments.DebugFragment this$0 -> a
-    84:88:java.lang.String doInBackground(java.lang.Void[]) -> a
-    93:101:void onPostExecute(java.lang.String) -> a
-    80:80:void onPostExecute(java.lang.Object) -> onPostExecute
-    80:80:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-eu.laprell.timetable.fragments.DebugFragment$2 -> eu.laprell.timetable.fragments.m:
     android.content.Context val$context -> a
     eu.laprell.timetable.fragments.DebugFragment this$0 -> b
-    121:143:java.lang.Void doInBackground(java.lang.Void[]) -> a
-    118:118:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    99:119:java.lang.Void doInBackground(java.lang.Void[]) -> a
+    96:96:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+eu.laprell.timetable.fragments.DebugFragment$2 -> eu.laprell.timetable.fragments.m:
+    eu.laprell.timetable.fragments.DebugFragment this$0 -> a
+    129:133:java.lang.String doInBackground(java.lang.Void[]) -> a
+    138:146:void onPostExecute(java.lang.String) -> a
+    125:125:void onPostExecute(java.lang.Object) -> onPostExecute
+    125:125:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+eu.laprell.timetable.fragments.DebugFragment$3 -> eu.laprell.timetable.fragments.n:
+    android.content.Context val$context -> a
+    eu.laprell.timetable.fragments.DebugFragment this$0 -> b
+    166:188:java.lang.Void doInBackground(java.lang.Void[]) -> a
+    163:163:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 eu.laprell.timetable.fragments.DrawerFragment -> eu.laprell.timetable.fragments.DrawerFragment:
     android.support.v7.widget.RecyclerView mRecyclerView -> a
     eu.laprell.timetable.fragments.DrawerFragment$MyAdapter mAdapter -> b
@@ -19203,33 +19182,33 @@ eu.laprell.timetable.fragments.DrawerFragment -> eu.laprell.timetable.fragments.
     38:38:android.widget.FrameLayout access$502(eu.laprell.timetable.fragments.DrawerFragment,android.widget.FrameLayout) -> a
     38:38:int access$400(eu.laprell.timetable.fragments.DrawerFragment) -> j
     38:38:void access$1400(eu.laprell.timetable.fragments.DrawerFragment) -> k
-eu.laprell.timetable.fragments.DrawerFragment$1 -> eu.laprell.timetable.fragments.n:
+eu.laprell.timetable.fragments.DrawerFragment$1 -> eu.laprell.timetable.fragments.o:
     eu.laprell.timetable.fragments.DrawerFragment this$0 -> a
     68:69:void navigateMenu(int) -> a
     73:75:void reloadDrawer() -> a
     79:79:int getDrawerContentWidth() -> b
     85:85:void dispatchDrawerOpened(float,float) -> a
-eu.laprell.timetable.fragments.DrawerFragment$2 -> eu.laprell.timetable.fragments.o:
+eu.laprell.timetable.fragments.DrawerFragment$2 -> eu.laprell.timetable.fragments.p:
     eu.laprell.timetable.fragments.DrawerFragment this$0 -> a
     108:115:void onClick(android.view.View) -> onClick
-eu.laprell.timetable.fragments.DrawerFragment$3 -> eu.laprell.timetable.fragments.p:
+eu.laprell.timetable.fragments.DrawerFragment$3 -> eu.laprell.timetable.fragments.q:
     eu.laprell.timetable.fragments.DrawerFragment this$0 -> a
     122:148:void run() -> run
-eu.laprell.timetable.fragments.DrawerFragment$4 -> eu.laprell.timetable.fragments.q:
+eu.laprell.timetable.fragments.DrawerFragment$4 -> eu.laprell.timetable.fragments.r:
     eu.laprell.timetable.fragments.DrawerFragment this$0 -> a
     173:212:java.lang.Boolean doInBackground(java.lang.Void[]) -> a
     217:228:void onPostExecute(java.lang.Boolean) -> a
     170:170:void onPostExecute(java.lang.Object) -> onPostExecute
     170:170:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-eu.laprell.timetable.fragments.DrawerFragment$DrawerNavigationBackend -> eu.laprell.timetable.fragments.r:
+eu.laprell.timetable.fragments.DrawerFragment$DrawerNavigationBackend -> eu.laprell.timetable.fragments.s:
     void navigateMenu(int) -> a
     void reloadDrawer() -> a
     int getDrawerContentWidth() -> b
     void dispatchDrawerOpened(float,float) -> a
-eu.laprell.timetable.fragments.DrawerFragment$DrawerNavigationCallback -> eu.laprell.timetable.fragments.s:
+eu.laprell.timetable.fragments.DrawerFragment$DrawerNavigationCallback -> eu.laprell.timetable.fragments.t:
     boolean navigateTo(int,java.lang.String) -> a
     void setDrawerNavigationBackend(eu.laprell.timetable.fragments.DrawerFragment$DrawerNavigationBackend) -> a
-eu.laprell.timetable.fragments.DrawerFragment$MyAdapter -> eu.laprell.timetable.fragments.t:
+eu.laprell.timetable.fragments.DrawerFragment$MyAdapter -> eu.laprell.timetable.fragments.u:
     eu.laprell.timetable.background.MenuNavigation mNav -> b
     int mSelected -> c
     android.graphics.drawable.ColorDrawable mBlueOverlay -> d
@@ -19243,13 +19222,13 @@ eu.laprell.timetable.fragments.DrawerFragment$MyAdapter -> eu.laprell.timetable.
     275:275:void onBindViewHolder(android.support.v7.widget.RecyclerView$ViewHolder,int) -> a
     275:275:android.support.v7.widget.RecyclerView$ViewHolder onCreateViewHolder(android.view.ViewGroup,int) -> a
     275:275:eu.laprell.timetable.background.MenuNavigation access$100(eu.laprell.timetable.fragments.DrawerFragment$MyAdapter) -> a
-eu.laprell.timetable.fragments.DrawerFragment$ViewHolder -> eu.laprell.timetable.fragments.u:
+eu.laprell.timetable.fragments.DrawerFragment$ViewHolder -> eu.laprell.timetable.fragments.v:
     android.view.View mView -> i
     android.widget.TextView mCaption -> j
     android.widget.ImageView mImage -> k
     android.widget.FrameLayout mContainer -> l
     256:256:android.widget.FrameLayout access$1500(eu.laprell.timetable.fragments.DrawerFragment$ViewHolder) -> a
-eu.laprell.timetable.fragments.InfoFragment -> eu.laprell.timetable.fragments.v:
+eu.laprell.timetable.fragments.InfoFragment -> eu.laprell.timetable.fragments.w:
     long mLastClick -> a
     int mClickCount -> b
     android.view.View$OnClickListener mListener -> c
@@ -19262,10 +19241,10 @@ eu.laprell.timetable.fragments.InfoFragment -> eu.laprell.timetable.fragments.v:
     29:29:int access$202(eu.laprell.timetable.fragments.InfoFragment,int) -> a
     29:29:long access$102(eu.laprell.timetable.fragments.InfoFragment,long) -> a
     29:29:int access$200(eu.laprell.timetable.fragments.InfoFragment) -> d
-eu.laprell.timetable.fragments.InfoFragment$1 -> eu.laprell.timetable.fragments.w:
+eu.laprell.timetable.fragments.InfoFragment$1 -> eu.laprell.timetable.fragments.x:
     eu.laprell.timetable.fragments.InfoFragment this$0 -> a
     59:60:void onClick(android.view.View) -> onClick
-eu.laprell.timetable.fragments.InfoFragment$2 -> eu.laprell.timetable.fragments.x:
+eu.laprell.timetable.fragments.InfoFragment$2 -> eu.laprell.timetable.fragments.y:
     eu.laprell.timetable.fragments.InfoFragment this$0 -> a
     71:94:void onClick(android.view.View) -> onClick
 eu.laprell.timetable.fragments.LessonImageFragment -> eu.laprell.timetable.fragments.LessonImageFragment:
@@ -19283,10 +19262,10 @@ eu.laprell.timetable.fragments.LessonImageFragment -> eu.laprell.timetable.fragm
     28:28:boolean access$002(eu.laprell.timetable.fragments.LessonImageFragment,boolean) -> a
     28:28:android.widget.ImageView access$100(eu.laprell.timetable.fragments.LessonImageFragment) -> a
     28:28:eu.laprell.timetable.fragments.interfaces.LessonViewController access$200(eu.laprell.timetable.fragments.LessonImageFragment) -> b
-eu.laprell.timetable.fragments.LessonImageFragment$1 -> eu.laprell.timetable.fragments.y:
+eu.laprell.timetable.fragments.LessonImageFragment$1 -> eu.laprell.timetable.fragments.z:
     eu.laprell.timetable.fragments.LessonImageFragment this$0 -> a
     45:46:void run() -> run
-eu.laprell.timetable.fragments.LessonImageFragment$2 -> eu.laprell.timetable.fragments.z:
+eu.laprell.timetable.fragments.LessonImageFragment$2 -> eu.laprell.timetable.fragments.aa:
     eu.laprell.timetable.fragments.LessonImageFragment this$0 -> a
     85:100:android.graphics.drawable.TransitionDrawable doInBackground(java.lang.Void[]) -> a
     105:113:void onPostExecute(android.graphics.drawable.TransitionDrawable) -> a
@@ -19310,23 +19289,23 @@ eu.laprell.timetable.fragments.LessonInfoFragment -> eu.laprell.timetable.fragme
     249:250:android.view.View makeDayView() -> R
     254:271:android.view.View makeFieldAndAdd(int,java.lang.String,int) -> a
     32:32:eu.laprell.timetable.fragments.interfaces.LessonViewController access$000(eu.laprell.timetable.fragments.LessonInfoFragment) -> a
-eu.laprell.timetable.fragments.LessonInfoFragment$1 -> eu.laprell.timetable.fragments.aa:
+eu.laprell.timetable.fragments.LessonInfoFragment$1 -> eu.laprell.timetable.fragments.ab:
     eu.laprell.timetable.fragments.LessonInfoFragment this$0 -> a
     116:132:com.nineoldandroids.animation.Animator makeAnimationForView(android.view.View,eu.laprell.timetable.fragments.LessonInfoFragment$VHolder) -> a
     113:113:com.nineoldandroids.animation.Animator makeAnimationForView(android.view.View,java.lang.Object) -> a
-eu.laprell.timetable.fragments.LessonInfoFragment$2 -> eu.laprell.timetable.fragments.ab:
+eu.laprell.timetable.fragments.LessonInfoFragment$2 -> eu.laprell.timetable.fragments.ac:
     eu.laprell.timetable.fragments.LessonInfoFragment this$0 -> a
     174:222:void onClick(android.view.View) -> onClick
-eu.laprell.timetable.fragments.LessonInfoFragment$2$1 -> eu.laprell.timetable.fragments.ac:
+eu.laprell.timetable.fragments.LessonInfoFragment$2$1 -> eu.laprell.timetable.fragments.ad:
     eu.laprell.timetable.fragments.LessonInfoFragment$VHolder val$holder -> a
     eu.laprell.timetable.fragments.LessonInfoFragment$2 this$1 -> b
     182:188:void selectedTeacher(eu.laprell.timetable.database.Teacher) -> a
-eu.laprell.timetable.fragments.LessonInfoFragment$2$2 -> eu.laprell.timetable.fragments.ad:
+eu.laprell.timetable.fragments.LessonInfoFragment$2$2 -> eu.laprell.timetable.fragments.ae:
     eu.laprell.timetable.fragments.LessonInfoFragment$VHolder val$holder -> a
     eu.laprell.timetable.fragments.LessonInfoFragment$2 this$1 -> b
     196:200:void selectedRoom(eu.laprell.timetable.database.Place,java.lang.String) -> a
     204:212:void selectedCustomRoom(java.lang.String) -> a
-eu.laprell.timetable.fragments.LessonInfoFragment$VHolder -> eu.laprell.timetable.fragments.ae:
+eu.laprell.timetable.fragments.LessonInfoFragment$VHolder -> eu.laprell.timetable.fragments.af:
     android.view.View view -> a
     android.view.View underline -> b
     android.widget.ImageView image -> c
@@ -19341,11 +19320,11 @@ eu.laprell.timetable.fragments.NewTaskFragment -> eu.laprell.timetable.fragments
     android.widget.EditText mTaskTitle -> d
     android.widget.EditText mTaskDescription -> e
     30:39:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
-eu.laprell.timetable.fragments.SettingsFragmentCompat -> eu.laprell.timetable.fragments.af:
+eu.laprell.timetable.fragments.SettingsFragmentCompat -> eu.laprell.timetable.fragments.ag:
     25:40:void onCreate(android.os.Bundle) -> a
     44:47:void onResume() -> s
     52:52:boolean onPreferenceChange(android.preference.Preference,java.lang.Object) -> onPreferenceChange
-eu.laprell.timetable.fragments.SetupListFragment -> eu.laprell.timetable.fragments.ag:
+eu.laprell.timetable.fragments.SetupListFragment -> eu.laprell.timetable.fragments.ah:
     android.widget.FrameLayout mContainer -> a
     android.support.v7.widget.RecyclerView mRecyclerView -> b
     eu.laprell.timetable.fragments.SetupListFragment$AddonAdapter mAdapter -> c
@@ -19356,10 +19335,10 @@ eu.laprell.timetable.fragments.SetupListFragment -> eu.laprell.timetable.fragmen
     25:25:android.view.View$OnClickListener access$000(eu.laprell.timetable.fragments.SetupListFragment) -> a
     25:25:android.support.v7.widget.RecyclerView access$100(eu.laprell.timetable.fragments.SetupListFragment) -> b
     25:25:eu.laprell.timetable.fragments.interfaces.SetupResultInterface access$200(eu.laprell.timetable.fragments.SetupListFragment) -> c
-eu.laprell.timetable.fragments.SetupListFragment$1 -> eu.laprell.timetable.fragments.ah:
+eu.laprell.timetable.fragments.SetupListFragment$1 -> eu.laprell.timetable.fragments.ai:
     eu.laprell.timetable.fragments.SetupListFragment this$0 -> a
     83:113:void onClick(android.view.View) -> onClick
-eu.laprell.timetable.fragments.SetupListFragment$1$1 -> eu.laprell.timetable.fragments.ai:
+eu.laprell.timetable.fragments.SetupListFragment$1$1 -> eu.laprell.timetable.fragments.aj:
     int val$pos -> a
     android.view.View val$v -> b
     eu.laprell.timetable.widgets.ShortLoadingDialog val$dialog -> c
@@ -19368,10 +19347,10 @@ eu.laprell.timetable.fragments.SetupListFragment$1$1 -> eu.laprell.timetable.fra
     103:110:void onPostExecute(java.lang.Void) -> a
     90:90:void onPostExecute(java.lang.Object) -> onPostExecute
     90:90:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-eu.laprell.timetable.fragments.SetupListFragment$1$1$1 -> eu.laprell.timetable.fragments.aj:
+eu.laprell.timetable.fragments.SetupListFragment$1$1$1 -> eu.laprell.timetable.fragments.ak:
     eu.laprell.timetable.fragments.SetupListFragment$1$1 this$2 -> a
     107:108:void run() -> run
-eu.laprell.timetable.fragments.SetupListFragment$AddonAdapter -> eu.laprell.timetable.fragments.ak:
+eu.laprell.timetable.fragments.SetupListFragment$AddonAdapter -> eu.laprell.timetable.fragments.al:
     eu.laprell.timetable.fragments.SetupListFragment this$0 -> a
     119:119:int getItemViewType(int) -> a
     124:138:eu.laprell.timetable.fragments.SetupListFragment$ViewHolder onCreateViewHolder(android.view.ViewGroup,int) -> c
@@ -19379,14 +19358,14 @@ eu.laprell.timetable.fragments.SetupListFragment$AddonAdapter -> eu.laprell.time
     168:168:int getItemCount() -> a
     116:116:void onBindViewHolder(android.support.v7.widget.RecyclerView$ViewHolder,int) -> a
     116:116:android.support.v7.widget.RecyclerView$ViewHolder onCreateViewHolder(android.view.ViewGroup,int) -> a
-eu.laprell.timetable.fragments.SetupListFragment$ViewHolder -> eu.laprell.timetable.fragments.al:
+eu.laprell.timetable.fragments.SetupListFragment$ViewHolder -> eu.laprell.timetable.fragments.am:
     android.view.View mRootView -> j
     android.widget.ImageView mBackImage -> k
     android.widget.TextView mText -> l
     eu.laprell.timetable.fragments.SetupListFragment this$0 -> i
     63:63:android.widget.ImageView access$300(eu.laprell.timetable.fragments.SetupListFragment$ViewHolder) -> a
     63:63:android.widget.TextView access$400(eu.laprell.timetable.fragments.SetupListFragment$ViewHolder) -> b
-eu.laprell.timetable.fragments.TaskFragment -> eu.laprell.timetable.fragments.am:
+eu.laprell.timetable.fragments.TaskFragment -> eu.laprell.timetable.fragments.an:
     eu.laprell.timetable.fragments.TaskListFragment mListFragment -> a
     eu.laprell.timetable.fragments.TaskViewFragment mViewFragment -> b
     26:31:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
@@ -19402,18 +19381,18 @@ eu.laprell.timetable.fragments.TaskListFragment -> eu.laprell.timetable.fragment
     43:55:void onAttach(android.app.Activity) -> a
     60:77:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
     24:24:java.util.ArrayList access$000(eu.laprell.timetable.fragments.TaskListFragment) -> a
-eu.laprell.timetable.fragments.TaskListFragment$TaskListAdapter -> eu.laprell.timetable.fragments.an:
+eu.laprell.timetable.fragments.TaskListFragment$TaskListAdapter -> eu.laprell.timetable.fragments.ao:
     eu.laprell.timetable.fragments.TaskListFragment this$0 -> a
     95:95:eu.laprell.timetable.fragments.TaskListFragment$VHolder onCreateViewHolder(android.view.ViewGroup,int) -> c
     101:101:void onBindViewHolder(eu.laprell.timetable.fragments.TaskListFragment$VHolder,int) -> a
     105:105:int getItemCount() -> a
     91:91:void onBindViewHolder(android.support.v7.widget.RecyclerView$ViewHolder,int) -> a
     91:91:android.support.v7.widget.RecyclerView$ViewHolder onCreateViewHolder(android.view.ViewGroup,int) -> a
-eu.laprell.timetable.fragments.TaskListFragment$TaskListCallback -> eu.laprell.timetable.fragments.ao:
-eu.laprell.timetable.fragments.TaskListFragment$VHolder -> eu.laprell.timetable.fragments.ap:
+eu.laprell.timetable.fragments.TaskListFragment$TaskListCallback -> eu.laprell.timetable.fragments.ap:
+eu.laprell.timetable.fragments.TaskListFragment$VHolder -> eu.laprell.timetable.fragments.aq:
 eu.laprell.timetable.fragments.TaskViewFragment -> eu.laprell.timetable.fragments.TaskViewFragment:
     20:20:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> a
-eu.laprell.timetable.fragments.TimeGridFragment -> eu.laprell.timetable.fragments.aq:
+eu.laprell.timetable.fragments.TimeGridFragment -> eu.laprell.timetable.fragments.ar:
     android.widget.LinearLayout mTimeContainer -> a
     fr.castorflex.android.circularprogressbar.CircularProgressBar mProgress -> b
     eu.laprell.timetable.fragments.model.TimeGridModel mModel -> c
@@ -19447,62 +19426,62 @@ eu.laprell.timetable.fragments.TimeGridFragment -> eu.laprell.timetable.fragment
     44:44:void access$800(eu.laprell.timetable.fragments.TimeGridFragment,eu.laprell.timetable.fragments.model.TimeGridModel$Data) -> b
     44:44:void access$900(eu.laprell.timetable.fragments.TimeGridFragment,int,boolean) -> a
     44:44:void access$1000(eu.laprell.timetable.fragments.TimeGridFragment,eu.laprell.timetable.database.TimeUnit) -> a
-eu.laprell.timetable.fragments.TimeGridFragment$1 -> eu.laprell.timetable.fragments.ar:
+eu.laprell.timetable.fragments.TimeGridFragment$1 -> eu.laprell.timetable.fragments.as:
     eu.laprell.timetable.fragments.TimeGridFragment this$0 -> a
     55:58:void onClick(android.view.View) -> onClick
-eu.laprell.timetable.fragments.TimeGridFragment$2 -> eu.laprell.timetable.fragments.as:
+eu.laprell.timetable.fragments.TimeGridFragment$2 -> eu.laprell.timetable.fragments.at:
     android.view.View val$tabletScroll -> a
     eu.laprell.timetable.fragments.TimeGridFragment this$0 -> b
     83:85:void run() -> run
-eu.laprell.timetable.fragments.TimeGridFragment$3 -> eu.laprell.timetable.fragments.at:
+eu.laprell.timetable.fragments.TimeGridFragment$3 -> eu.laprell.timetable.fragments.au:
     eu.laprell.timetable.fragments.TimeGridFragment this$0 -> a
     117:124:com.nineoldandroids.animation.Animator makeAnimationForView(android.view.View,java.lang.Object) -> a
-eu.laprell.timetable.fragments.TimeGridFragment$4 -> eu.laprell.timetable.fragments.au:
+eu.laprell.timetable.fragments.TimeGridFragment$4 -> eu.laprell.timetable.fragments.av:
     int[] val$loc -> a
     eu.laprell.timetable.fragments.TimeGridFragment this$0 -> b
     202:217:void run() -> run
-eu.laprell.timetable.fragments.TimeGridFragment$4$1 -> eu.laprell.timetable.fragments.av:
+eu.laprell.timetable.fragments.TimeGridFragment$4$1 -> eu.laprell.timetable.fragments.aw:
     eu.laprell.timetable.fragments.TimeGridFragment$4 this$1 -> a
     205:205:com.nineoldandroids.animation.Animator makeAnimationForView(android.view.View,eu.laprell.timetable.fragments.model.TimeGridModel$Data) -> a
     202:202:com.nineoldandroids.animation.Animator makeAnimationForView(android.view.View,java.lang.Object) -> a
-eu.laprell.timetable.fragments.TimeGridFragment$5 -> eu.laprell.timetable.fragments.aw:
+eu.laprell.timetable.fragments.TimeGridFragment$5 -> eu.laprell.timetable.fragments.ax:
     eu.laprell.timetable.utils.misc.FlWrapper mFloat -> a
     229:230:eu.laprell.timetable.utils.misc.FlWrapper get(android.view.View) -> a
     235:237:void set(android.view.View,eu.laprell.timetable.utils.misc.FlWrapper) -> a
     223:223:java.lang.Object get(java.lang.Object) -> a
     223:223:void set(java.lang.Object,java.lang.Object) -> a
-eu.laprell.timetable.fragments.TimeGridFragment$6 -> eu.laprell.timetable.fragments.ax:
+eu.laprell.timetable.fragments.TimeGridFragment$6 -> eu.laprell.timetable.fragments.ay:
     eu.laprell.timetable.fragments.TimeGridFragment this$0 -> a
     462:462:com.nineoldandroids.animation.Animator makeAnimationForView(android.view.View,eu.laprell.timetable.fragments.model.TimeGridModel$Data) -> a
     459:459:com.nineoldandroids.animation.Animator makeAnimationForView(android.view.View,java.lang.Object) -> a
-eu.laprell.timetable.fragments.TimeGridFragment$ButtonClickListener -> eu.laprell.timetable.fragments.ay:
+eu.laprell.timetable.fragments.TimeGridFragment$ButtonClickListener -> eu.laprell.timetable.fragments.az:
     eu.laprell.timetable.fragments.model.TimeGridModel$Data mData -> b
     eu.laprell.timetable.fragments.TimeGridFragment this$0 -> a
     344:375:void onClick(android.view.View) -> onClick
     378:435:void showMoreMenu() -> a
     318:318:eu.laprell.timetable.fragments.model.TimeGridModel$Data access$700(eu.laprell.timetable.fragments.TimeGridFragment$ButtonClickListener) -> a
-eu.laprell.timetable.fragments.TimeGridFragment$ButtonClickListener$1 -> eu.laprell.timetable.fragments.az:
+eu.laprell.timetable.fragments.TimeGridFragment$ButtonClickListener$1 -> eu.laprell.timetable.fragments.ba:
     eu.laprell.timetable.fragments.TimeGridFragment$ButtonClickListener this$1 -> a
     349:354:void onTimeSet(com.sleepbot.datetimepicker.time.RadialPickerLayout,int,int) -> a
-eu.laprell.timetable.fragments.TimeGridFragment$ButtonClickListener$2 -> eu.laprell.timetable.fragments.ba:
+eu.laprell.timetable.fragments.TimeGridFragment$ButtonClickListener$2 -> eu.laprell.timetable.fragments.bb:
     eu.laprell.timetable.fragments.TimeGridFragment$ButtonClickListener this$1 -> a
     363:368:void onTimeSet(com.sleepbot.datetimepicker.time.RadialPickerLayout,int,int) -> a
-eu.laprell.timetable.fragments.TimeGridFragment$ButtonClickListener$3 -> eu.laprell.timetable.fragments.bb:
+eu.laprell.timetable.fragments.TimeGridFragment$ButtonClickListener$3 -> eu.laprell.timetable.fragments.bc:
     android.support.v7.widget.ListPopupWindow val$popUp -> a
     eu.laprell.timetable.fragments.TimeGridFragment$ButtonClickListener this$1 -> b
     387:420:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-eu.laprell.timetable.fragments.TimeGridFragment$ButtonClickListener$3$1 -> eu.laprell.timetable.fragments.bc:
+eu.laprell.timetable.fragments.TimeGridFragment$ButtonClickListener$3$1 -> eu.laprell.timetable.fragments.bd:
     eu.laprell.timetable.fragments.TimeGridFragment$ButtonClickListener$3 this$2 -> a
     409:410:void onPositive(com.afollestad.materialdialogs.MaterialDialog) -> a
-eu.laprell.timetable.fragments.TimeGridFragment$ButtonClickListener$4 -> eu.laprell.timetable.fragments.bd:
+eu.laprell.timetable.fragments.TimeGridFragment$ButtonClickListener$4 -> eu.laprell.timetable.fragments.be:
     eu.laprell.timetable.fragments.TimeGridFragment$ButtonClickListener this$1 -> a
     425:426:void onDismiss() -> onDismiss
-eu.laprell.timetable.fragments.TimeGridFragment$MoveUpEvaluator -> eu.laprell.timetable.fragments.be:
+eu.laprell.timetable.fragments.TimeGridFragment$MoveUpEvaluator -> eu.laprell.timetable.fragments.bf:
     eu.laprell.timetable.utils.misc.FlWrapper mFloat -> b
     eu.laprell.timetable.fragments.TimeGridFragment this$0 -> a
     245:246:eu.laprell.timetable.utils.misc.FlWrapper evaluate(float,eu.laprell.timetable.utils.misc.FlWrapper,eu.laprell.timetable.utils.misc.FlWrapper) -> a
     240:240:java.lang.Object evaluate(float,java.lang.Object,java.lang.Object) -> a
-eu.laprell.timetable.fragments.TimeTableDayFragment2 -> eu.laprell.timetable.fragments.bf:
+eu.laprell.timetable.fragments.TimeTableDayFragment2 -> eu.laprell.timetable.fragments.bg:
     int CRASHED -> a
     eu.laprell.timetable.widgets.NavigationFrameLayout mContainer -> b
     android.support.v7.widget.RecyclerView mRecyclerView -> c
@@ -19551,64 +19530,64 @@ eu.laprell.timetable.fragments.TimeTableDayFragment2 -> eu.laprell.timetable.fra
     64:64:void access$2300(eu.laprell.timetable.fragments.TimeTableDayFragment2) -> m
     64:64:fr.castorflex.android.circularprogressbar.CircularProgressBar access$2400(eu.laprell.timetable.fragments.TimeTableDayFragment2) -> n
     64:64:android.os.AsyncTask access$2502(eu.laprell.timetable.fragments.TimeTableDayFragment2,android.os.AsyncTask) -> a
-eu.laprell.timetable.fragments.TimeTableDayFragment2$1 -> eu.laprell.timetable.fragments.bg:
+eu.laprell.timetable.fragments.TimeTableDayFragment2$1 -> eu.laprell.timetable.fragments.bh:
     eu.laprell.timetable.fragments.TimeTableDayFragment2 this$0 -> a
     113:120:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-eu.laprell.timetable.fragments.TimeTableDayFragment2$10 -> eu.laprell.timetable.fragments.bh:
+eu.laprell.timetable.fragments.TimeTableDayFragment2$10 -> eu.laprell.timetable.fragments.bi:
     eu.laprell.timetable.fragments.TimeTableDayFragment2 this$0 -> a
     552:553:java.lang.Void doInBackground(java.lang.Void[]) -> a
     558:566:void onPostExecute(java.lang.Void) -> a
     549:549:void onPostExecute(java.lang.Object) -> onPostExecute
     549:549:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-eu.laprell.timetable.fragments.TimeTableDayFragment2$11 -> eu.laprell.timetable.fragments.bi:
+eu.laprell.timetable.fragments.TimeTableDayFragment2$11 -> eu.laprell.timetable.fragments.bj:
     eu.laprell.timetable.fragments.TimeTableDayFragment2 this$0 -> a
     578:584:int[] doInBackground(java.lang.Void[]) -> a
     589:596:void onPostExecute(int[]) -> a
     575:575:void onPostExecute(java.lang.Object) -> onPostExecute
     575:575:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-eu.laprell.timetable.fragments.TimeTableDayFragment2$2 -> eu.laprell.timetable.fragments.bj:
+eu.laprell.timetable.fragments.TimeTableDayFragment2$2 -> eu.laprell.timetable.fragments.bk:
     eu.laprell.timetable.fragments.TimeTableDayFragment2 this$0 -> a
     125:126:void onDismiss() -> onDismiss
-eu.laprell.timetable.fragments.TimeTableDayFragment2$3 -> eu.laprell.timetable.fragments.bk:
+eu.laprell.timetable.fragments.TimeTableDayFragment2$3 -> eu.laprell.timetable.fragments.bl:
     eu.laprell.timetable.fragments.TimeTableDayFragment2 this$0 -> a
     160:161:void onFinished() -> a
-eu.laprell.timetable.fragments.TimeTableDayFragment2$4 -> eu.laprell.timetable.fragments.bl:
+eu.laprell.timetable.fragments.TimeTableDayFragment2$4 -> eu.laprell.timetable.fragments.bm:
     eu.laprell.timetable.fragments.TimeTableDayFragment2 this$0 -> a
     181:182:void onFinished() -> a
-eu.laprell.timetable.fragments.TimeTableDayFragment2$5 -> eu.laprell.timetable.fragments.bm:
+eu.laprell.timetable.fragments.TimeTableDayFragment2$5 -> eu.laprell.timetable.fragments.bn:
     eu.laprell.timetable.database.TimeUnit val$t -> a
     eu.laprell.timetable.fragments.TimeTableDayFragment2 this$0 -> b
     203:204:void onNegative(com.afollestad.materialdialogs.MaterialDialog) -> b
     208:212:void onPositive(com.afollestad.materialdialogs.MaterialDialog) -> a
-eu.laprell.timetable.fragments.TimeTableDayFragment2$6 -> eu.laprell.timetable.fragments.bn:
+eu.laprell.timetable.fragments.TimeTableDayFragment2$6 -> eu.laprell.timetable.fragments.bo:
     eu.laprell.timetable.database.TimeUnit val$t -> a
     eu.laprell.timetable.fragments.TimeTableDayFragment2 this$0 -> b
     249:277:void createdLesson(eu.laprell.timetable.database.Lesson) -> a
     281:300:void createFreetime() -> a
-eu.laprell.timetable.fragments.TimeTableDayFragment2$6$1 -> eu.laprell.timetable.fragments.bo:
+eu.laprell.timetable.fragments.TimeTableDayFragment2$6$1 -> eu.laprell.timetable.fragments.bp:
     eu.laprell.timetable.database.Creator$Data val$data -> a
     eu.laprell.timetable.fragments.TimeTableDayFragment2$6 this$1 -> b
     265:266:java.lang.Void doInBackground(java.lang.Void[]) -> a
     271:274:void onPostExecute(java.lang.Void) -> a
     262:262:void onPostExecute(java.lang.Object) -> onPostExecute
     262:262:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-eu.laprell.timetable.fragments.TimeTableDayFragment2$6$2 -> eu.laprell.timetable.fragments.bp:
+eu.laprell.timetable.fragments.TimeTableDayFragment2$6$2 -> eu.laprell.timetable.fragments.bq:
     eu.laprell.timetable.database.Creator$Data val$data -> a
     eu.laprell.timetable.fragments.TimeTableDayFragment2$6 this$1 -> b
     289:290:java.lang.Void doInBackground(java.lang.Void[]) -> a
     295:298:void onPostExecute(java.lang.Void) -> a
     286:286:void onPostExecute(java.lang.Object) -> onPostExecute
     286:286:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-eu.laprell.timetable.fragments.TimeTableDayFragment2$7 -> eu.laprell.timetable.fragments.bq:
+eu.laprell.timetable.fragments.TimeTableDayFragment2$7 -> eu.laprell.timetable.fragments.br:
     eu.laprell.timetable.fragments.TimeTableDayFragment2 this$0 -> a
     331:388:void onClick(android.view.View) -> onClick
-eu.laprell.timetable.fragments.TimeTableDayFragment2$8 -> eu.laprell.timetable.fragments.br:
+eu.laprell.timetable.fragments.TimeTableDayFragment2$8 -> eu.laprell.timetable.fragments.bs:
     eu.laprell.timetable.fragments.TimeTableDayFragment2 this$0 -> a
     398:399:void run() -> run
-eu.laprell.timetable.fragments.TimeTableDayFragment2$9 -> eu.laprell.timetable.fragments.bs:
+eu.laprell.timetable.fragments.TimeTableDayFragment2$9 -> eu.laprell.timetable.fragments.bt:
     eu.laprell.timetable.fragments.TimeTableDayFragment2 this$0 -> a
     408:434:void onClick(android.view.View) -> onClick
-eu.laprell.timetable.fragments.TimeTableDayFragment2$Data -> eu.laprell.timetable.fragments.bt:
+eu.laprell.timetable.fragments.TimeTableDayFragment2$Data -> eu.laprell.timetable.fragments.bu:
     eu.laprell.timetable.database.Lesson lesson -> b
     eu.laprell.timetable.database.TimeUnit time -> c
     eu.laprell.timetable.database.Place place -> d
@@ -19634,7 +19613,7 @@ eu.laprell.timetable.fragments.TimeTableDayFragment2$Data -> eu.laprell.timetabl
     600:600:int access$2100(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data) -> f
     600:600:android.graphics.drawable.BitmapDrawable access$2200(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data) -> g
     600:600:boolean access$2600(eu.laprell.timetable.fragments.TimeTableDayFragment2$Data) -> h
-eu.laprell.timetable.fragments.TimeTableDayFragment2$TimeTableDayDatabaseAdapter -> eu.laprell.timetable.fragments.bu:
+eu.laprell.timetable.fragments.TimeTableDayFragment2$TimeTableDayDatabaseAdapter -> eu.laprell.timetable.fragments.bv:
     android.view.View$OnClickListener mListener -> b
     android.view.View$OnClickListener mMoreListener -> c
     boolean mCountNull -> d
@@ -19648,7 +19627,7 @@ eu.laprell.timetable.fragments.TimeTableDayFragment2$TimeTableDayDatabaseAdapter
     834:835:void setCountToNull(boolean) -> a
     670:670:void onBindViewHolder(android.support.v7.widget.RecyclerView$ViewHolder,int) -> a
     670:670:android.support.v7.widget.RecyclerView$ViewHolder onCreateViewHolder(android.view.ViewGroup,int) -> a
-eu.laprell.timetable.fragments.TimeTableDayFragment2$ViewHolder -> eu.laprell.timetable.fragments.bv:
+eu.laprell.timetable.fragments.TimeTableDayFragment2$ViewHolder -> eu.laprell.timetable.fragments.bw:
     android.view.View mView -> i
     eu.laprell.timetable.widgets.VerticalDropShadowCard mShadow -> j
     eu.laprell.timetable.widgets.LessonCardView mCard -> k
@@ -19657,7 +19636,7 @@ eu.laprell.timetable.fragments.TimeTableDayFragment2$ViewHolder -> eu.laprell.ti
     android.widget.TextView mNr -> n
     android.widget.TextView mTime -> o
     android.widget.ImageView mImage -> p
-eu.laprell.timetable.fragments.WeekOverviewFragment -> eu.laprell.timetable.fragments.bw:
+eu.laprell.timetable.fragments.WeekOverviewFragment -> eu.laprell.timetable.fragments.bx:
     eu.laprell.timetable.widgets.TableView$DataProvider mFakeProvider -> a
     eu.laprell.timetable.widgets.TableView mTable -> b
     eu.laprell.timetable.database.TimeUnit[] mAbsTimes -> c
@@ -19679,31 +19658,31 @@ eu.laprell.timetable.fragments.WeekOverviewFragment -> eu.laprell.timetable.frag
     31:31:eu.laprell.timetable.widgets.TableView$DataProvider access$1000(eu.laprell.timetable.fragments.WeekOverviewFragment) -> e
     31:31:java.lang.String[] access$1100(eu.laprell.timetable.fragments.WeekOverviewFragment) -> f
     31:31:java.lang.String access$1200(eu.laprell.timetable.fragments.WeekOverviewFragment) -> g
-eu.laprell.timetable.fragments.WeekOverviewFragment$1 -> eu.laprell.timetable.fragments.bx:
+eu.laprell.timetable.fragments.WeekOverviewFragment$1 -> eu.laprell.timetable.fragments.by:
     eu.laprell.timetable.fragments.WeekOverviewFragment this$0 -> a
     36:36:java.lang.String getHeaderTitle(int) -> a
     41:41:java.lang.String getRowTitle(int) -> b
     46:46:java.lang.String getContentAt(int,int) -> a
     51:51:int getColorAt(int,int) -> b
     56:56:int getTextColorAt(int,int) -> c
-eu.laprell.timetable.fragments.WeekOverviewFragment$2 -> eu.laprell.timetable.fragments.by:
+eu.laprell.timetable.fragments.WeekOverviewFragment$2 -> eu.laprell.timetable.fragments.bz:
     eu.laprell.timetable.fragments.WeekOverviewFragment this$0 -> a
     106:128:boolean onClickCell(int,int) -> a
     134:134:void onLongClickCell(int,int) -> b
-eu.laprell.timetable.fragments.WeekOverviewFragment$3 -> eu.laprell.timetable.fragments.bz:
+eu.laprell.timetable.fragments.WeekOverviewFragment$3 -> eu.laprell.timetable.fragments.ca:
     eu.laprell.timetable.fragments.WeekOverviewFragment this$0 -> a
     158:207:java.lang.Void doInBackground(java.lang.Void[]) -> a
     212:221:void onPostExecute(java.lang.Void) -> a
     155:155:void onPostExecute(java.lang.Object) -> onPostExecute
     155:155:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-eu.laprell.timetable.fragments.WeekOverviewFragment$4 -> eu.laprell.timetable.fragments.ca:
+eu.laprell.timetable.fragments.WeekOverviewFragment$4 -> eu.laprell.timetable.fragments.cb:
     eu.laprell.timetable.fragments.WeekOverviewFragment this$0 -> a
     228:231:java.lang.String getHeaderTitle(int) -> a
     236:239:java.lang.String getRowTitle(int) -> b
     244:253:java.lang.String getContentAt(int,int) -> a
     258:267:int getColorAt(int,int) -> b
     272:279:int getTextColorAt(int,int) -> c
-eu.laprell.timetable.fragments.WeekOverviewFragment$DayData -> eu.laprell.timetable.fragments.cb:
+eu.laprell.timetable.fragments.WeekOverviewFragment$DayData -> eu.laprell.timetable.fragments.cc:
     eu.laprell.timetable.database.TimeUnit[] mTimes -> b
     eu.laprell.timetable.database.Day mDay -> c
     eu.laprell.timetable.database.Lesson[] mLessons -> d
@@ -19909,7 +19888,7 @@ eu.laprell.timetable.fragments.model.AbsModel -> eu.laprell.timetable.fragments.
     eu.laprell.timetable.fragments.BaseFragment mBase -> a
     android.content.Context mContext -> b
     28:28:android.content.Context getContext() -> a
-    64:64:eu.laprell.timetable.background.LessonNotifier getLessonNotifier() -> b
+    64:64:eu.laprell.timetable.background.notifications.LessonNotifier2 getLessonNotifier() -> b
 eu.laprell.timetable.fragments.model.TimeGridModel -> eu.laprell.timetable.fragments.d.b:
     java.util.ArrayList mList -> a
     eu.laprell.timetable.fragments.model.TimeGridModel$SavingAsyncTask mTask -> b
@@ -20227,7 +20206,7 @@ eu.laprell.timetable.utils.Dialogs$TimeDialogCallback -> eu.laprell.timetable.ut
     void selectedTime(eu.laprell.timetable.database.TimeUnit,java.lang.String) -> a
 eu.laprell.timetable.utils.FileUtils -> eu.laprell.timetable.utils.ay:
     16:27:java.lang.String readFromfile(java.io.File) -> a
-    31:69:java.lang.String readFromfile(java.io.File,int) -> a
+    31:66:java.lang.String readFromfile(java.io.File,int) -> a
 eu.laprell.timetable.utils.IntentUtils -> eu.laprell.timetable.utils.az:
     14:20:void shareText(android.content.Context,java.lang.String,java.lang.String,java.lang.String) -> a
 eu.laprell.timetable.utils.MetricsUtils -> eu.laprell.timetable.utils.ba:
